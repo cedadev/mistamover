@@ -1,0 +1,7 @@
+md5wrapped Module
+=================
+
+.. automodule:: md5wrapped
+    :members:
+    :undoc-members:
+    :show-inheritance:

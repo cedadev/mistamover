@@ -1,0 +1,7 @@
+MyZipFile Module
+================
+
+.. automodule:: MyZipFile
+    :members:
+    :undoc-members:
+    :show-inheritance:

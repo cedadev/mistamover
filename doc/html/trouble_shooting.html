@@ -1,0 +1,140 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Trouble-shooting &mdash; MiStaMover 0.1.0alpha documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.0alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="MiStaMover 0.1.0alpha documentation" href="index.html" />
+    <link rel="next" title="Terminology" href="terminology.html" />
+    <link rel="prev" title="Advanced Features" href="features.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="terminology.html" title="Terminology"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="features.html" title="Advanced Features"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="trouble-shooting">
+<span id="id1"></span><h1>Trouble-shooting<a class="headerlink" href="#trouble-shooting" title="Permalink to this headline">¶</a></h1>
+<p>This section provides help and explanations.</p>
+<div class="section" id="frequently-asked-questions">
+<h2>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>Why does MiStaMover not run on Python 2.4 or older versions?</dt>
+<dd>We had to make a cut-off point and we decided that Python 2.5 and above was reasonable. MiStaMover may not run on older versions of Python.</dd>
+<dt>Why is the &#8220;mirror&#8221; transfer mode only available for rsync transfer protocols?</dt>
+<dd>The <cite>rsync</cite> tool has been built to be able to exactly duplicate the contents of a directory to a remote host. This is a relatively complex function that would require significant coding to achieve with all transfer protocols. Within MiStaMover it has only therefore been possible to implement the &#8220;mirror&#8221; transfer mode as a thin wrapper around the existing functionality of rsync.</dd>
+<dt>Why does MiStaMover not unzip directories once delivered to the target host?</dt>
+<dd><p class="first">A number of transfer protocols are available to push data to a remote host. Since each protocol has its own limitations we could not implement a generic solution for pushing a directory structure that would work for all. As a result if the <em class="xref std std-ref">rsync_ssh</em> or <em class="xref std std-ref">rsync_native</em> protocols are used then an entire directory will be copied to the target host as is.</p>
+<p class="last">However, for other protocols there is no direct support for remotely copying whole directories. We therefore took the decision to zip the directory on the source host so that we could verify the send process robustly. Unzipping on the target host would require a signficant amount of extra engineering which was considered out of scope for the development of this tool.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Trouble-shooting</a><ul>
+<li><a class="reference internal" href="#frequently-asked-questions">Frequently Asked Questions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="features.html"
+                        title="previous chapter">Advanced Features</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="terminology.html"
+                        title="next chapter">Terminology</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/trouble_shooting.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="terminology.html" title="Terminology"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="features.html" title="Advanced Features"
+             >previous</a> |</li>
+        <li><a href="index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright See STFC Licernce..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

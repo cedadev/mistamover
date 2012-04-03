@@ -1,0 +1,164 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ReceiptFile Module &mdash; MiStaMover 0.1.0alpha documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MiStaMover 0.1.0alpha documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-ReceiptFile">
+<span id="receiptfile-module"></span><h1>ReceiptFile Module<a class="headerlink" href="#module-ReceiptFile" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="ReceiptFile.ReceiptFile">
+<em class="property">class </em><tt class="descclassname">ReceiptFile.</tt><tt class="descname">ReceiptFile</tt><big>(</big><em>file_path</em>, <em>can_overwrite=False</em><big>)</big><a class="headerlink" href="#ReceiptFile.ReceiptFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="AbstractControlFile.html#AbstractControlFile.AbstractControlFile" title="AbstractControlFile.AbstractControlFile"><tt class="xref py py-class docutils literal"><span class="pre">AbstractControlFile.AbstractControlFile</span></tt></a></p>
+<p>Class wrapper around a file that confirms a file size and check sum,
+and the path name of a receipt acknowledgment (&#8216;thank you&#8217;) file.</p>
+<p>create() requires [filename, status, size, checksum]
+likewise read() returns these</p>
+<p>Note read() and create() are in base class; encode() and decode() 
+are helpers for them.</p>
+<p>Lines of receipt file are:</p>
+<blockquote>
+<div>magic1
+data_file_name
+numerical_status (see codes at top of module)
+actual_size_in_bytes (if applicable else empty line)
+actual_md5_checksum (if applicable else empty line)
+basename_requested_for_thankyou_file
+magic2</div></blockquote>
+<dl class="method">
+<dt id="ReceiptFile.ReceiptFile.decode">
+<tt class="descname">decode</tt><big>(</big><em>lines</em><big>)</big><a class="headerlink" href="#ReceiptFile.ReceiptFile.decode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ReceiptFile.ReceiptFile.describeStatus">
+<tt class="descname">describeStatus</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#ReceiptFile.ReceiptFile.describeStatus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ReceiptFile.ReceiptFile.encode">
+<tt class="descname">encode</tt><big>(</big><em>filename</em>, <em>status</em>, <em>size=-1</em>, <em>cksum=''</em>, <em>thankyou_file=''</em><big>)</big><a class="headerlink" href="#ReceiptFile.ReceiptFile.encode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ReceiptFile.ReceiptFile.getFileChecksum">
+<tt class="descname">getFileChecksum</tt><big>(</big><big>)</big><a class="headerlink" href="#ReceiptFile.ReceiptFile.getFileChecksum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ReceiptFile.ReceiptFile.getFileName">
+<tt class="descname">getFileName</tt><big>(</big><big>)</big><a class="headerlink" href="#ReceiptFile.ReceiptFile.getFileName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ReceiptFile.ReceiptFile.getFileSize">
+<tt class="descname">getFileSize</tt><big>(</big><big>)</big><a class="headerlink" href="#ReceiptFile.ReceiptFile.getFileSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ReceiptFile.ReceiptFile.getStatus">
+<tt class="descname">getStatus</tt><big>(</big><big>)</big><a class="headerlink" href="#ReceiptFile.ReceiptFile.getStatus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ReceiptFile.ReceiptFile.magic1">
+<tt class="descname">magic1</tt><em class="property"> = '_start_stager_receipt_data_'</em><a class="headerlink" href="#ReceiptFile.ReceiptFile.magic1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ReceiptFile.ReceiptFile.magic2">
+<tt class="descname">magic2</tt><em class="property"> = '_end_stager_receipt_data_'</em><a class="headerlink" href="#ReceiptFile.ReceiptFile.magic2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/modules/ReceiptFile.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright See STFC Licernce..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

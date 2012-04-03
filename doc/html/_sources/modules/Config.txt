@@ -1,0 +1,35 @@
+Config Package
+==============
+
+:mod:`Config` Package
+---------------------
+
+.. automodule:: Config
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`BaseConfig` Module
+------------------------
+
+.. automodule:: Config.BaseConfig
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`DatasetConfig` Module
+---------------------------
+
+.. automodule:: Config.DatasetConfig
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`GlobalConfig` Module
+--------------------------
+
+.. automodule:: Config.GlobalConfig
+    :members:
+    :undoc-members:
+    :show-inheritance:
+

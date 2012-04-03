@@ -1,0 +1,248 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Testing Framework &mdash; MiStaMover 0.1.0alpha documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.0alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="MiStaMover 0.1.0alpha documentation" href="index.html" />
+    <link rel="next" title="Download and Version Information" href="download.html" />
+    <link rel="prev" title="Terminology" href="terminology.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="download.html" title="Download and Version Information"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="terminology.html" title="Terminology"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="testing-framework">
+<span id="testing"></span><h1>Testing Framework<a class="headerlink" href="#testing-framework" title="Permalink to this headline">¶</a></h1>
+<p>The MiStaMover tool has a testing framework which is designed to show that individual modules work as designed.</p>
+<p>The test config files and programs can be found in a subdirectory in the MiStaMover source tree called <em>test</em></p>
+<p>The tests can be run by changing to the MiStaMover directory and typing</p>
+<p><cite>python test/myproxytest.py &#8211;runPipe</cite></p>
+<p>This will cause the <em>myproxytest.py</em> test to be run - as some tests can perform mulitple things the command line argument is used to determine which operation to run (in this case &#8211;runPipe)</p>
+<p>The following tests are available</p>
+<dl class="docutils">
+<dt>emailtest.py</dt>
+<dd><ul class="first last simple">
+<li>uses email_global.ini</li>
+<li>starts a log server, creates an info message and emails a critical message</li>
+</ul>
+</dd>
+<dt>ftptest.py</dt>
+<dd><ul class="first last simple">
+<li>uses ftp_global.ini data_stream_ftp.ini</li>
+<li>checks that config is valid, creates stopfile, creates push command, creates receipt command</li>
+<li>creates thank you file</li>
+</ul>
+</dd>
+<dt>globustest.py</dt>
+<dd><ul class="first last simple">
+<li>uses rsync_global.ini data_stream_rsync.ini</li>
+<li>creates a transfer base, creates a command to test grid ftp credentials</li>
+</ul>
+</dd>
+<dt>rsynctest.py</dt>
+<dd><ul class="first last simple">
+<li>uses rsync_global.ini data_stream_rsync.ini</li>
+<li>checks config, sets stop file command, sets up push command</li>
+</ul>
+</dd>
+<dt>rsynctransfertest.py</dt>
+<dd><ul class="first last simple">
+<li>uses rsync_global2.ini data_stream_rsync2.ini</li>
+<li>sets up RsyncTransfer instance, transfers a file to another directory</li>
+</ul>
+</dd>
+<dt>stagercontrollertest.py</dt>
+<dd><ul class="first last simple">
+<li>uses rsync_global_ini data_stream_rsync.ini</li>
+<li>sets up a stagercontroller instance and dumps the config</li>
+</ul>
+</dd>
+<dt>transferbasetest.py</dt>
+<dd><ul class="first last simple">
+<li>uses rsync_global.ini data_stream_rsync.ini</li>
+<li>sets up a transferbase instance, runs a command ls -l via the transferdata method</li>
+</ul>
+</dd>
+<dt>transferbasetest2.py</dt>
+<dd><ul class="first last simple">
+<li>sets up a transferbase - uses a mock object for logging</li>
+<li>runs an rsync command over the transferdata method</li>
+</ul>
+</dd>
+</dl>
+<div class="section" id="configuring-a-test-data-stream">
+<span id="config-test-data"></span><h2>Configuring a test data stream<a class="headerlink" href="#configuring-a-test-data-stream" title="Permalink to this headline">¶</a></h2>
+<p>MiStaMover can manage a number (up to 10 have been tested) of parallel data stream transfers. It requires a configuration file for each data stream and will monitor incoming directories and transfer files to outgoing directories for each stream.</p>
+<p>In order to run a test, we need to create a test data stream. Since we imagine that most users will get started this way, we have provided a test data stream configuration file in the configuration directory called <tt class="docutils literal"><span class="pre">data</span> <span class="pre">stream_test1.ini</span></tt>. In order for MiStaMover to know about this data stream its global configuration file (<tt class="docutils literal"><span class="pre">global.ini</span></tt>) needs to be informed about it. The default <tt class="docutils literal"><span class="pre">global.ini</span></tt> file includes the line:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">data_stream_list</span> <span class="o">=</span> <span class="n">test1</span>
+</pre></div>
+</div>
+<p>Now, we need some files to send. You can create a set of test files by running:</p>
+<div class="highlight-python"><pre>export MY_STAGER=/usr/local/mistamover
+export LOG_DIR=$MY_STAGER/log
+export REMOTE_USERNAME=someone
+export REMOTE_HOST=some.server.some.where
+export SSH_KEY_FILE=$HOME/.ssh/identity
+export STAGER_CONF=$MY_STAGER/conf
+export STAGER_TEST=$MY_STAGER/data
+mistamover.py --create-test-data</pre>
+</div>
+<p>Note that you do not have to set all of the above. The following variables have default values set to:</p>
+<div class="highlight-python"><pre>REMOTE_USERNAME: $USER (environment variable)
+REMOTE_HOST:     localhost</pre>
+</div>
+<p>This magically generates a set of files in the directory:</p>
+<div class="highlight-python"><pre>/usr/local/mistamover/data/test1</pre>
+</div>
+<p>The test data stream is configured to send all data to the <tt class="docutils literal"><span class="pre">REMOTE_HOST</span></tt> using the <tt class="docutils literal"><span class="pre">rsync_ssh</span></tt> transfer method (over <tt class="docutils literal"><span class="pre">ssh</span></tt>). If this is not configured on your system then the test data stream will not work without further in the configuration file.</p>
+<p>However, in many cases you should now be able to run with:</p>
+<blockquote>
+<div># The first line is required to tell MiStaMover where to find its default global configuration file
+bin/mistamover.py &#8211;debug</div></blockquote>
+<p>By choosing to run with the <tt class="docutils literal"><span class="pre">--debug</span></tt> argument switched on you can view the output from mistamover at the terminal. Alternatively, you can look at the log files _log_files.</p>
+<p>The output should look something like:</p>
+<div class="highlight-python"><pre>LOG MESSAGE: 10: (pid=17103) DSML init
+LOG MESSAGE: 20: (pid=17103) starting disk space monitor for filesystem /misc/humid1
+LOG MESSAGE: 20: (pid=17103) started log server
+LOG MESSAGE: 20: (pid=17103) starting procs for data stream test1
+LOG MESSAGE: 20: (pid=17103) starting Transfer Controller for data stream test1
+LOG MESSAGE: 20: (pid=17103) starting transfer controller for data stream test1
+LOG MESSAGE: 20: (pid=17109) startup
+LOG MESSAGE: 20: (pid=17109) Listing contents of data stream dir: /home/users/astephen/destroy/data/test1
+LOG MESSAGE: 20: (pid=17109) Processing Transfers...
+LOG MESSAGE: 20: (pid=17109) startup
+LOG MESSAGE: 20: (pid=17109) Listing contents of data stream dir: /home/users/astephen/destroy/data/test1
+LOG MESSAGE: 20: (pid=17109) Found a list of items to transfer of length '10', starting with: ['test1-0.nc', 'test1-1.nc', 'test1-2.nc']
+LOG MESSAGE: 20: (pid=17109) Starting transfer to: astephen@localhost:/home/users/astephen/destroy/received
+LOG MESSAGE: 10: (pid=17109) we will transfer test1-0.nc
+LOG MESSAGE: 10: (pid=17109) Not using arrival monitor
+LOG MESSAGE: 20: (pid=17109) Starting transfer to: astephen@localhost:/home/users/astephen/destroy/received
+LOG MESSAGE: 20: (pid=17109) Transfer succeeded: test1-0.nc</pre>
+</div>
+</div>
+<div class="section" id="trouble-shooting-the-test-data-stream-configuration">
+<h2>Trouble-shooting the test data stream configuration<a class="headerlink" href="#trouble-shooting-the-test-data-stream-configuration" title="Permalink to this headline">¶</a></h2>
+<p>If the test data stream did not run you may need to modify your configuration file(s). Please see the <a class="reference internal" href="configs.html#configuration"><em>Configuring MiStaMover</em></a> section for more details.</p>
+<p>Or it may be that you cannot run rsync over SSH. If that is the case you may wish to set the software up to run with FTP by customising the <a class="reference internal" href="configs.html#configuration"><em>configuration files</em></a>.</p>
+</div>
+<div class="section" id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li>:ref:<a href="#id1"><span class="problematic" id="id2">`</span></a>search</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Testing Framework</a><ul>
+<li><a class="reference internal" href="#configuring-a-test-data-stream">Configuring a test data stream</a></li>
+<li><a class="reference internal" href="#trouble-shooting-the-test-data-stream-configuration">Trouble-shooting the test data stream configuration</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="terminology.html"
+                        title="previous chapter">Terminology</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="download.html"
+                        title="next chapter">Download and Version Information</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/testing.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="download.html" title="Download and Version Information"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="terminology.html" title="Terminology"
+             >previous</a> |</li>
+        <li><a href="index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright See STFC Licernce..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

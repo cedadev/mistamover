@@ -1,0 +1,7 @@
+LastMailedController Module
+===========================
+
+.. automodule:: LastMailedController
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,169 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DiskSpaceMonitorLauncher Module &mdash; MiStaMover 0.1.0alpha documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MiStaMover 0.1.0alpha documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-DiskSpaceMonitorLauncher">
+<span id="diskspacemonitorlauncher-module"></span><h1>DiskSpaceMonitorLauncher Module<a class="headerlink" href="#module-DiskSpaceMonitorLauncher" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="DiskSpaceMonitorLauncher.DiskSpaceMonitorLauncher">
+<em class="property">class </em><tt class="descclassname">DiskSpaceMonitorLauncher.</tt><tt class="descname">DiskSpaceMonitorLauncher</tt><big>(</big><em>gconfig</em>, <em>dconfigs</em>, <em>logger=None</em><big>)</big><a class="headerlink" href="#DiskSpaceMonitorLauncher.DiskSpaceMonitorLauncher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>A launcher which starts and stops different DiskSpaceMonitor daemons
+for each filesystem on which data_stream directories live.  Note that
+it doesn&#8217;t test which filesystem incoming directories live on; 
+these are assumed to be on the same filesystem as the data_stream 
+directory for that data_stream.</p>
+<dl class="method">
+<dt id="DiskSpaceMonitorLauncher.DiskSpaceMonitorLauncher.getDescription">
+<tt class="descname">getDescription</tt><big>(</big><em>filesys</em><big>)</big><a class="headerlink" href="#DiskSpaceMonitorLauncher.DiskSpaceMonitorLauncher.getDescription" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get short and long descriptions for a given filesystem
+(input string is name of the mount point)
+long to be used for log messages + emails
+short to be used for tags on log messages and for process naming</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DiskSpaceMonitorLauncher.DiskSpaceMonitorLauncher.groupDatasetsByDisk">
+<tt class="descname">groupDatasetsByDisk</tt><big>(</big><big>)</big><a class="headerlink" href="#DiskSpaceMonitorLauncher.DiskSpaceMonitorLauncher.groupDatasetsByDisk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dictionary containing the data_streams for each file system:
+key is the mount point, value is an array of data_stream config 
+objects.  Use this so that we can launch a separate DiskSpaceMonitor 
+for each filesystem.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DiskSpaceMonitorLauncher.DiskSpaceMonitorLauncher.kill">
+<tt class="descname">kill</tt><big>(</big><big>)</big><a class="headerlink" href="#DiskSpaceMonitorLauncher.DiskSpaceMonitorLauncher.kill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kill all DiskSpaceMonitor daemons that have been launched</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DiskSpaceMonitorLauncher.DiskSpaceMonitorLauncher.killOne">
+<tt class="descname">killOne</tt><big>(</big><em>daemon</em><big>)</big><a class="headerlink" href="#DiskSpaceMonitorLauncher.DiskSpaceMonitorLauncher.killOne" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kill one daemon.  Argument is a DaemonCtl object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DiskSpaceMonitorLauncher.DiskSpaceMonitorLauncher.launch">
+<tt class="descname">launch</tt><big>(</big><big>)</big><a class="headerlink" href="#DiskSpaceMonitorLauncher.DiskSpaceMonitorLauncher.launch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Launch all the DiskSpaceMonitor daemons that are required</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DiskSpaceMonitorLauncher.DiskSpaceMonitorLauncher.launchOne">
+<tt class="descname">launchOne</tt><big>(</big><em>ds_filesys</em>, <em>ds_group</em><big>)</big><a class="headerlink" href="#DiskSpaceMonitorLauncher.DiskSpaceMonitorLauncher.launchOne" title="Permalink to this definition">¶</a></dt>
+<dd><p>launch a single DiskSpaceMonitor for a group of data_stream
+that reside on a given filesystem.</p>
+<dl class="docutils">
+<dt>inputs:  ds_filesys (string) - name of mount point</dt>
+<dd><dl class="first last docutils">
+<dt>ds_group - list of DatasetConfig objects just for </dt>
+<dd>this group of data_streams</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="DiskSpaceMonitorLauncher.DiskSpaceMonitorLauncher.makeUnique">
+<tt class="descname">makeUnique</tt><big>(</big><em>tag</em><big>)</big><a class="headerlink" href="#DiskSpaceMonitorLauncher.DiskSpaceMonitorLauncher.makeUnique" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a tag, append prefixes as required so that it is unique.
+Reason for this is so that if more than one filesystem has the same
+short name (last pathname element of the mount point), they will have
+distinct tags for logging and process naming purposes.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/modules/DiskSpaceMonitorLauncher.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright See STFC Licernce..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+Informer Module
+===============
+
+.. automodule:: Informer
+    :members:
+    :undoc-members:
+    :show-inheritance:

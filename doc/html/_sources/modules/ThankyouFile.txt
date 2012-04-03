@@ -1,0 +1,7 @@
+ThankyouFile Module
+===================
+
+.. automodule:: ThankyouFile
+    :members:
+    :undoc-members:
+    :show-inheritance:

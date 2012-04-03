@@ -1,0 +1,7 @@
+FileUtils Module
+================
+
+.. automodule:: FileUtils
+    :members:
+    :undoc-members:
+    :show-inheritance:

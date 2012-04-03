@@ -1,0 +1,7 @@
+LoggerServer Module
+===================
+
+.. automodule:: LoggerServer
+    :members:
+    :undoc-members:
+    :show-inheritance:

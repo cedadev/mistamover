@@ -1,0 +1,189 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>LoggerClient Module &mdash; MiStaMover 0.1.0alpha documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MiStaMover 0.1.0alpha documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-LoggerClient">
+<span id="loggerclient-module"></span><h1>LoggerClient Module<a class="headerlink" href="#module-LoggerClient" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="LoggerClient.LoggerClient">
+<em class="property">class </em><tt class="descclassname">LoggerClient.</tt><tt class="descname">LoggerClient</tt><big>(</big><em>config</em>, <em>host='localhost'</em>, <em>port=None</em>, <em>tag='MiStaMover'</em>, <em>name=None</em>, <em>debug_on=False</em><big>)</big><a class="headerlink" href="#LoggerClient.LoggerClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Class that connects to a running LoggerServer, and also sends
+email for messages which exceed a certain level.</p>
+<p>(The sending email could perhaps be moved to the server - it is
+possible to test the level in the server - but this way the app
+can decide whether to send email by specifying send_email=True/False
+on logMessage(), overriding the config-based decision.)</p>
+<dl class="method">
+<dt id="LoggerClient.LoggerClient.critical">
+<tt class="descname">critical</tt><big>(</big><em>message</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#LoggerClient.LoggerClient.critical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log a message at CRITICAL level</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="LoggerClient.LoggerClient.debug">
+<tt class="descname">debug</tt><big>(</big><em>message</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#LoggerClient.LoggerClient.debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log a message at DEBUG level</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="LoggerClient.LoggerClient.error">
+<tt class="descname">error</tt><big>(</big><em>message</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#LoggerClient.LoggerClient.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log a message at ERROR level</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="LoggerClient.LoggerClient.exportMethods">
+<tt class="descname">exportMethods</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#LoggerClient.LoggerClient.exportMethods" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports the main methods into another object, for 
+convenience.</p>
+<dl class="docutils">
+<dt>Calling code would do something like:</dt>
+<dd>self.logger = LoggerClient()
+self.logger.exportMethods(self)</dd>
+<dt>and can thereafter do</dt>
+<dd>self.info(....)</dd>
+</dl>
+<p>instead of &#8220;self.logger.info&#8221; everywhere</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="LoggerClient.LoggerClient.info">
+<tt class="descname">info</tt><big>(</big><em>message</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#LoggerClient.LoggerClient.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log a message at INFO level</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="LoggerClient.LoggerClient.logMessage">
+<tt class="descname">logMessage</tt><big>(</big><em>level_spec</em>, <em>message</em>, <em>send_email=None</em><big>)</big><a class="headerlink" href="#LoggerClient.LoggerClient.logMessage" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>log a messages at a given level (level_spec can be e.g. either </dt>
+<dd>logging.INFO or string e.g. &#8220;INFO&#8221;).</dd>
+</dl>
+<p>Also decides whether to send email, but can pass optional arg to 
+force this as yes/no.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="LoggerClient.LoggerClient.lookupLevel">
+<tt class="descname">lookupLevel</tt><big>(</big><em>level_spec</em><big>)</big><a class="headerlink" href="#LoggerClient.LoggerClient.lookupLevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn &#8216;INFO&#8217; into logging.INFO etc</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="LoggerClient.LoggerClient.pushMessage">
+<tt class="descname">pushMessage</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#LoggerClient.LoggerClient.pushMessage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LoggerClient.LoggerClient.sendEmails">
+<tt class="descname">sendEmails</tt><big>(</big><em>signum</em>, <em>frame</em><big>)</big><a class="headerlink" href="#LoggerClient.LoggerClient.sendEmails" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LoggerClient.LoggerClient.warn">
+<tt class="descname">warn</tt><big>(</big><em>message</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#LoggerClient.LoggerClient.warn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log a message at WARN level</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="LoggerClient.LoggerClient.whetherToSendEmail">
+<tt class="descname">whetherToSendEmail</tt><big>(</big><em>level</em>, <em>send_email</em><big>)</big><a class="headerlink" href="#LoggerClient.LoggerClient.whetherToSendEmail" title="Permalink to this definition">¶</a></dt>
+<dd><p>send_email can be: None &#8211; (decide based on message level and threshold),
+True/False &#8211; respond unconditionally</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/modules/LoggerClient.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright See STFC Licernce..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+AlertEmailer Module
+===================
+
+.. automodule:: AlertEmailer
+    :members:
+    :undoc-members:
+    :show-inheritance:

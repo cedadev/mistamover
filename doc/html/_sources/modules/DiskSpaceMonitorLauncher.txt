@@ -1,0 +1,7 @@
+DiskSpaceMonitorLauncher Module
+===============================
+
+.. automodule:: DiskSpaceMonitorLauncher
+    :members:
+    :undoc-members:
+    :show-inheritance:

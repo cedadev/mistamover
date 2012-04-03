@@ -1,0 +1,245 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>FileUtils Module &mdash; MiStaMover 0.1.0alpha documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MiStaMover 0.1.0alpha documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-FileUtils">
+<span id="fileutils-module"></span><h1>FileUtils Module<a class="headerlink" href="#module-FileUtils" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="FileUtils.FileUtils">
+<em class="property">class </em><tt class="descclassname">FileUtils.</tt><tt class="descname">FileUtils</tt><a class="headerlink" href="#FileUtils.FileUtils" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Class acting as a container for a selection of useful file utilities.</p>
+<dl class="method">
+<dt id="FileUtils.FileUtils.calcChecksum">
+<tt class="descname">calcChecksum</tt><big>(</big><em>file_path</em><big>)</big><a class="headerlink" href="#FileUtils.FileUtils.calcChecksum" title="Permalink to this definition">¶</a></dt>
+<dd><p>NOTE: THIS MIGHT NOT BE BEST METHOD FOR CALCULATING MD5 checksum!!!!</p>
+<p>comment from Alan - tested it and it agrees with md5sum command - haven&#8217;t tested performance</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FileUtils.FileUtils.deleteDir">
+<tt class="descname">deleteDir</tt><big>(</big><em>dir_path</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#FileUtils.FileUtils.deleteDir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a directory recursively (akin to rm -fr)</p>
+<p>Optional args (in particular stop_on_first_error) can be
+passed to recurseDir()</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="FileUtils.FileUtils.deleteEmptyDir">
+<tt class="descname">deleteEmptyDir</tt><em class="property"> = &lt;Response.Wrapper object at 0x1c2d250&gt;</em><a class="headerlink" href="#FileUtils.FileUtils.deleteEmptyDir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FileUtils.FileUtils.deleteFile">
+<tt class="descname">deleteFile</tt><em class="property"> = &lt;Response.Wrapper object at 0x1c2d210&gt;</em><a class="headerlink" href="#FileUtils.FileUtils.deleteFile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FileUtils.FileUtils.ensureDirExists">
+<tt class="descname">ensureDirExists</tt><big>(</big><em>dir_path</em>, <em>ensure_read_write=True</em><big>)</big><a class="headerlink" href="#FileUtils.FileUtils.ensureDirExists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure a directory exists.  By default it also checks that it is
+writable.  Creates parent directories as necessary.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FileUtils.FileUtils.ensureReadWrite">
+<tt class="descname">ensureReadWrite</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#FileUtils.FileUtils.ensureReadWrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>ensure we have both read and write access to a given path
+(which should already exist)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FileUtils.FileUtils.getCtimeOrNone">
+<tt class="descname">getCtimeOrNone</tt><big>(</big><em>file_path</em><big>)</big><a class="headerlink" href="#FileUtils.FileUtils.getCtimeOrNone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get ctime, or if an error then return None</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FileUtils.FileUtils.getDirSize">
+<tt class="descname">getDirSize</tt><big>(</big><em>dir_path</em><big>)</big><a class="headerlink" href="#FileUtils.FileUtils.getDirSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>recursively add sizes of regular files contained under directory 
+(in bytes)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FileUtils.FileUtils.getDiskSpace">
+<tt class="descname">getDiskSpace</tt><big>(</big><em>path</em>, <em>getNonRoot=False</em><big>)</big><a class="headerlink" href="#FileUtils.FileUtils.getDiskSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get total and free disk space for a given path as a two-element
+tuple (total, free) in KB.</p>
+<p>If optional argument getNonRoot is set, and a proportion of the disk
+is reserved for root, then return only the free space available for
+non-root users.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FileUtils.FileUtils.getFileAge">
+<tt class="descname">getFileAge</tt><big>(</big><em>file_path</em><big>)</big><a class="headerlink" href="#FileUtils.FileUtils.getFileAge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get difference in seconds between current time and file mtime</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FileUtils.FileUtils.getLastUpdatedTime">
+<tt class="descname">getLastUpdatedTime</tt><big>(</big><em>file_path</em><big>)</big><a class="headerlink" href="#FileUtils.FileUtils.getLastUpdatedTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>get file mtime</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FileUtils.FileUtils.getMountPointForPath">
+<tt class="descname">getMountPointForPath</tt><big>(</big><em>dirpath</em><big>)</big><a class="headerlink" href="#FileUtils.FileUtils.getMountPointForPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the mount point (string) on which a path resides, or if it does not
+exist then the path name of the lowest-level parent directory which
+does exist (i.e. the filesystem on which it will end up on once
+directories are created)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FileUtils.FileUtils.getSize">
+<tt class="descname">getSize</tt><big>(</big><em>file_path</em><big>)</big><a class="headerlink" href="#FileUtils.FileUtils.getSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>get file size in bytes</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FileUtils.FileUtils.isFileNewerThan">
+<tt class="descname">isFileNewerThan</tt><big>(</big><em>file_path</em>, <em>unix_time</em><big>)</big><a class="headerlink" href="#FileUtils.FileUtils.isFileNewerThan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if file has been updated since unix_time or False.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FileUtils.FileUtils.listDir">
+<tt class="descname">listDir</tt><big>(</big><em>dir_path</em>, <em>include_dotfiles=False</em>, <em>fullPaths=False</em>, <em>emptyListOnException=False</em>, <em>listOldestFirst=True</em><big>)</big><a class="headerlink" href="#FileUtils.FileUtils.listDir" title="Permalink to this definition">¶</a></dt>
+<dd><p>List a directory.</p>
+<p>Default is to exclude dotfiles, and to return only relative pathnames.
+Override with optional args as required.</p>
+<p>if emptyListOnException set, returns [] if can&#8217;t list the directory</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FileUtils.FileUtils.notDotFile">
+<tt class="descname">notDotFile</tt><big>(</big><em>fname</em><big>)</big><a class="headerlink" href="#FileUtils.FileUtils.notDotFile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FileUtils.FileUtils.recurseDir">
+<tt class="descname">recurseDir</tt><big>(</big><em>dir_path</em>, <em>file_action</em>, <em>dir_action</em>, <em>regular_files_only=False</em>, <em>stop_on_first_error=True</em><big>)</big><a class="headerlink" href="#FileUtils.FileUtils.recurseDir" title="Permalink to this definition">¶</a></dt>
+<dd><p>recurse a directory doing actions
+file_action on each file, and dir_action on each directory
+these actions must return a Response object</p>
+<p>dir_path is a string (starting path)</p>
+<dl class="docutils">
+<dt>file_action is a callable which takes a path argument</dt>
+<dd><p class="first">(called for either all non-directory items or just 
+reguar files, depending on optional arg regular_files_only)</p>
+<blockquote class="last">
+<div><ul class="simple">
+<li>or None if none required</li>
+</ul>
+</div></blockquote>
+</dd>
+<dt>dir_action is a callable which takes a path argument</dt>
+<dd>(called for directories) - or None if none required - 
+NB this is just what to do with the directory entries 
+themselves - the recursion is already provided</dd>
+</dl>
+<p>optional arg stop_on_first_error should be self-explanatory</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FileUtils.FileUtils.zipDir">
+<tt class="descname">zipDir</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#FileUtils.FileUtils.zipDir" title="Permalink to this definition">¶</a></dt>
+<dd><p>As _zipDir, but returns a Response object</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/modules/FileUtils.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright See STFC Licernce..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

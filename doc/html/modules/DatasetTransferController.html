@@ -1,0 +1,160 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DatasetTransferController Module &mdash; MiStaMover 0.1.0alpha documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MiStaMover 0.1.0alpha documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-DatasetTransferController">
+<span id="datasettransfercontroller-module"></span><h1>DatasetTransferController Module<a class="headerlink" href="#module-DatasetTransferController" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="DatasetTransferController.DatasetTransferController">
+<em class="property">class </em><tt class="descclassname">DatasetTransferController.</tt><tt class="descname">DatasetTransferController</tt><big>(</big><em>dataset_config</em>, <em>debug_on=False</em><big>)</big><a class="headerlink" href="#DatasetTransferController.DatasetTransferController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="AbstractDatasetController.html#AbstractDatasetController.AbstractDatasetController" title="AbstractDatasetController.AbstractDatasetController"><tt class="xref py py-class docutils literal"><span class="pre">AbstractDatasetController.AbstractDatasetController</span></tt></a></p>
+<p>A sub-process controller to manage a data_stream.</p>
+<p>The dataset transfer controller will monitor the data_stream directory
+for files (or directories) appearing.  With each that it sees, it
+will use the transferToRemoteHost method from a TransferUnitController
+object to transfer it to the remote host.</p>
+<p>Note that the TransferUnitController stuff runs in <em>this</em> same process.
+It is not a separate process in the way that some of the other
+&#8220;Controllers&#8221; in stager are.  This means that for each file to be 
+transferred, it waits for completion before attempting the next one.
+This is desirable.  There is no attempt to rescan the directory before
+it has finished transferring (or attempting to transfer) the existing files.</p>
+<p>Note also that a key assumption is that any files created by the transfer
+unit controller for chatter with a remote arrival monitor will be 
+dot-files, and as such are excluded from the scan.  Also explicitly 
+excluded is the quarantine directory (which may otherwise appear under
+the data_stream directory).</p>
+<dl class="method">
+<dt id="DatasetTransferController.DatasetTransferController.doIgnore">
+<tt class="descname">doIgnore</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#DatasetTransferController.DatasetTransferController.doIgnore" title="Permalink to this definition">¶</a></dt>
+<dd><p>items to ignore in data_stream directory</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DatasetTransferController.DatasetTransferController.doSetup">
+<tt class="descname">doSetup</tt><big>(</big><big>)</big><a class="headerlink" href="#DatasetTransferController.DatasetTransferController.doSetup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="DatasetTransferController.DatasetTransferController.long_name">
+<tt class="descname">long_name</tt><em class="property"> = 'dataset transfer controller'</em><a class="headerlink" href="#DatasetTransferController.DatasetTransferController.long_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DatasetTransferController.DatasetTransferController.processTransfers">
+<tt class="descname">processTransfers</tt><big>(</big><big>)</big><a class="headerlink" href="#DatasetTransferController.DatasetTransferController.processTransfers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs forever until status changes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DatasetTransferController.DatasetTransferController.setVarsFromConfig">
+<tt class="descname">setVarsFromConfig</tt><big>(</big><big>)</big><a class="headerlink" href="#DatasetTransferController.DatasetTransferController.setVarsFromConfig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="DatasetTransferController.DatasetTransferController.short_name">
+<tt class="descname">short_name</tt><em class="property"> = 'dtc'</em><a class="headerlink" href="#DatasetTransferController.DatasetTransferController.short_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DatasetTransferController.DatasetTransferController.tidyDatasetDir">
+<tt class="descname">tidyDatasetDir</tt><big>(</big><big>)</big><a class="headerlink" href="#DatasetTransferController.DatasetTransferController.tidyDatasetDir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called on re-start.
+Remove any old control files lying around in the data_stream directory.
+NB it doesn&#8217;t try to remove any other dotfiles (FIXME: should it?)</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/modules/DatasetTransferController.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright See STFC Licernce..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

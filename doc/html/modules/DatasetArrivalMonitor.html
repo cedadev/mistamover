@@ -1,0 +1,208 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DatasetArrivalMonitor Module &mdash; MiStaMover 0.1.0alpha documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MiStaMover 0.1.0alpha documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-DatasetArrivalMonitor">
+<span id="datasetarrivalmonitor-module"></span><h1>DatasetArrivalMonitor Module<a class="headerlink" href="#module-DatasetArrivalMonitor" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="DatasetArrivalMonitor.DatasetArrivalMonitor">
+<em class="property">class </em><tt class="descclassname">DatasetArrivalMonitor.</tt><tt class="descname">DatasetArrivalMonitor</tt><big>(</big><em>dataset_config</em>, <em>debug_on=False</em><big>)</big><a class="headerlink" href="#DatasetArrivalMonitor.DatasetArrivalMonitor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="AbstractDatasetController.html#AbstractDatasetController.AbstractDatasetController" title="AbstractDatasetController.AbstractDatasetController"><tt class="xref py py-class docutils literal"><span class="pre">AbstractDatasetController.AbstractDatasetController</span></tt></a></p>
+<p>Sub-process that monitors arrivals,
+runs checksums, generates receipt (checksum) files,
+delivers good files to data_stream dir (see next para),
+and tests for &#8220;thank you&#8221; files (acknowledgement of
+receipt files) in which case it deletes the receipt
+files and the &#8220;thank you&#8221; files themselves.</p>
+<p>This is set up to look in an &#8220;incoming&#8221; directory, and when a
+data file has a good checksum then deliver it to the data_stream
+directory for the DatasetTransferController.  This means that the 
+DatasetTransferController will just look for files appearing in 
+the data_stream directory and can assume their integrity - it knows
+nothing about the arrival monitor - only the top-level 
+StagerController knows that it launched an arrival monitor.</p>
+<p>Note also that it does not look at any data files until 
+these are referred to by a control file.  So partially arrived
+data files are not a problem.  BUT it is the sender&#8217;s 
+responsibility to send the control file AFTER the data file.</p>
+<dl class="method">
+<dt id="DatasetArrivalMonitor.DatasetArrivalMonitor.checkFile">
+<tt class="descname">checkFile</tt><big>(</big><em>file_path</em>, <em>correct_size</em>, <em>correct_cksum</em><big>)</big><a class="headerlink" href="#DatasetArrivalMonitor.DatasetArrivalMonitor.checkFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check a file and return data to write to the receipt file</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DatasetArrivalMonitor.DatasetArrivalMonitor.createReceiptFile">
+<tt class="descname">createReceiptFile</tt><big>(</big><em>rcpt_file_name</em>, <em>data_file_name</em>, <em>rcpt_data</em><big>)</big><a class="headerlink" href="#DatasetArrivalMonitor.DatasetArrivalMonitor.createReceiptFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>create a receipt file in the incoming directory
+rcpt_file_name is the basename for the file to create
+data_file_name is the basename for the data file
+rcpt_data is a list of [status, size, checksum] (or shorter list if any</p>
+<blockquote>
+<div>of these are not supplied)</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="DatasetArrivalMonitor.DatasetArrivalMonitor.getPathInIncoming">
+<tt class="descname">getPathInIncoming</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#DatasetArrivalMonitor.DatasetArrivalMonitor.getPathInIncoming" title="Permalink to this definition">¶</a></dt>
+<dd><p>given basename return full path name in incoming</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DatasetArrivalMonitor.DatasetArrivalMonitor.isControlFile">
+<tt class="descname">isControlFile</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#DatasetArrivalMonitor.DatasetArrivalMonitor.isControlFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if file is a control file (returns boolean)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DatasetArrivalMonitor.DatasetArrivalMonitor.isThankyouFile">
+<tt class="descname">isThankyouFile</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#DatasetArrivalMonitor.DatasetArrivalMonitor.isThankyouFile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DatasetArrivalMonitor.DatasetArrivalMonitor.listIncomingDir">
+<tt class="descname">listIncomingDir</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#DatasetArrivalMonitor.DatasetArrivalMonitor.listIncomingDir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns list of files (basenames) in incoming dir.
+Defaults to excluding dotfiles, but called with include_dotfiles
+when we want to see the control files.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="DatasetArrivalMonitor.DatasetArrivalMonitor.long_name">
+<tt class="descname">long_name</tt><em class="property"> = 'dataset arrival monitor'</em><a class="headerlink" href="#DatasetArrivalMonitor.DatasetArrivalMonitor.long_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="DatasetArrivalMonitor.DatasetArrivalMonitor.max_age_for_bad_ctl_file">
+<tt class="descname">max_age_for_bad_ctl_file</tt><em class="property"> = 10</em><a class="headerlink" href="#DatasetArrivalMonitor.DatasetArrivalMonitor.max_age_for_bad_ctl_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DatasetArrivalMonitor.DatasetArrivalMonitor.monitor">
+<tt class="descname">monitor</tt><big>(</big><big>)</big><a class="headerlink" href="#DatasetArrivalMonitor.DatasetArrivalMonitor.monitor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ongoing monitoring of process unless told to stop.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DatasetArrivalMonitor.DatasetArrivalMonitor.respondToControlFile">
+<tt class="descname">respondToControlFile</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#DatasetArrivalMonitor.DatasetArrivalMonitor.respondToControlFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Respond to a control file, generating receipt file with appropriate
+response, and delivering the data file to the data_stream directory if
+appropriate.</p>
+<p>Argument is the basename of the control file.</p>
+<p>Returns the data file name if it was all okay, otherwise None</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DatasetArrivalMonitor.DatasetArrivalMonitor.respondToThankyouFile">
+<tt class="descname">respondToThankyouFile</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#DatasetArrivalMonitor.DatasetArrivalMonitor.respondToThankyouFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>deal with a thank you file: delete the receipt file and the
+thank you file itself</p>
+<p>(input filename is the basename)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DatasetArrivalMonitor.DatasetArrivalMonitor.setVarsFromConfig">
+<tt class="descname">setVarsFromConfig</tt><big>(</big><big>)</big><a class="headerlink" href="#DatasetArrivalMonitor.DatasetArrivalMonitor.setVarsFromConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>see also method with this name in base class (which is called)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="DatasetArrivalMonitor.DatasetArrivalMonitor.short_name">
+<tt class="descname">short_name</tt><em class="property"> = 'arrmon'</em><a class="headerlink" href="#DatasetArrivalMonitor.DatasetArrivalMonitor.short_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/modules/DatasetArrivalMonitor.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright See STFC Licernce..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+Daemon Module
+=============
+
+.. automodule:: Daemon
+    :members:
+    :undoc-members:
+    :show-inheritance:

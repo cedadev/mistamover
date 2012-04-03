@@ -1,0 +1,33 @@
+emailtest.py
+	uses email_global.ini
+	starts a log server, creates an info message and emails a critical message
+	
+ftptest.py
+	uses ftp_global.ini dataset_ftp.ini
+	checks that config is valid, creates stopfile, creates push command, creates receipt command
+	creates thank you file
+
+globustest.py
+	uses rsync_global.ini dataset_rsync.ini
+	creates a transfer base, creates a command to test grid ftp credentials
+	
+rsynctest.py
+	uses rsync_global.ini dataset_rsync.ini
+	checks config, sets stop file command, sets up push command
+
+rsynctransfertest.py
+	uses rsync_global2.ini dataset_rsync2.ini
+	sets up RsyncTransfer instance, transfers a file to another directory
+
+stagercontrollertest.py
+	uses rsync_global_ini dataset_rsync.ini
+	sets up a stagercontroller instance and dumps the config
+
+transferbasetest.py
+	uses rsync_global.ini dataset_rsync.ini
+	sets up a transferbase instance, runs a command ls -l via the transferdata method
+
+transferbasetest2.py
+	sets up a transferbase - uses a mock object for logging
+	runs an rsync command over the transferdata method
+

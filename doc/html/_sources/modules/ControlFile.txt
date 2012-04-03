@@ -1,0 +1,7 @@
+ControlFile Module
+==================
+
+.. automodule:: ControlFile
+    :members:
+    :undoc-members:
+    :show-inheritance:

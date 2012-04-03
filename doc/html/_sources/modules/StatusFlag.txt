@@ -1,0 +1,7 @@
+StatusFlag Module
+=================
+
+.. automodule:: StatusFlag
+    :members:
+    :undoc-members:
+    :show-inheritance:

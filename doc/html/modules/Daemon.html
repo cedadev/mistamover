@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Daemon Module &mdash; MiStaMover 0.1.0alpha documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MiStaMover 0.1.0alpha documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-Daemon">
+<span id="daemon-module"></span><h1>Daemon Module<a class="headerlink" href="#module-Daemon" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="daemon-py-daemon-module">
+<h2>Daemon.py - daemon module<a class="headerlink" href="#daemon-py-daemon-module" title="Permalink to this headline">¶</a></h2>
+<p>Module holds a couple of classes related to launching code in a daemon process.</p>
+<p>The key usage concept is that the parent process should instantiate 
+<tt class="docutils literal"><span class="pre">DaemonCtl</span></tt>, passing the method for the daemon to run, and the arguments
+to pass to that method.  This will launch a daemon which runs as 
+specified, and the DaemonCtl object that is instantated in the
+parent process then has methods for communicating with the daemon and
+testing return values.</p>
+<p>The <tt class="docutils literal"><span class="pre">Daemon</span></tt> class is instantiated in the daemon. However, the user-provided
+method should probably not refer to this directly, and indeed the method does
+not need to be written with any awareness that it is running as a daemon.
+However, a module-level function called weWereSignalled() is provided so that
+the daemon can test whether signals were received.</p>
+<dl class="class">
+<dt id="Daemon.Daemon">
+<em class="property">class </em><tt class="descclassname">Daemon.</tt><tt class="descname">Daemon</tt><big>(</big><em>method, args=[], kwargs={}, logfile=None, log_append=False, signals=['USR1', 'USR2']</em><big>)</big><a class="headerlink" href="#Daemon.Daemon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Daemon.DaemonBase" title="Daemon.DaemonBase"><tt class="xref py py-class docutils literal"><span class="pre">Daemon.DaemonBase</span></tt></a></p>
+<dl class="class">
+<dt id="Daemon.Daemon.Daemon">
+<em class="property">class </em><tt class="descname">Daemon</tt><big>(</big><em>DaemonBase</em><big>)</big><a class="headerlink" href="#Daemon.Daemon.Daemon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Daemon running code.  To instantiate in the child (daemon) process itself.</p>
+<p>Note this is done automagically - the user code does not have to care 
+about this.</p>
+<dl class="method">
+<dt id="Daemon.Daemon.wasSignalled">
+<tt class="descclassname">Daemon.</tt><tt class="descname">wasSignalled</tt><big>(</big><em>sig</em><big>)</big><a class="headerlink" href="#Daemon.Daemon.wasSignalled" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt>
+<tt class="descname">wasSignalled</tt><big>(</big><em>self</em>, <em>sig</em><big>)</big></dt>
+<dd><p>sig: signal value or string</p>
+</dd></dl>
+
+<p>Tests if we have received a signal from the parent and returns a boolean.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Daemon.DaemonBase">
+<em class="property">class </em><tt class="descclassname">Daemon.</tt><tt class="descname">DaemonBase</tt><a class="headerlink" href="#Daemon.DaemonBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="class">
+<dt id="Daemon.DaemonBase.DaemonBase">
+<em class="property">class </em><tt class="descname">DaemonBase</tt><a class="headerlink" href="#Daemon.DaemonBase.DaemonBase" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Base class for deamon classes. Has one method to get a signal.</p>
+<dl class="method">
+<dt id="Daemon.DaemonBase.getSignal">
+<tt class="descclassname">DaemonBase.</tt><tt class="descname">getSignal</tt><big>(</big><em>sig</em><big>)</big><a class="headerlink" href="#Daemon.DaemonBase.getSignal" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Daemon.DaemonBase.sig">
+<tt class="descname">sig</tt><big>(</big><big>)</big><a class="headerlink" href="#Daemon.DaemonBase.sig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Return a signal number from what may be a name or number.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Daemon.DaemonCtl">
+<em class="property">class </em><tt class="descclassname">Daemon.</tt><tt class="descname">DaemonCtl</tt><big>(</big><em>method=None</em>, <em>doubleFork=False</em>, <em>description=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#Daemon.DaemonCtl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Daemon.DaemonBase" title="Daemon.DaemonBase"><tt class="xref py py-class docutils literal"><span class="pre">Daemon.DaemonBase</span></tt></a></p>
+<dl class="class">
+<dt id="Daemon.DaemonCtl.DaemonCtl">
+<em class="property">class </em><tt class="descname">DaemonCtl</tt><big>(</big><em>DaemonBase</em><big>)</big><a class="headerlink" href="#Daemon.DaemonCtl.DaemonCtl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Daemon control code.  To instantiate in the parent process.</p>
+<dl class="method">
+<dt id="Daemon.DaemonCtl.fork">
+<tt class="descclassname">DaemonCtl.</tt><tt class="descname">fork</tt><big>(</big><big>)</big><a class="headerlink" href="#Daemon.DaemonCtl.fork" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt>
+<tt class="descname">fork</tt><big>(</big><em>self</em><big>)</big></dt>
+<dd></dd></dl>
+
+<p>Wrapper around <cite>self.__fork()</cite></p>
+<p>Returns the forked process id.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Daemon.DaemonCtl.getStatus">
+<tt class="descclassname">DaemonCtl.</tt><tt class="descname">getStatus</tt><big>(</big><em>wait=False</em><big>)</big><a class="headerlink" href="#Daemon.DaemonCtl.getStatus" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt>
+<tt class="descname">getStatus</tt><big>(</big><em>self</em>, <em>wait=False</em><big>)</big></dt>
+<dd><p>wait: Boolean, if <tt class="docutils literal"><span class="pre">wait</span></tt> is set then wait until it finishes.</p>
+</dd></dl>
+
+<p>Returns the return status of the daemon.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Daemon.DaemonCtl.isRunning">
+<tt class="descclassname">DaemonCtl.</tt><tt class="descname">isRunning</tt><big>(</big><big>)</big><a class="headerlink" href="#Daemon.DaemonCtl.isRunning" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt>
+<tt class="descname">isRunning</tt><big>(</big><em>self</em><big>)</big></dt>
+<dd></dd></dl>
+
+<p>Check if the daemon is running</p>
+<p>Returns a boolean of whether the process is running or not.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Daemon.DaemonCtl.launch">
+<tt class="descclassname">DaemonCtl.</tt><tt class="descname">launch</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#Daemon.DaemonCtl.launch" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt>
+<tt class="descname">launch</tt><big>(</big><em>self</em>, <em>*args</em>, <em>**kwargs</em><big>)</big></dt>
+<dd></dd></dl>
+
+<p>Launch a daemon process.
+The arguments in <tt class="docutils literal"><span class="pre">args</span></tt> and <tt class="docutils literal"><span class="pre">kwargs</span></tt> are passed to the Daemon instance.</p>
+<p>Returns the process id.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Daemon.DaemonCtl.sendSignal">
+<tt class="descclassname">DaemonCtl.</tt><tt class="descname">sendSignal</tt><big>(</big><em>sig=None</em><big>)</big><a class="headerlink" href="#Daemon.DaemonCtl.sendSignal" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt>
+<tt class="descname">sendSignal</tt><big>(</big><em>self</em>, <em>sig = None</em><big>)</big></dt>
+<dd><p>sig: is the signal number or string.</p>
+</dd></dl>
+
+<p>Sends a signal to the daemon process</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Daemon.DaemonCtl.shutdown">
+<tt class="descclassname">DaemonCtl.</tt><tt class="descname">shutdown</tt><big>(</big><big>)</big><a class="headerlink" href="#Daemon.DaemonCtl.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt>
+<tt class="descname">shutdown</tt><big>(</big><em>self</em><big>)</big></dt>
+<dd></dd></dl>
+
+<p>Sends term, then kill signal.</p>
+<p>Returns exit value.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Daemon.SimpleContainer">
+<em class="property">class </em><tt class="descclassname">Daemon.</tt><tt class="descname">SimpleContainer</tt><a class="headerlink" href="#Daemon.SimpleContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Simple mutable object for storing a single item.</p>
+<dl class="method">
+<dt id="Daemon.SimpleContainer.get">
+<tt class="descname">get</tt><big>(</big><big>)</big><a class="headerlink" href="#Daemon.SimpleContainer.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Daemon.SimpleContainer.isSet">
+<tt class="descname">isSet</tt><big>(</big><big>)</big><a class="headerlink" href="#Daemon.SimpleContainer.isSet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Daemon.SimpleContainer.reset">
+<tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#Daemon.SimpleContainer.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Daemon.SimpleContainer.set">
+<tt class="descname">set</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#Daemon.SimpleContainer.set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="Daemon.weWereSignalled">
+<tt class="descclassname">Daemon.</tt><tt class="descname">weWereSignalled</tt><big>(</big><em>sig</em>, <em>requireDaemon=False</em><big>)</big><a class="headerlink" href="#Daemon.weWereSignalled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Code that can be called by the daemon to test whether a given signal
+was received (which needs to have been a signal specified at the time
+when the daemon was launched - see argument &#8220;signals&#8221; in Daemon.__init__
+that are passed via DaemonCtl.launch). Note that &#8220;sig&#8221; may be a name
+(e.g. USR1) or a number.</p>
+<p>If the process wasn&#8217;t actually launched as a daemon by this module, 
+then the action depends on whether optional argument requireDaemon is 
+set (raise an exception) or not (just return False).</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Daemon Module</a><ul>
+<li><a class="reference internal" href="#daemon-py-daemon-module">Daemon.py - daemon module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/modules/Daemon.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright See STFC Licernce..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

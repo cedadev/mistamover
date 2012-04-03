@@ -1,0 +1,7 @@
+ReceiptFile Module
+==================
+
+.. automodule:: ReceiptFile
+    :members:
+    :undoc-members:
+    :show-inheritance:

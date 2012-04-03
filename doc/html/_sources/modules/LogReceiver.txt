@@ -1,0 +1,7 @@
+LogReceiver Module
+==================
+
+.. automodule:: LogReceiver
+    :members:
+    :undoc-members:
+    :show-inheritance:

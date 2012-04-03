@@ -1,0 +1,169 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Response Module &mdash; MiStaMover 0.1.0alpha documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MiStaMover 0.1.0alpha documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-Response">
+<span id="response-module"></span><h1>Response Module<a class="headerlink" href="#module-Response" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="Response.Response">
+<em class="property">class </em><tt class="descclassname">Response.</tt><tt class="descname">Response</tt><big>(</big><em>code</em>, <em>msg</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#Response.Response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>A response object containing a code (which must be a ResponseCode object)
+and a message, and optionally some additional data.</p>
+<dl class="docutils">
+<dt>Has a __nonzero__() method that is based on success/failure status:</dt>
+<dd><dl class="first last docutils">
+<dt>if response:</dt>
+<dd>... stuff to do if it succeeded ...</dd>
+</dl>
+</dd>
+</dl>
+<p>also you can add responses, and you will get a useful combination of
+two responses - see doc string for __add__()</p>
+<dl class="method">
+<dt id="Response.Response.assert_">
+<tt class="descname">assert_</tt><big>(</big><big>)</big><a class="headerlink" href="#Response.Response.assert_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise an exception if the response was a failure code</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Response.Response.dup">
+<tt class="descname">dup</tt><big>(</big><big>)</big><a class="headerlink" href="#Response.Response.dup" title="Permalink to this definition">¶</a></dt>
+<dd><p>can be changed to return self (for performance) if this object is not modifiable???</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Response.ResponseCode">
+<em class="property">class </em><tt class="descclassname">Response.</tt><tt class="descname">ResponseCode</tt><big>(</big><em>succeed</em><big>)</big><a class="headerlink" href="#Response.ResponseCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>We only allow Response codes to be instances of ResponseCode</p>
+<dl class="docutils">
+<dt>The calling code must set them e.g. with</dt>
+<dd>status = Response.failure</dd>
+</dl>
+<p>and can expect at a minimum that status.__nonzero__() will return
+True for success or False for failure.  The implementation 
+can be changed later if a range of failure codes are added</p>
+<p>Codes are also callable - they return Response objects with that code
+and the message (or with &#8216;Success&#8217; or &#8216;Failure&#8217; if no message given)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="Response.Wrapper">
+<em class="property">class </em><tt class="descclassname">Response.</tt><tt class="descname">Wrapper</tt><big>(</big><em>method</em><big>)</big><a class="headerlink" href="#Response.Wrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>This turns a generic callable which may raise an exception into
+a callable which will return a Response object depending whether
+an exception was raised or not.</p>
+<p>If it succeeds, then the message is the return value (unless None,
+in which case the default message).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Response.successIf">
+<tt class="descclassname">Response.</tt><tt class="descname">successIf</tt><big>(</big><em>condition</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#Response.successIf" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a success or failure Response object depending on condition</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Response.wrap">
+<tt class="descclassname">Response.</tt><tt class="descname">wrap</tt><big>(</big><em>method</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#Response.wrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrap a method, and return a response code.  The actual return value
+of the method is returned in the optional extra data; the main 
+success/failure code depends on whether there was an exception.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/modules/Response.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright See STFC Licernce..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

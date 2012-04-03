@@ -1,0 +1,7 @@
+DiskSpaceMonitor Module
+=======================
+
+.. automodule:: DiskSpaceMonitor
+    :members:
+    :undoc-members:
+    :show-inheritance:

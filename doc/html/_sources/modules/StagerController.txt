@@ -1,0 +1,7 @@
+StagerController Module
+=======================
+
+.. automodule:: StagerController
+    :members:
+    :undoc-members:
+    :show-inheritance:

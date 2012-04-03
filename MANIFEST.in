@@ -1,0 +1,9 @@
+include *.*
+recursive-include bin *.py
+recursive-include conf *.* 
+recursive-include data *.* 
+recursive-include doc *.*
+recursive-include lib *.py
+recursive-include log *.*
+recursive-include test *.py
+recursive-include test2 *.*

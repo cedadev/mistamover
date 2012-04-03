@@ -1,0 +1,39 @@
+TOFIX:
+
+usb mini-b 5-pin
+ * I use the term "Incoming directory" in lots of places - is it the wrong term?
+ * Need a picture explaining the relationship between the main controller and the sub-processes
+ * delete the bin/print_code_tree.py module
+ * delete PKG-INFO setup*stuff and test from tarball????!!?!?
+ * Move helper/*.py to bin/
+ * delete "helper"
+ * How much can we remove (as defaults) from the top-level directory?
+ * Should we get rid of "full_name", "short_name" and "name" - not necessary - where are they used?
+ * Remove [ssh] section of configs and just make an [rsync_ssh] section
+ * Change "dataset_list" to "data_stream_list" in `global.ini`
+
+
+The Stager Configuration files (configs.rst)
+
+    How Stager uses configuration files
+    Global Configuration
+    Dataset-Specific Configuration
+    Configuration Options explained
+        Go through all settings and explain what they do, how they are used, the type and any constraints 
+
+Advanced Features (features.rst)
+
+    How to suspend transfers for a dataset
+    Logging
+    Mirror or move?
+    Running with GridFTP
+    Running multiple data streams
+    Chaining Stager instances on different servers
+    Using the Arrivals Monitor function to ensure data arrives 
+    
+Terminology (terminology.rst)
+
+Trouble-shooting (trouble_shooting.rst)
+
+    De-bugging your config files
+    Analysing the log files 

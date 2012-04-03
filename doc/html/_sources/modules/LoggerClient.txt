@@ -1,0 +1,7 @@
+LoggerClient Module
+===================
+
+.. automodule:: LoggerClient
+    :members:
+    :undoc-members:
+    :show-inheritance:

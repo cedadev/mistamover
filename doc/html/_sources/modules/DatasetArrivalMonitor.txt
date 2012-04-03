@@ -1,0 +1,7 @@
+DatasetArrivalMonitor Module
+============================
+
+.. automodule:: DatasetArrivalMonitor
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,67 @@
+TransferModules Package
+=======================
+
+:mod:`TransferModules` Package
+------------------------------
+
+.. automodule:: TransferModules
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`FtpTransfer` Module
+-------------------------
+
+.. automodule:: TransferModules.FtpTransfer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`GridFTPTransfer` Module
+-----------------------------
+
+.. automodule:: TransferModules.GridFTPTransfer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`RsyncNativeTransfer` Module
+---------------------------------
+
+.. automodule:: TransferModules.RsyncNativeTransfer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`RsyncTransfer` Module
+---------------------------
+
+.. automodule:: TransferModules.RsyncTransfer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`TransferBase` Module
+--------------------------
+
+.. automodule:: TransferModules.TransferBase
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`TransferBaseController` Module
+------------------------------------
+
+.. automodule:: TransferModules.TransferBaseController
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`TransferUtils` Module
+---------------------------
+
+.. automodule:: TransferModules.TransferUtils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+

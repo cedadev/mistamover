@@ -1,0 +1,182 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Advanced Features &mdash; MiStaMover 0.1.0alpha documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.0alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="MiStaMover 0.1.0alpha documentation" href="index.html" />
+    <link rel="next" title="Trouble-shooting" href="trouble_shooting.html" />
+    <link rel="prev" title="Configuring MiStaMover" href="configs.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="trouble_shooting.html" title="Trouble-shooting"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="configs.html" title="Configuring MiStaMover"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="advanced-features">
+<span id="features"></span><h1>Advanced Features<a class="headerlink" href="#advanced-features" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="how-to-suspend-transfers-for-a-data-stream">
+<h2>How to suspend transfers for a data_stream<a class="headerlink" href="#how-to-suspend-transfers-for-a-data-stream" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">MiStaMover</span></tt> uses the notion of a <tt class="docutils literal"><span class="pre">.stop</span></tt> file to inform the the transfer handler to stop doing anything. This behaves as follows:</p>
+<ol class="arabic simple">
+<li>A file called <tt class="docutils literal"><span class="pre">.stop</span></tt> is placed (manually or otherwise) in the dataset transfer directory.</li>
+<li><tt class="docutils literal"><span class="pre">MiStaMover</span></tt> knows that it should not attempt to transfer any files until the <tt class="docutils literal"><span class="pre">.stop</span></tt> file has been removed.</li>
+<li>A remote deliverer can poll for this file to find out whether to send data.</li>
+<li>A remote deliverer can also send <tt class="docutils literal"><span class="pre">.stop</span></tt> file itself in order to instruct <tt class="docutils literal"><span class="pre">MiStaMover</span></tt> to stop sending files.</li>
+<li>A remote deliverer can also remove the <tt class="docutils literal"><span class="pre">.stop</span></tt> file itself to instruct <tt class="docutils literal"><span class="pre">MiStaMover</span></tt> to resume transfers.</li>
+</ol>
+<p>Note that the <tt class="docutils literal"><span class="pre">DiskSpaceMonitor</span></tt> class will create and delete <tt class="docutils literal"><span class="pre">.stop</span></tt> files in response to changes in the amount of disk space available. This only occurs when the disk is getting full, or very full. See the <a class="reference external" href="modules/DiskSpaceMonitor.html">DiskSpaceMonitor</a> documentation for more details.</p>
+</div>
+<div class="section" id="how-to-change-the-priority-of-a-data-stream">
+<h2>How to change the priority of a data_stream<a class="headerlink" href="#how-to-change-the-priority-of-a-data-stream" title="Permalink to this headline">¶</a></h2>
+<p>The global.ini file defines an option in the <tt class="docutils literal"><span class="pre">disk_space_monitor</span></tt> section called <tt class="docutils literal"><span class="pre">base_priority</span></tt>.</p>
+<p>This is option will cause any incoming data_streams to be monitored and stopped (as described above) if disk space gets too low</p>
+<p>Data_streams with priorities lower than the base_priority will be stopped (and potentially removed) before data_streams with higher priorities.</p>
+<p>Data_streams will only be removed if the option in the <tt class="docutils literal"><span class="pre">data_stream</span></tt> section of the data_stream config file called <tt class="docutils literal"><span class="pre">deletion_enabled</span></tt> is set to <tt class="docutils literal"><span class="pre">True</span></tt></p>
+</div>
+<div class="section" id="how-to-ensure-data-is-transfered-correctly-for-protocols-that-do-not-do-this-already">
+<h2>How to ensure data is transfered correctly (for protocols that do not do this already)<a class="headerlink" href="#how-to-ensure-data-is-transfered-correctly-for-protocols-that-do-not-do-this-already" title="Permalink to this headline">¶</a></h2>
+<p>MiStaMover uses the concept of an Arrivals Monitor that can be switched on via the config files on a per dataset basis</p>
+<blockquote>
+<div><ul class="simple">
+<li>By using an arrivals monitor, a file is pushed to a server along with a control file that defines the size and checksum of the file.</li>
+<li>The remote server is also running a MiStaMover instance (and is using Arrivals Monitor) so, recevies and data and once it receives the control file, checksums the data file and if the size and checksum of the received file is correct (as defined by the control file) then the remote stage instance places a receipt file in the directory.</li>
+<li>The initial &#8216;push&#8217; instance of mistamover pulls the receipt file from the remote server and pushs a thank you file to the remote server which ends the transaction/</li>
+<li>If for any reason the transfer failed, then the remote server places the appropriate rror code in the receipt file and the initial push mistamover instance re-pushes the data</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="logging">
+<span id="id1"></span><h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<p>MiStaMover is managed by a main process and a set of sub-processes, one per <a class="reference internal" href="terminology.html#data-stream"><em>Data Stream</em></a>. A separate logging process is started when you run MiStaMover that manages all the log files, as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The main MiStaMover log file (<tt class="docutils literal"><span class="pre">mistamover_ctl.log</span></tt>)</li>
+<li>A Data Stream Transfer Controller log file for each Data Stream (e.g.: <tt class="docutils literal"><span class="pre">dtc_proj1.log</span></tt>)</li>
+<li>A TransferModule log file for each Data Stream (e.g.: <tt class="docutils literal"><span class="pre">rsync_proj1.log</span></tt>)</li>
+<li>A Disk Space Manager log file (<tt class="docutils literal"><span class="pre">dsm_local.log</span></tt>)</li>
+</ul>
+</div></blockquote>
+<p>All files are logged to the directory specified in the <tt class="docutils literal"><span class="pre">logging:base_log_dir</span></tt> configuration setting.</p>
+</div>
+<div class="section" id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Advanced Features</a><ul>
+<li><a class="reference internal" href="#how-to-suspend-transfers-for-a-data-stream">How to suspend transfers for a data_stream</a></li>
+<li><a class="reference internal" href="#how-to-change-the-priority-of-a-data-stream">How to change the priority of a data_stream</a></li>
+<li><a class="reference internal" href="#how-to-ensure-data-is-transfered-correctly-for-protocols-that-do-not-do-this-already">How to ensure data is transfered correctly (for protocols that do not do this already)</a></li>
+<li><a class="reference internal" href="#logging">Logging</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="configs.html"
+                        title="previous chapter">Configuring MiStaMover</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="trouble_shooting.html"
+                        title="next chapter">Trouble-shooting</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/features.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="trouble_shooting.html" title="Trouble-shooting"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="configs.html" title="Configuring MiStaMover"
+             >previous</a> |</li>
+        <li><a href="index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright See STFC Licernce..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

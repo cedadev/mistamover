@@ -1,0 +1,161 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Running Modes &mdash; MiStaMover 0.1.0alpha documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.0alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="MiStaMover 0.1.0alpha documentation" href="index.html" />
+    <link rel="next" title="Configuring MiStaMover" href="configs.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="configs.html" title="Configuring MiStaMover"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="getting_started.html" title="Getting Started"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="running-modes">
+<span id="modes"></span><h1>Running Modes<a class="headerlink" href="#running-modes" title="Permalink to this headline">¶</a></h1>
+<p>As mentioned in the <a class="reference internal" href="intro.html#intro"><em>Introduction</em></a>, there are a number of modes in which MiStaMover can be run. This section describes them in more detail.</p>
+<p>The 4 main running modes are:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>One-off mirror</li>
+<li>One-off move</li>
+<li>Daemon mirror</li>
+<li>Daemon move</li>
+</ol>
+</div></blockquote>
+<div class="section" id="one-off-mirror-mode">
+<h2>One-off mirror mode<a class="headerlink" href="#one-off-mirror-mode" title="Permalink to this headline">¶</a></h2>
+<p>Running MiStaMover as a <em>one-off</em> process means that it will scan the incoming directory for each data stream specified only once. If it finds files or directories during that scan it will transfer those to the target host. Once it has completed this task for all data streams it will exit.</p>
+<p>The use of the <em>mirror</em> transfer mode instructs the tool to copy the entire contents of the incoming directory to the target host <em>without</em> deleting the contents in the incoming directory.</p>
+<p><strong>NOTE that the *mirror* transfer mode is only compatible with the `rsync_ssh` and `rsync_native` transfer protocols.</strong></p>
+<p>If sub-directories exist within the incoming directory then MiStaMover will either mirror these as they are (if the transfer protocol uses <em>rsync</em>) or zip up each directory and transfer the zip file.</p>
+</div>
+<div class="section" id="one-off-move-mode">
+<h2>One-off move mode<a class="headerlink" href="#one-off-move-mode" title="Permalink to this headline">¶</a></h2>
+<p>The <em>one-off</em> process can also be run in <em>move</em> transfer mode. In this case it acts the same as the one-off <em>mirror</em> mode but after each file is successfully trasnferred to the target host <strong>the copy on the local host will be deleted.</strong></p>
+<p><strong>WARNING: The default transfer mode is &#8220;move&#8221;. Do not set your incoming directory to a location in which you intend to keep data without setting the transfer mode to &#8220;mirror&#8221;!</strong></p>
+</div>
+<div class="section" id="daemon-mirror-mode">
+<h2>Daemon mirror mode<a class="headerlink" href="#daemon-mirror-mode" title="Permalink to this headline">¶</a></h2>
+<p>Running MiStaMover as a <em>daemon</em> process essentially runs as an eternal loop around the <em>one-off</em> process. Each time a set of files and/or directories have been transferred the incoming directory will be re-scanned and the process repeated. If nothing is found in the incoming directory then the process will pause for a while (as configured in the <tt class="docutils literal"><span class="pre">pause_time:TOFIX</span></tt> setting) and then re-scan.</p>
+<p>Running as a <em>daemon</em> process with <em>mirror</em> transfer mode will continue to mirror the contents of the incoming directory (for each data stream) to the target host so it can be left running if an ongoing mirror or backup strategy is required. Modifying the <tt class="docutils literal"><span class="pre">pause_time:TOFIX</span></tt> setting allows the pause time between re-scanning and mirroring to be modified.</p>
+</div>
+<div class="section" id="daemon-move-mode">
+<h2>Daemon move mode<a class="headerlink" href="#daemon-move-mode" title="Permalink to this headline">¶</a></h2>
+<p>Running as a <em>daemon</em> process in <em>move</em> transfer mode will continue to push data from the incoming directory of each data stream and delete the local copy once it has been successfully transferred. Each time a set of files and/or directories have been transferred the incoming directory will be re-scanned and the process repeated. In this way, MiStaMover can be configured to act as a <em>staging tool</em> that monitors a number of directories for new data and pushes it on to a range of target host machines as required.</p>
+<p><strong>WARNING: The default transfer mode is &#8220;move&#8221;. Do not set your incoming directory to a location in which you intend to keep data without setting the transfer mode to &#8220;mirror&#8221;!</strong></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Running Modes</a><ul>
+<li><a class="reference internal" href="#one-off-mirror-mode">One-off mirror mode</a></li>
+<li><a class="reference internal" href="#one-off-move-mode">One-off move mode</a></li>
+<li><a class="reference internal" href="#daemon-mirror-mode">Daemon mirror mode</a></li>
+<li><a class="reference internal" href="#daemon-move-mode">Daemon move mode</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="getting_started.html"
+                        title="previous chapter">Getting Started</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="configs.html"
+                        title="next chapter">Configuring MiStaMover</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/modes.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="configs.html" title="Configuring MiStaMover"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="getting_started.html" title="Getting Started"
+             >previous</a> |</li>
+        <li><a href="index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright See STFC Licernce..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+TestConfig Module
+=================
+
+.. automodule:: TestConfig
+    :members:
+    :undoc-members:
+    :show-inheritance:

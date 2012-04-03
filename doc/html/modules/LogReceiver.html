@@ -1,0 +1,149 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>LogReceiver Module &mdash; MiStaMover 0.1.0alpha documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MiStaMover 0.1.0alpha documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-LogReceiver">
+<span id="logreceiver-module"></span><h1>LogReceiver Module<a class="headerlink" href="#module-LogReceiver" title="Permalink to this headline">¶</a></h1>
+<p>This is adapted from the example from the python docs.</p>
+<p><a class="reference external" href="http://docs.python.org/library/logging.html">http://docs.python.org/library/logging.html</a></p>
+<dl class="class">
+<dt id="LogReceiver.LogRecordSocketReceiver">
+<em class="property">class </em><tt class="descclassname">LogReceiver.</tt><tt class="descname">LogRecordSocketReceiver</tt><big>(</big><em>logger</em>, <em>host='localhost'</em>, <em>port=9020</em><big>)</big><a class="headerlink" href="#LogReceiver.LogRecordSocketReceiver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">SocketServer.ThreadingTCPServer</span></tt></p>
+<p>simple TCP socket-based logging receiver suitable for testing.</p>
+<dl class="attribute">
+<dt id="LogReceiver.LogRecordSocketReceiver.allow_reuse_address">
+<tt class="descname">allow_reuse_address</tt><em class="property"> = 1</em><a class="headerlink" href="#LogReceiver.LogRecordSocketReceiver.allow_reuse_address" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LogReceiver.LogRecordSocketReceiver.serve_until_stopped">
+<tt class="descname">serve_until_stopped</tt><big>(</big><big>)</big><a class="headerlink" href="#LogReceiver.LogRecordSocketReceiver.serve_until_stopped" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="LogReceiver.LogRecordStreamHandler">
+<em class="property">class </em><tt class="descclassname">LogReceiver.</tt><tt class="descname">LogRecordStreamHandler</tt><big>(</big><em>logger</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#LogReceiver.LogRecordStreamHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">SocketServer.StreamRequestHandler</span></tt></p>
+<p>Handler for a streaming logging request.</p>
+<p>This passes the request to the specified logger.
+The __init__ has an extra arg compared to the example in the python docs,
+which is the logger to use.</p>
+<dl class="method">
+<dt id="LogReceiver.LogRecordStreamHandler.handle">
+<tt class="descname">handle</tt><big>(</big><big>)</big><a class="headerlink" href="#LogReceiver.LogRecordStreamHandler.handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle multiple requests - each expected to be a 4-byte length,
+followed by the LogRecord in pickle format. Logs the record
+according to whatever policy is configured locally.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="LogReceiver.LogRecordStreamHandler.unPickle">
+<tt class="descname">unPickle</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#LogReceiver.LogRecordStreamHandler.unPickle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="LogReceiver.LogRecordStreamHandlerGenerator">
+<em class="property">class </em><tt class="descclassname">LogReceiver.</tt><tt class="descname">LogRecordStreamHandlerGenerator</tt><big>(</big><em>logger</em><big>)</big><a class="headerlink" href="#LogReceiver.LogRecordStreamHandlerGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>The LogRecordStreamHandler above has an extra arg compared to what
+is in the python docs.  This generator class stores that extra arg
+and is then callable using the expected interface.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/modules/LogReceiver.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright See STFC Licernce..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

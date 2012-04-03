@@ -1,0 +1,7 @@
+ProcName Module
+===============
+
+.. automodule:: ProcName
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,279 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>TransferUnitController Module &mdash; MiStaMover 0.1.0alpha documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MiStaMover 0.1.0alpha documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-TransferUnitController">
+<span id="transferunitcontroller-module"></span><h1>TransferUnitController Module<a class="headerlink" href="#module-TransferUnitController" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="TransferUnitController.TransferUnitController">
+<em class="property">class </em><tt class="descclassname">TransferUnitController.</tt><tt class="descname">TransferUnitController</tt><big>(</big><em>dataset_config</em>, <em>debug_on=False</em><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="AbstractDatasetController.html#AbstractDatasetController.AbstractDatasetController" title="AbstractDatasetController.AbstractDatasetController"><tt class="xref py py-class docutils literal"><span class="pre">AbstractDatasetController.AbstractDatasetController</span></tt></a></p>
+<p>Class which takes care of transferring a single transfer unit
+(file or directory) to a remote host by either ftp or rsync,
+and optionally talks to a listening DatasetArrivalMonitor</p>
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.closeFtpSession">
+<tt class="descname">closeFtpSession</tt><big>(</big><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.closeFtpSession" title="Permalink to this definition">¶</a></dt>
+<dd><p>close the ftp session that python is managing &#8211; if there is one</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.ensureFtpSession">
+<tt class="descname">ensureFtpSession</tt><big>(</big><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.ensureFtpSession" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure there is a working ftp session.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.ftpResponseContainsErrors">
+<tt class="descname">ftpResponseContainsErrors</tt><big>(</big><em>output</em><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.ftpResponseContainsErrors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test ftp response string for return codes in the range 4xx or 5xx</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.ftpTransfer">
+<tt class="descname">ftpTransfer</tt><big>(</big><em>files</em>, <em>mode=&lt;TransferUnitController._TransferModes instance at 0x319bc68&gt;</em><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.ftpTransfer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transfer files to/from remote host using ftp, which may be 
+ftplib or external command.
+Args/return as for transferFiles().</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.ftpTransferUsingPython">
+<tt class="descname">ftpTransferUsingPython</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.ftpTransferUsingPython" title="Permalink to this definition">¶</a></dt>
+<dd><p>put files by ftp using ftplib.
+Args/return as for transferFiles().</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.genericTransfer">
+<tt class="descname">genericTransfer</tt><big>(</big><em>files</em>, <em>mode=&lt;TransferUnitController._TransferModes instance at 0x319bc68&gt;</em><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.genericTransfer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transfer files to/from remote host using a generic helper script,
+which must accept the following command line:</p>
+<blockquote>
+<div><blockquote>
+<div>&lt;program_name&gt;               -m &lt;get|put|test&gt;               [args]               &lt;local_dir&gt;               &lt;remote_host&gt;               &lt;remote_dir&gt;               &lt;file1&gt;</div></blockquote>
+<p>(note that &lt;local_dir&gt; should be ignored for mode &#8220;test&#8221;)</p>
+<p>The following config vars, all in config section &#8220;[helper]&#8221;,
+apply:</p>
+<blockquote>
+<div><p>&#8220;path&#8221; : program_name
+&#8220;args&#8221; : any args to be passed in [args]
+&#8220;multi&#8221; : if set to true, the program is assumed to accept</p>
+<blockquote>
+<div>multiple files on the end of the command line, 
+i.e. &#8220;&lt;file1&gt;&#8221; becomes &#8220;&lt;file1&gt; [file2...]&#8221;
+in the above specification</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.getPlainFileName">
+<tt class="descname">getPlainFileName</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.getPlainFileName" title="Permalink to this definition">¶</a></dt>
+<dd><p>item is an entry in the dataset directory, which may be file or directory</p>
+<p>if a plain file, return the name</p>
+<p>if a directory, zip it up and return the zip file name</p>
+<p>if anything that can&#8217;t be transferred, return None</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.hasFtpSession">
+<tt class="descname">hasFtpSession</tt><big>(</big><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.hasFtpSession" title="Permalink to this definition">¶</a></dt>
+<dd><p>send a NOOP command to test if existing ftp session is working.
+Returns boolean.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.initFtpSession">
+<tt class="descname">initFtpSession</tt><big>(</big><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.initFtpSession" title="Permalink to this definition">¶</a></dt>
+<dd><p>When handling ftp in python, log into remte server and get into 
+correct directory etc</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="TransferUnitController.TransferUnitController.long_name">
+<tt class="descname">long_name</tt><em class="property"> = 'transfer unit controller'</em><a class="headerlink" href="#TransferUnitController.TransferUnitController.long_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.pollForFile">
+<tt class="descname">pollForFile</tt><big>(</big><em>file</em>, <em>count</em>, <em>interval</em><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.pollForFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch a file repeatedly until it works.</p>
+<p>Args count, interval self-explanatory except that 
+set count=0 for indefinite.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.quarantine">
+<tt class="descname">quarantine</tt><big>(</big><em>file_name</em><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.quarantine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move specified file into the quarantine directory,
+If necessary timestamp the filename to prevent overwriting.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.rsyncTransfer">
+<tt class="descname">rsyncTransfer</tt><big>(</big><em>files</em>, <em>mode=&lt;TransferUnitController._TransferModes instance at 0x319bc68&gt;</em><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.rsyncTransfer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transfer files to/from remote host using rsync.
+Args/return as for transferFiles()</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.setVarsFromConfig">
+<tt class="descname">setVarsFromConfig</tt><big>(</big><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.setVarsFromConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>see also method with this name in base class (which is called)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="TransferUnitController.TransferUnitController.short_name">
+<tt class="descname">short_name</tt><em class="property"> = 'tuc'</em><a class="headerlink" href="#TransferUnitController.TransferUnitController.short_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.testFile">
+<tt class="descname">testFile</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.testFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if a remote file exists</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.transferFiles">
+<tt class="descname">transferFiles</tt><big>(</big><em>files</em>, <em>mode=&lt;TransferUnitController._TransferModes instance at 0x319bc68&gt;</em><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.transferFiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Routine to just transfer files without ArrivalMonitor interaction
+(also used to provide underlying functionality for
+transferToRemoteHostWithArrivalMonitor)</p>
+<dl class="docutils">
+<dt>Inputs:</dt>
+<dd><p class="first">Files is list of filenames in dataset directory</p>
+<dl class="last docutils">
+<dt>mode is xfr_put (put files), xfr_get (get files), </dt>
+<dd>or xfr_test (test existence of remote files)</dd>
+</dl>
+</dd>
+<dt>Returns: </dt>
+<dd>a Response object</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.transferToRemoteHost">
+<tt class="descname">transferToRemoteHost</tt><big>(</big><em>items</em><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.transferToRemoteHost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Top-level routine to transfer files and directories; may or may not
+expect an ArrivalMonitor at the remote end</p>
+<p>items is a list of basenames of TUs to transfer (in the dataset dir)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.transferToRemoteHostSingleAttempt">
+<tt class="descname">transferToRemoteHostSingleAttempt</tt><big>(</big><em>item</em>, <em>ctl_file_name</em>, <em>rcpt_file_name</em><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.transferToRemoteHostSingleAttempt" title="Permalink to this definition">¶</a></dt>
+<dd><p>helper function for transferToRemoteHostWithArrivalMonitor.</p>
+<p>This is the main code to actually do the the chatter regarding
+receipt files etc.</p>
+<p>A single attempt to transfer to remote host - returns a Response object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.transferToRemoteHostWithArrivalMonitor">
+<tt class="descname">transferToRemoteHostWithArrivalMonitor</tt><big>(</big><em>item_name</em><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.transferToRemoteHostWithArrivalMonitor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Routine to transfer a single item where there <em>is</em> an ArrivalMonitor at the remote end</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="TransferUnitController.TransferUnitController.waitForPermission">
+<tt class="descname">waitForPermission</tt><big>(</big><big>)</big><a class="headerlink" href="#TransferUnitController.TransferUnitController.waitForPermission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check repeatedly until the remote host does not have a 
+.stop file in place</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/modules/TransferUnitController.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright See STFC Licernce..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

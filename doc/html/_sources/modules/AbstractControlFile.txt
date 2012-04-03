@@ -1,0 +1,7 @@
+AbstractControlFile Module
+==========================
+
+.. automodule:: AbstractControlFile
+    :members:
+    :undoc-members:
+    :show-inheritance:
