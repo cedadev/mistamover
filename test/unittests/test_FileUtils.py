@@ -55,11 +55,20 @@ if __name__ == '__main__':
         dirs = ["%s/xdm" % tmp_path]
         for d in dirs: os.chmod(d, 0)
         print "deleting..."
-        print f.deleteDir(tmp_path, stop_on_first_error=False)
-        print f.deleteDir(tmp_path)
+        try:
+            print f.deleteDir(tmp_path, stop_on_first_error=False)
+        except Exception, ex:
+            print str(ex)
+        try:
+            print f.deleteDir(tmp_path)
+        except Exception, ex:
+            print str(ex)
 
         for d in dirs: os.chmod(d, 0755)
-        print f.deleteDir(tmp_path)
+        try:
+            print f.deleteDir(tmp_path)
+        except Exception, ex:
+            print str(ex)
 
         os.system("ls -l %s" % tmp_path)
 
