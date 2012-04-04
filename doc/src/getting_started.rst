@@ -70,7 +70,7 @@ The best way to get started is to run MiStaMover as a :ref:`one-off process <One
 
 The following options are available when running MiStaMover at the command line::
 
-  bin/mistamover.py [ --one-off | --daemon | --create-test-data | --run-with-test-data ] [<GLOBAL_CONFIG_FILE>]
+  bin/mistamover.py [ --one-off | --daemon | ] [<GLOBAL_CONFIG_FILE>]
   
 Where only one of the first four arguments must be specified. The ``<GLOBAL_CONFIG_FILE>`` is the location of the global configuration file you wish to use. This is an optional argument for which the default location is ``conf/global.ini``.
 

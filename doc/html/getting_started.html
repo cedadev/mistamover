@@ -113,7 +113,7 @@ tar -C $HOME/mstmvr -xvzf mistamover-${VERSION}.tar.gz</pre>
 </ol>
 </div></blockquote>
 <p>The following options are available when running MiStaMover at the command line:</p>
-<div class="highlight-python"><pre>bin/mistamover.py [ --one-off | --daemon | --create-test-data | --run-with-test-data ] [&lt;GLOBAL_CONFIG_FILE&gt;]</pre>
+<div class="highlight-python"><pre>bin/mistamover.py [ --one-off | --daemon | ] [&lt;GLOBAL_CONFIG_FILE&gt;]</pre>
 </div>
 <p>Where only one of the first four arguments must be specified. The <tt class="docutils literal"><span class="pre">&lt;GLOBAL_CONFIG_FILE&gt;</span></tt> is the location of the global configuration file you wish to use. This is an optional argument for which the default location is <tt class="docutils literal"><span class="pre">conf/global.ini</span></tt>.</p>
 <p><strong>WARNING: The default transfer mode is &#8220;move&#8221;. Do not set your incoming directory to a location in which you intend to keep data without setting the transfer mode to &#8220;mirror&#8221;!</strong></p>
