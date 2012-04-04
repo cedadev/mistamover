@@ -8,7 +8,7 @@
 import os
 from subprocess import Popen, PIPE
 import time
-import hashlib
+#import hashlib
 import shutil
 
 import sys
@@ -18,7 +18,7 @@ lib_dir = os.path.join(top_dir, "lib")
 sys.path.append(lib_dir)
 
 from Response import Response, ResponseCode
-from FileUtils import futils
+#from FileUtils import futils
 from LoggerClient import LoggerClient
 from StatusFlag import status
 from Daemon import weWereSignalled

@@ -18,8 +18,8 @@ import tempfile
 from FileUtils import futils
 
 import LoggerClient
-from Config import GlobalConfig
-from Config import DatasetConfig
+#from Config import GlobalConfig
+#from Config import DatasetConfig
 
 class DiskState(object):
     # note - the numerical values are arbitrary but the 

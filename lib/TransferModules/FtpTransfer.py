@@ -136,12 +136,12 @@ class FtpTransfer(TransferBase):
                 pass
         # there should be no issue here as this is only called after
         # a receipt file has been proven to be valid
-        rcpt_err = None
+        #rcpt_err = None
         try:
             rcpt = ReceiptFile(self.rcpt_file_path)
             rcpt_data = rcpt.read()
         except Exception, err:
-            rcpt_err = "bad receipt file: %s" % err
+            #rcpt_err = "bad receipt file: %s" % err
             self.info("push thanks setup fail %s" % err)
             return ""
         thankyou_file_name = rcpt_data[4]

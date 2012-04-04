@@ -17,7 +17,7 @@ lib_dir = os.path.join(top_dir, "lib")
 sys.path.append(lib_dir)
 
 from Response import Response, ResponseCode
-from LoggerClient import LoggerClient
+#from LoggerClient import LoggerClient
 from ControlFile import ControlFile
 from ReceiptFile import ReceiptFile
 from ThankyouFile import ThankyouFile
@@ -107,13 +107,13 @@ class GridFTPTransfer(TransferBase):
                 pass
         # there should be no issue here as this is only called after
         # a receipt file has been proven to be valid
-        rcpt_err = None
+        #rcpt_err = None
         gftp = self.cmd
         try:
             rcpt = ReceiptFile(self.rcpt_file_path)
             rcpt_data = rcpt.read()
         except Exception, err:
-            rcpt_err = "bad receipt file: %s" % err
+            #rcpt_err = "bad receipt file: %s" % err
             self.info("push thanks setup fail %s" % err)
             return ""
         thankyou_file_name = rcpt_data[4]

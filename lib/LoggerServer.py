@@ -150,7 +150,7 @@ class LoggerServer(object):
 
 if __name__ == '__main__':
 
-    import time
+    #import time
     import sys
     from TestConfig import gc
 

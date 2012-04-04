@@ -314,7 +314,7 @@ class StagerController(object):
         # stop disk space monitor
         try:
             self.dsml.kill()
-        except Exception, ex:
+        except Exception:
             pass 
         self.stopLogServer()
 

@@ -107,7 +107,6 @@ class DatasetTransferController(AbstractDatasetController):
                 if os.path.isdir(item) == True:
                     for dirname, dirnames, filenames in os.walk(item):
                         for filename in filenames:
-                            pth = os.path.join(dirname, filename)
                             full_path = os.path.join(self.dataset_dir, item)
                             stat1 = (futils.getLastUpdatedTime(full_path), futils.getSize(full_path))
                             time.sleep(5)

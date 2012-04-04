@@ -9,10 +9,10 @@ import time
 import re
 import smtplib
 import commands
-from email.MIMEText import MIMEText
+#from email.MIMEText import MIMEText
 
 import Daemon
-import tempfile
+#import tempfile
 import os
 
 class AlertEmailer(object):
