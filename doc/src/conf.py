@@ -39,7 +39,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'MiStaMover'
-copyright = u'See STFC Licernce.'
+copyright = u'See STFC Licence.'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
