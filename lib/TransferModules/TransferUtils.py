@@ -21,8 +21,6 @@ class TransferUtils:
     """
     Utilities class for TransferBase
     """
-    #def __init__(self, datadir):
-    #  self.datadir = datadir
 
     @staticmethod
     def timeStamp():

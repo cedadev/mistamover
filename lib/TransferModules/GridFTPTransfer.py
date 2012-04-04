@@ -41,6 +41,9 @@ class GridFTPTransfer(TransferBase):
 
     # this is called by TransferModule
     def setupPushCmd(self):
+        '''
+        called by TransferBase in order to create a push command
+        '''
         if self.ctl_file_path != None:
             try:
                 os.remove(self.ctl_file_path)
@@ -83,6 +86,9 @@ class GridFTPTransfer(TransferBase):
         return pushcmd
 
     def setupPullRcptCmd(self):
+        '''
+        called by TransferBase to setup the command that pulls receipt files from the target
+        '''
         gftp = self.cmd
         pullrcpt = gftp + " gsiftp://" + self.config.get("outgoing.target_host") + \
         ":" + str(self.config.get("gridftp.port")) + \
@@ -91,6 +97,9 @@ class GridFTPTransfer(TransferBase):
         return pullrcpt
 
     def setupPushThanksCmd(self):
+        '''
+        called by TransferBase to setup the command that pushes a ThankYou file to the target
+        '''
         if self.thankyou_file_path != None:
             try:
                 os.remove(self.thankyou_file_path)
@@ -119,7 +128,10 @@ class GridFTPTransfer(TransferBase):
         return thankyoucmd
 
     # this is called by TransferModule
-    def setupStopFileCmd(self): 
+    def setupStopFileCmd(self):
+        '''
+        called by TransferBase in order to create the command to check for stop files
+        '''
         tf, name = tempfile.mkstemp()
         self.stopname = name
         self.stoptf = tf

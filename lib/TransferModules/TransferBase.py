@@ -161,6 +161,10 @@ class TransferBase:
         self.info("startup")
 
     def deleteOrWarn(self, filename):
+        '''
+        remove files after they have been transfered or warn
+        if for any reason they cannot be deleted
+        '''
         self.info("deleteOrWarn")
         try:
             self.info("removing %s " % filename)

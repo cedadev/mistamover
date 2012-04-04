@@ -10,6 +10,10 @@ from RsyncNativeTransfer import RsyncNativeTransfer
 from FtpTransfer import FtpTransfer
 from GridFTPTransfer import GridFTPTransfer
 class TransferBaseController:
+    '''
+    The main controller for transfermodules - this module discovers which transfer
+    module to use (as defined by the config file) and creates an instance of it
+    '''
     def __init__(self, config):
         self.config = config
         self.tp = self.config.get("outgoing.transfer_protocol")

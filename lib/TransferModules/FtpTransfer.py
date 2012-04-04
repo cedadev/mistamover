@@ -41,6 +41,9 @@ class FtpTransfer(TransferBase):
 
     # called by TransferBase
     def setupStopFileCmd(self):
+        '''
+        called by TransferBase in order to create the command to check for stop files
+        '''
         tf, name = tempfile.mkstemp()
         os.write(tf, "user " + self.config.get("ftp.username") + " " + self.config.get("ftp.password") + "\n")
         os.write(tf, "cd " + self.config.get("outgoing.target_dir") + "\n")
@@ -57,6 +60,9 @@ class FtpTransfer(TransferBase):
 
     # called by TransferBase
     def setupPushCmd(self):
+        '''
+        called by TransferBase in order to create a push command
+        '''
         if self.ctl_file_path != None:
             try:
                 os.remove(self.ctl_file_path)
@@ -101,6 +107,9 @@ class FtpTransfer(TransferBase):
 
     # called by TransferBase
     def setupPullRcptCmd(self):
+        '''
+        called by TransferBase to setup the command that pulls receipt files from the target
+        '''
         tf, name = tempfile.mkstemp()
         os.write(tf, "user " + self.config.get("ftp.username") + " " + self.config.get("ftp.password") + "\n")
         os.write(tf, "cd " + self.config.get("outgoing.target_dir") + "\n")
@@ -117,6 +126,9 @@ class FtpTransfer(TransferBase):
 
     # called by TransferBase
     def setupPushThanksCmd(self):
+        '''
+        called by TransferBase to setup the command that pushes a ThankYou file to the target
+        '''
         if self.thankyou_file_path != None:
             try:
                 os.remove(self.thankyou_file_path)

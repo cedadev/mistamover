@@ -42,6 +42,9 @@ class RsyncTransfer(TransferBase):
 
     # this is called from the TransferBase
     def setupPushCmd(self):
+        '''
+        called by TransferBase in order to create a push command
+        '''
         if self.ctl_file_path != None:
             try:
                 os.remove(self.ctl_file_path)
@@ -84,7 +87,10 @@ class RsyncTransfer(TransferBase):
         return pushcmd
 
     # this is called from the TransferBase
-    def setupStopFileCmd(self): 
+    def setupStopFileCmd(self):
+        '''
+        called by TransferBase in order to create the command to check for stop files
+        '''
         listonly = self.cmd + " --list-only "
         pullstop = listonly + self.config.get("outgoing.target_host") + "://" + \
         self.config.get("outgoing.target_dir") + "/" + "/" + self.config.get("outgoing.stop_file")
@@ -92,12 +98,18 @@ class RsyncTransfer(TransferBase):
         return pullstop
 
     def setupPullRcptCmd(self):
+        '''
+        called by TransferBase to setup the command that pulls receipt files from the target
+        '''
         pullrcpt = self.cmd + " " + self.config.get("outgoing.target_host") + "://" + self.config.get("outgoing.target_dir") + \
         "/" + self.rcpt_file_name + " " + self.config.get("data_stream.directory") + "/"
         self.info("setupPullRcptCmd %s" % pullrcpt)
         return pullrcpt
 
     def setupPushThanksCmd(self):
+        '''
+        called by TransferBase to setup the command that pushes a ThankYou file to the target
+        '''
         if self.thankyou_file_path != None:
             try:
                 os.remove(self.thankyou_file_path)
