@@ -15,8 +15,6 @@ lib
    DiskSpaceMonitor
    DiskSpaceMonitorLauncher
    FileUtils
-   Informer
-   LastMailedController
    LogReceiver
    LoggerClient
    LoggerServer

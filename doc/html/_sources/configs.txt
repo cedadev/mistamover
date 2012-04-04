@@ -155,70 +155,167 @@ Here is an example of a *one-off* config file that uses the ``rsync-over-ssh`` t
 
 Here is an example of a Data Stream config file the uses FTP and an Arrivals Monitor::
 
-  [data_stream]                                                                                           
-  priority = 200                                                                                      
-  name = jah                                                                                          
-  transfer_unit = file                                                                                
-  status = RUNNING                                                                                    
-  directory = /home/users/jhorton/Download/SVN/jah/outgoing/jah                                       
-
+  [data_stream]
+  priority = 200
+  name = ftp
+  transfer_unit = file
+  status = RUNNING
+  deletion_enabled = False
+  #
+  # location of files to transfer for this data_stream
+  #
+  directory = /home/users/mistamover/outgoing/my_data_stream
+  
   [incoming]
   require_arrival_monitor = False
-
+  
   [outgoing]
+  #
+  # the host we are transfering files to
+  #
   target_host = cmip-dev1
+  #
+  # the underlying protocol we are using to transfer files
+  #
   transfer_protocol = ftp
   target_uses_arrival_monitor = True
-  target_dir = /home/users/jhorton/incoming/jah
-
+  #
+  # the location on the target_host where we are placing the files
+  #
+  target_dir = /home/users/mistamover/incoming/my_data_stream
+  
   [ftp]
   cmd = /usr/bin/ftp
-  username = jhorton
-  password = password
-
+  username = mistamover
+  password = mistamover
 
 Here is an example of the Data Stream config file that will run on the other server (that uses use Arrivals monitor)::
 
-  [data_stream]                                                                                                                 
-  priority = 200                             
-  name = jah                             
-  transfer_unit = file                   
-  status = RUNNING                       
-  directory = /home/users/jhorton/incoming/jah
-
+  [data_stream]
+  priority = 200
+  name = arrival_monitor
+  transfer_unit = file
+  status = RUNNING
+  deletion_enabled = False
+  #
+  # location of files to transfer for this data_stream
+  #
+  directory = /home/users/mistamover/incoming/my_data_stream
+  
   [incoming]
   require_arrival_monitor = True
-
+  
   [outgoing]
-  target_host = cmip-dev2
+  #
+  # the host we are transfering files to
+  #
+  target_host = cmip-dev1
+  #
+  # the underlying protocol we are using to transfer files
+  # - it is none as we are only listening for incoming files
+  #
   transfer_protocol = none
-  target_uses_arrival_monitor = False
-  target_dir = /home/users/jhorton/incoming/
 
+Here is an example of a Data Stream config file that uses rsync ssh to mirror::
 
-Here is an example of a Data Stream config file that uses rsync to mirror::
-
-  [data_stream]        
-  priority = 200   
-  name = jah2      
+  [data_stream]
+  priority = 200
+  name = rsync_ssh
   transfer_unit = file
-  status = RUNNING 
-  directory = /home/users/jhorton/Download/SVN/jah/outgoing/jah2                                      
-
+  status = RUNNING
+  directory = /home/users/mistamover/outgoing/rsync_ssh
+  
   [incoming]
   require_arrival_monitor = False
-
-  [outgoing]
-  target_host = mercury
-  transfer_protocol = rsync
-  target_uses_arrival_monitor = False
-  target_dir = /disks/almond1/jhorton/jah2
-
-  [rsync]
-  username = jhorton
-  transfer_mode = mirror
-  cmd = /usr/bin/rsync
   
+  [outgoing]
+  target_host = cmip-dev1
+  transfer_protocol = rsync_ssh
+  target_dir = /home/users/mistamover/incoming/rsync_ssh
+  
+  [rsync_ssh]
+  username = mistamover
+  cmd = /usr/bin/rsync
+  transfer_mode = mirror
+ 
+Here is an example of a Data Stream config file that uses rsync native to move::
+
+  [data_stream]
+  priority = 200
+  name = rsync_native
+  transfer_unit = file
+  status = RUNNING
+  #
+  # location of files to transfer for this data_stream
+  #
+  directory = /home/users/mistamover/outgoing/rsync_native
+  
+  [incoming]
+  require_arrival_monitor = False
+  
+  [outgoing]
+  #
+  # the host we are transfering files to
+  #
+  target_host = cmip-dev1
+  #
+  # the underlying protocol we are using to transfer files
+  #
+  transfer_protocol = rsync_native
+  target_uses_arrival_monitor = False
+  #
+  # the location on the target_host where we are placing the files
+  #
+  target_dir = Example/incoming/rsync_native
+  
+  [rsync_native]
+  username = mistamover
+  password = mistamover
+  use_checksum = True
+  check_size = True
+  transfer_mode = move
+  cmd = /usr/bin/rsync
+
+Here is an example of Data Stream config file that uses gridftp to move::
+
+  [data_stream]
+  priority = 200
+  name = gridftp
+  transfer_unit = file
+  status = RUNNING
+  deletion_enabled = False
+  #
+  # location of files to transfer for this data_stream
+  #
+  directory = /home/users/mistamover/outgoing/gridftp
+  
+  [incoming]
+  require_arrival_monitor = False
+  
+  [outgoing]
+  #
+  # the host we are transfering files to
+  #
+  target_host = mercury
+  #
+  # the underlying protocol we are using to transfer files
+  #
+  transfer_protocol = gridftp
+  target_uses_arrival_monitor = False
+  #
+  # the location on the target_host where we are placing the files
+  #
+  target_dir = /disks/almond1/mistamover/incoming/gridftp
+  
+  [gridftp]
+  username = mistamover
+  cmd = /home/users/mistamover/globus/bin/globus-url-copy
+  port = 2811
+  proxy = myproxy.ceda.ac.uk
+  username = mistamover
+  password = mistamover
+
+
 Configuration Options
 ---------------------
 

@@ -32,7 +32,7 @@ class DatasetConfig(BaseConfig):
             #print "PID: %s" % os.getpid()
   
         if global_path == None:
-            file_path = os.path.join(gconfig["global"]["config_dir"], "dataset_%s.ini" % dataset_name)
+            file_path = os.path.join(gconfig["global"]["config_dir"], "ds_%s.ini" % dataset_name)
         else:
             file_path = global_path
         self.name = dataset_name
@@ -43,7 +43,7 @@ class DatasetConfig(BaseConfig):
         """
         Further manipulation of specific variables beyond what's in the config
         """
-        dset_sect = self["dataset"]
+        dset_sect = self["data_stream"]
         incoming_sect = self["incoming"]
         outgoing_sect = self["outgoing"]
     
