@@ -16,6 +16,8 @@ outgoing_default = {
 'receipt_file_extension': 'stager-rcpt-bss',
 'thankyou_file_extension': 'stager-thanks-bss',
 'retry_count': 3,
+'receipt_file_poll_count': 100,
+'receipt_file_poll_interval': 5,
 'stop_file': '.stop',
 'stop_file_poll_interval': 600
 }
