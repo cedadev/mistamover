@@ -14,6 +14,7 @@ class GlobalConfig(BaseConfig):
     """
 
     def reread(self):
+        BaseConfig.readDefaults(self)
         BaseConfig.reread(self)
         self.checkCompulsoryVars()
 

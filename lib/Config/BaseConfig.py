@@ -56,6 +56,8 @@ import os
 import time
 import re
 
+import settings
+
 class ConfigSection(dict):
     """
     A class to make a section act as a dictionary.
@@ -212,6 +214,7 @@ class BaseConfig(dict):
         self.d.__init__()
         self.config_file_path = config_file_path
         self.missing_ok = missing_ok
+        self.settings = []
         self.reread()
 
     def __getitem__(self, key):
@@ -243,8 +246,32 @@ class BaseConfig(dict):
         for section in config.sections():
             self.d.__setitem__(section, ConfigSection(config, section, parent=self))
 
+        # go through the default settings and update the config with the
+        # defaults if none have been set so far
+        for s in self.settings:
+            if not self.checkSet(s[0] + "." + s[1]):
+                if not config.has_section(s[0]):
+                  config.add_section(s[0])
+                  self.d.__setitem__(s[0], ConfigSection(config, s[0], parent=self))
+                self.set(s[0] + "." + s[1], s[2])
+
         self.time_last_read = time.time()
         self.checkCompulsoryVars()
+
+
+    def readDefaults(self):
+        '''
+        Read global default values from python settings.py file
+        '''
+        self.settings = []
+        defaults = dir(settings)
+        for default in defaults:
+            if not default.startswith("__"):
+                c = getattr(settings, default)
+                d = default.split("_")
+                for k in c:
+                    e = d[0]
+                    self.settings.append((e, k, c[k]))
 
 
     def checkCompulsoryVars(self):
