@@ -1,3 +1,7 @@
+global_default = {
+'general_poll_interval': 3
+}
+
 incoming_default = {
 'require_arrival_monitor': False,
 'control_file_extension': 'stager-ctrl-bss',
