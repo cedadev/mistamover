@@ -127,7 +127,8 @@ class TransferBase:
             ex = str(ex)
             rv = str(p.returncode)
             grc = ResponseCode(False)
-            grv = Response(grc, "An exception occurred during  transferData ", str(ex))
+            grv = Response(grc, "An exception occurred during  transferData ", \
+                str(ex))
             self.info("transferData for %s raised exception %s " % cmd, str(ex))
         return grv
 
@@ -175,7 +176,8 @@ class TransferBase:
             self.info("deleteOrWarn removed %s" % filename)
         except Exception, ex:
             self.warn("Could not delete %s" % filename)
-            self.info("deleteOrWarn raised exception %s for %s" % (str(ex), filename))
+            self.info("deleteOrWarn raised exception %s for %s" % (str(ex), \
+                filename))
 
     def waitForStopFile(self):
         """
@@ -197,7 +199,8 @@ class TransferBase:
             rv = self.transferData(pullstop)
             if rv.data.find(self.getStopError()) != -1:
                 stopFilePresent = False
-                self.info("pull stop %s : Success, .stop file not present" % (pullstop))
+                self.info("pull stop %s : Success, .stop file not present" % \
+                    (pullstop))
             else:
                 time.sleep(self.config.get("outgoing.stop_file_poll_interval"))
                 self.info("waitForStopFile sleeping")   
@@ -235,8 +238,8 @@ class TransferBase:
                 time.sleep(self.config.get("global.general_poll_interval"))
                 self.info("pushData trying transfer again")
             else:
-                # the push succeeded - if we use arrivalMonitor we also need to do that
-                # before we return
+                # the push succeeded - if we use arrivalMonitor we also need to
+                # do that before we return
                 if self.config.get("outgoing.target_uses_arrival_monitor"):
                     self.info("pushData succeeded - pulling receipt")
                     time.sleep(self.config.get("global.general_poll_interval"))
@@ -254,12 +257,15 @@ class TransferBase:
                     self.info(" pushdata grv = %s " % str(grv.code))
                     if str(grv.code) == "Success":
                         if self.__mirror != True:
-                            self.deleteOrWarn(self.config.get("data_stream.directory") + "/" + self.getFile())
+                            self.deleteOrWarn(self.config.get( \
+                                "data_stream.directory") + "/" + \
+                                self.getFile())
                     return grv
         self.info(" pushdata grv = %s " % str(grv.code))
         if str(grv.code) == "Success":
             if self.__mirror != True:
-                self.deleteOrWarn(self.config.get("data_stream.directory") + "/" + self.getFile())
+                self.deleteOrWarn(self.config.get(\
+                    "data_stream.directory") + "/" + self.getFile())
         return grv
 
     def pullReceipt(self):
