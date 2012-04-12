@@ -140,10 +140,10 @@ class DiskSpaceMonitorLauncher(object):
 
 if __name__ == '__main__':
     import time
-    import StagerController
+    import MiStaMoverController
 
     os.environ["CONFIG__global__top"] = ".."
-    s = StagerController.StagerController("../conf/global.ini")
+    s = MiStaMoverController.MiStaMoverController("../conf/global.ini")
 
     dsml = DiskSpaceMonitorLauncher(s.gconfig, s.dconfigs, logger = s.logger)
 

@@ -157,7 +157,7 @@ class DatasetTransferController(AbstractDatasetController):
             # if we are running oneoff then exit here
             if self.dconfig.get("global.oneoff") == True:
                 runLoop = False
-                # send a signal back to StagerController syaing that this
+                # send a signal back to MiStaMoverController syaing that this
                 # data_stream has completed
                 os.kill(os.getppid(), signal.SIGUSR2)
 

@@ -30,7 +30,7 @@ class DatasetArrivalMonitor(AbstractDatasetController):
     DatasetTransferController will just look for files appearing in 
     the data_stream directory and can assume their integrity - it knows
     nothing about the arrival monitor - only the top-level 
-    StagerController knows that it launched an arrival monitor.
+    MiStaMoverController knows that it launched an arrival monitor.
 
     Note also that it does not look at any data files until 
     these are referred to by a control file.  So partially arrived

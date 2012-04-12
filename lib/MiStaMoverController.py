@@ -20,7 +20,7 @@ import LoggerServer
 import LoggerClient
 import DiskSpaceMonitorLauncher
 
-class StagerController(object):
+class MiStaMoverController(object):
     """
     This is the daemon process that manages a group of other class 
     instances which are run in sub-processes, specifically:
@@ -349,7 +349,7 @@ class StagerController(object):
         """
         initialise the logger client object for logging from this module.
         NB this is completely separate from the server side, which is also 
-        started by StagerController
+        started by MiStaMoverController
         """
         self.logger = LoggerClient.LoggerClient(
             self.gconfig,
@@ -494,11 +494,11 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         print sys.argv
         if sys.argv[1] == "--checkConfig":
-            s = StagerController("../conf/global.ini")
+            s = MiStaMoverController("../conf/global.ini")
             s.checkConfig()
         if sys.argv[1] == "--dumpConfig":
-            s = StagerController("../conf/global.ini")
+            s = MiStaMoverController("../conf/global.ini")
             s.dumpConfig()
         if sys.argv[1] == "--startStager":
-            s = StagerController("../conf/global.ini")
+            s = MiStaMoverController("../conf/global.ini")
             s.main()
