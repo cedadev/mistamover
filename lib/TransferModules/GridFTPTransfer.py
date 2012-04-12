@@ -58,39 +58,38 @@ class GridFTPTransfer(TransferBase):
         if self.config.get("outgoing.target_uses_arrival_monitor"):
             # set up a control file
             item_name = self.getFile()
-            item_path = os.path.join(self.config.get("data_stream.directory"), \
-                os.path.basename(item_name))
-            ctl_file_name = ".%s.%s" % (item_name, self.config.get( \
-                "outgoing.control_file_extension"))
-            ctl_file_path = os.path.join(self.config.get( \
-                "data_stream.directory"), os.path.basename(ctl_file_name))
+            item_path = (os.path.join(self.config.get("data_stream.directory"),
+                os.path.basename(item_name)))
+            ctl_file_name = (".%s.%s" % (item_name, self.config.get(
+                "outgoing.control_file_extension")))
+            ctl_file_path = (os.path.join(self.config.get(
+                "data_stream.directory"), os.path.basename(ctl_file_name)))
             self.ctl_file_path = ctl_file_path
             item_size = os.path.getsize(item_path)
             item_cksum = TransferUtils.calcChecksum(item_path)
             ts = "%.2f" % time.time()
-            rcpt_file_name = ".%s.%s.%s" % (item_name, ts, self.config.get( \
-                "outgoing.receipt_file_extension"))
+            rcpt_file_name = (".%s.%s.%s" % (item_name, ts, self.config.get(
+                "outgoing.receipt_file_extension")))
             ctl_file = ControlFile(ctl_file_path, can_overwrite=True)
             ctl_file.create(item_name, item_size, item_cksum, rcpt_file_name)
             self.rcpt_file_name = rcpt_file_name
-            self.rcpt_file_path = TransferUtils.getPathInDir(rcpt_file_name, \
-                self.config.get("data_stream.directory"))
+            self.rcpt_file_path = (TransferUtils.getPathInDir(rcpt_file_name,
+                self.config.get("data_stream.directory")))
 
         f = self.getFile()
         gftp = self.cmd
         if self.config.get("outgoing.target_uses_arrival_monitor") == False:
             gftp += " -sync -sync-level 3"
-        pushcmd = gftp + " " + self.config.get("data_stream.directory") + "/" \
-            + f + " gsiftp://" + \
-        self.config.get("outgoing.target_host") + ":" + str(self.config.get( \
-            "gridftp.port")) + "//" +  self.config.get("outgoing.target_dir") \
-            + "/" + f
+        pushcmd = (gftp + " " + self.config.get("data_stream.directory") + "/"
+            + f + " gsiftp://" + self.config.get("outgoing.target_host") + ":" 
+            + str(self.config.get("gridftp.port")) + "//" +  
+            self.config.get("outgoing.target_dir") + "/" + f)
         if self.config.get("outgoing.target_uses_arrival_monitor"):
-            pushcmd += "; " + gftp + " " + self.config.get( \
-                "data_stream.directory") + "/" + ctl_file_name + " gsiftp://" \
-                + self.config.get("outgoing.target_host") + ":" + \
-                str(self.config.get("gridftp.port")) + \
-                self.config.get("outgoing.target_dir") + "/" + ctl_file_name
+            pushcmd += ("; " + gftp + " " + self.config.get(
+                "data_stream.directory") + "/" + ctl_file_name + " gsiftp://"
+                + self.config.get("outgoing.target_host") + ":" +
+                str(self.config.get("gridftp.port")) +
+                self.config.get("outgoing.target_dir") + "/" + ctl_file_name)
         self.info("setupPushCmd %s " % pushcmd)
         return pushcmd
 
@@ -100,10 +99,10 @@ class GridFTPTransfer(TransferBase):
         from the target
         '''
         gftp = self.cmd
-        pullrcpt = gftp + " gsiftp://" + self.config.get("outgoing.target_host") \
-            + ":" + str(self.config.get("gridftp.port")) + "//" + self.config.get( \
-            "outgoing.target_dir") + "/" + self.rcpt_file_name + " " + \
-            self.config.get("data_stream.directory") + "/" + self.rcpt_file_name
+        pullrcpt = (gftp + " gsiftp://" + self.config.get("outgoing.target_host")
+            + ":" + str(self.config.get("gridftp.port")) + "//" + self.config.get(
+            "outgoing.target_dir") + "/" + self.rcpt_file_name + " " +
+            self.config.get("data_stream.directory") + "/" + self.rcpt_file_name)
         return pullrcpt
 
     def setupPushThanksCmd(self):
@@ -128,17 +127,17 @@ class GridFTPTransfer(TransferBase):
             self.info("push thanks setup fail %s" % err)
             return ""
         thankyou_file_name = rcpt_data[4]
-        thankyou_file_path = TransferUtils.getPathInDir(thankyou_file_name, \
-            self.config.get("data_stream.directory"))
+        thankyou_file_path = (TransferUtils.getPathInDir(thankyou_file_name,
+            self.config.get("data_stream.directory")))
         self.thankyou_file_path = thankyou_file_path
         thankyou_file = ThankyouFile(thankyou_file_path)
         thankyou_file.create(self.rcpt_file_name)
         self.thankyou_file_path = thankyou_file_path
-        thankyoucmd = gftp + " " + self.config.get("data_stream.directory") + \
-            "/" + thankyou_file_name + " gsiftp://" + self.config.get( \
-            "outgoing.target_host") + ":" + str(self.config.get( \
-            "gridftp.port")) + "//" +  self.config.get("outgoing.target_dir") \
-            + "/" + thankyou_file_name
+        thankyoucmd = (gftp + " " + self.config.get("data_stream.directory") +
+            "/" + thankyou_file_name + " gsiftp://" + self.config.get(
+            "outgoing.target_host") + ":" + str(self.config.get(
+            "gridftp.port")) + "//" +  self.config.get("outgoing.target_dir")
+            + "/" + thankyou_file_name)
         return thankyoucmd
 
     # this is called by TransferModule
@@ -150,10 +149,10 @@ class GridFTPTransfer(TransferBase):
         tf, name = tempfile.mkstemp()
         self.stopname = name
         self.stoptf = tf
-        pullstop = self.cmd + " gsiftp://" + self.config.get( \
-            "outgoing.target_host") + ":" + str(self.config.get("gridftp.port")) \
-            + "//" + self.config.get("outgoing.target_dir") + "/" + \
-            self.config.get("outgoing.stop_file") + " " + name
+        pullstop = (self.cmd + " gsiftp://" + self.config.get(
+            "outgoing.target_host") + ":" + str(self.config.get("gridftp.port"))
+            + "//" + self.config.get("outgoing.target_dir") + "/" +
+            self.config.get("outgoing.stop_file") + " " + name)
         self.info("setupStopFileCmd %s " % pullstop)
         return pullstop
 
@@ -190,11 +189,11 @@ class GridFTPTransfer(TransferBase):
     # this is the entry point for the module
     def setupTransfer(self, f):
         self.setFile(f)
-        file_name = TransferUtils.getPlainFileName(self.config.get( \
-            "data_stream.directory"), f, self.config.get("outgoing.dir_size_limit"))
+        file_name = (TransferUtils.getPlainFileName(self.config.get(
+            "data_stream.directory"), f, self.config.get("outgoing.dir_size_limit")))
         if not file_name:
-            TransferUtils.quarantine(f, self.config.get("data_stream.directory"), \
-                 self.config.get("outgoing.quarantine_dir"))
+            (TransferUtils.quarantine(f, self.config.get("data_stream.directory"),
+                 self.config.get("outgoing.quarantine_dir")))
             grv = Response.failure("Did not attempt transfer of %s" % f)
             self.info("Did not attempt transfer of %s" % f)
             return grv
@@ -224,9 +223,9 @@ class GridFTPTransfer(TransferBase):
             tf, name = tempfile.mkstemp()
             os.write(tf, self.config.get("gridftp.password"))
             os.fsync(tf)
-            setupCredential = "myproxy-logon -S -s " + self.config.get( \
-                "gridftp.proxy") + " -l " + self.config.get("gridftp.username") \
-                + " < " + name
+            setupCredential = ("myproxy-logon -S -s " + self.config.get(
+                "gridftp.proxy") + " -l " + self.config.get("gridftp.username")
+                + " < " + name)
             grv = self.transferData(setupCredential)
             try:
                 os.close(tf)

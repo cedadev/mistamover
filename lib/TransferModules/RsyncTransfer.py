@@ -58,23 +58,23 @@ class RsyncTransfer(TransferBase):
         f = self.getFile()
         if self.config.get("outgoing.target_uses_arrival_monitor"):
             item_name = f
-            item_path = os.path.join(self.config.get("data_stream.directory"), \
-                os.path.basename(item_name))
-            ctl_file_name = ".%s.%s" % (item_name, self.config.get( \
-                "outgoing.control_file_extension"))
-            ctl_file_path = os.path.join(self.config.get( \
-                "data_stream.directory"), os.path.basename(ctl_file_name))
+            item_path = (os.path.join(self.config.get("data_stream.directory"), 
+                os.path.basename(item_name)))
+            ctl_file_name = (".%s.%s" % (item_name, self.config.get(
+                "outgoing.control_file_extension")))
+            ctl_file_path = (os.path.join(self.config.get(
+                "data_stream.directory"), os.path.basename(ctl_file_name)))
             self.ctl_file_path = ctl_file_path
             item_size = os.path.getsize(item_path)
             item_cksum = TransferUtils.calcChecksum(item_path)
             ts = "%.2f" % time.time()
-            rcpt_file_name = ".%s.%s.%s" % (item_name, ts, self.config.get( \
-                "outgoing.receipt_file_extension"))
+            rcpt_file_name = (".%s.%s.%s" % (item_name, ts, self.config.get(
+                "outgoing.receipt_file_extension")))
             ctl_file = ControlFile(ctl_file_path, can_overwrite=True)
             ctl_file.create(item_name, item_size, item_cksum, rcpt_file_name)
             self.rcpt_file_name = rcpt_file_name
-            self.rcpt_file_path = TransferUtils.getPathInDir(rcpt_file_name, \
-                self.config.get("data_stream.directory"))
+            self.rcpt_file_path = (TransferUtils.getPathInDir(rcpt_file_name,
+                self.config.get("data_stream.directory")))
 
         rsc = self.cmd + " -avz "
         if self.config.get("rsync_ssh.use_checksum") == True:
@@ -82,14 +82,14 @@ class RsyncTransfer(TransferBase):
         if self.config.get("rsync_ssh.check_size") == True:
             rsc += " --size-only "
         if not self.config.get("outgoing.target_uses_arrival_monitor"):
-            pushcmd = rsc + self.config.get("data_stream.directory") + "/" + \
-            f + " " + self.config.get("outgoing.target_host") + "://" + \
-            self.config.get("outgoing.target_dir") + "/" + f
+            pushcmd = (rsc + self.config.get("data_stream.directory") + "/" +
+            f + " " + self.config.get("outgoing.target_host") + "://" +
+            self.config.get("outgoing.target_dir") + "/" + f)
         else:
-            pushcmd = rsc + self.config.get("data_stream.directory") + "/" \
-            +f + " " + self.config.get("data_stream.directory") + "/" + \
-            ctl_file_name + " " + self.config.get("outgoing.target_host") + \
-            "://" + self.config.get("outgoing.target_dir") + "/"
+            pushcmd = (rsc + self.config.get("data_stream.directory") + "/"
+            +f + " " + self.config.get("data_stream.directory") + "/" +
+            ctl_file_name + " " + self.config.get("outgoing.target_host") +
+            "://" + self.config.get("outgoing.target_dir") + "/")
         self.info("setupPushCmd %s " % pushcmd)
         return pushcmd
 
@@ -100,9 +100,9 @@ class RsyncTransfer(TransferBase):
         stop files
         '''
         listonly = self.cmd + " --list-only "
-        pullstop = listonly + self.config.get("outgoing.target_host") + "://" \
-            + self.config.get("outgoing.target_dir") + "/" + "/" + \
-            self.config.get("outgoing.stop_file")
+        pullstop = (listonly + self.config.get("outgoing.target_host") + "://" 
+            + self.config.get("outgoing.target_dir") + "/" + "/" + 
+            self.config.get("outgoing.stop_file"))
         self.info("setupStopFileCmd %s " % pullstop)
         return pullstop
 
@@ -111,10 +111,10 @@ class RsyncTransfer(TransferBase):
         called by TransferBase to setup the command that pulls receipt files 
         from the target
         '''
-        pullrcpt = self.cmd + " " + self.config.get("outgoing.target_host") \
-            + "://" + self.config.get("outgoing.target_dir") + "/" + \
-            self.rcpt_file_name + " " + self.config.get( \
-            "data_stream.directory") + "/"
+        pullrcpt = (self.cmd + " " + self.config.get("outgoing.target_host")
+            + "://" + self.config.get("outgoing.target_dir") + "/" +
+            self.rcpt_file_name + " " + self.config.get(
+            "data_stream.directory") + "/")
         self.info("setupPullRcptCmd %s" % pullrcpt)
         return pullrcpt
 
@@ -139,15 +139,15 @@ class RsyncTransfer(TransferBase):
             self.info("push thanks setup fail %s" % err)
             return ""
         thankyou_file_name = rcpt_data[4]
-        thankyou_file_path = TransferUtils.getPathInDir(thankyou_file_name, \
-             self.config.get("data_stream.directory"))
+        thankyou_file_path = (TransferUtils.getPathInDir(thankyou_file_name,
+             self.config.get("data_stream.directory")))
         self.thankyou_file_path = thankyou_file_path
         thankyou_file = ThankyouFile(thankyou_file_path)
         thankyou_file.create(self.rcpt_file_name)
         self.thankyou_file_path = thankyou_file_path
-        thankyoucmd = self.cmd + " " + self.thankyou_file_path + \
-            self.config.get("outgoing.target_host") + "://" + \
-        self.config.get("outgoing.target_dir") + "/"
+        thankyoucmd = (self.cmd + " " + self.thankyou_file_path +
+            self.config.get("outgoing.target_host") + "://" +
+            self.config.get("outgoing.target_dir") + "/")
         return thankyoucmd
 
     def checkVars(self):
@@ -169,17 +169,17 @@ class RsyncTransfer(TransferBase):
         #if self.config.get("rsync.mirror") == True:
         if self.config.get("rsync_ssh.transfer_mode") == "mirror":
             self.mirror = True
-            file_name = TransferUtils.getPlainFileName(self.config.get( \
-                "data_stream.directory"), f, self.config.get( \
-                "outgoing.dir_size_limit"), False)
+            file_name = (TransferUtils.getPlainFileName(self.config.get(
+                "data_stream.directory"), f, self.config.get(
+                "outgoing.dir_size_limit"), False))
         else:
-            file_name = TransferUtils.getPlainFileName(self.config.get( \
-                "data_stream.directory"), f, self.config.get( \
-                "outgoing.dir_size_limit"))
+            file_name = (TransferUtils.getPlainFileName(self.config.get(
+                "data_stream.directory"), f, self.config.get(
+                "outgoing.dir_size_limit")))
         if not file_name:
-            TransferUtils.quarantine(f, self.config.get( \
-                "data_stream.directory"), self.config.get( \
-                "outgoing.quarantine_dir"))
+            (TransferUtils.quarantine(f, self.config.get(
+                "data_stream.directory"), self.config.get(
+                "outgoing.quarantine_dir")))
             rc = ResponseCode(False)
             grv = Response(rc, "Did not attempt transfer of %s" % f)
             self.info("Did not attempt transfer of %s" % f)
@@ -216,7 +216,7 @@ class RsyncTransfer(TransferBase):
                 print str(ex)
         if str(grv.code) == "Success":
             if self.config.get("outgoing.transfer_mode") == "move":
-                self.info("Successfully sent: %s; size: %s" % (self.getFile(), \
-                    filesize))
+                (self.info("Successfully sent: %s; size: %s" % (self.getFile(),
+                    filesize)))
         return grv
 

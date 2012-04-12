@@ -46,16 +46,16 @@ class FtpTransfer(TransferBase):
          files
         '''
         tf, name = tempfile.mkstemp()
-        os.write(tf, "user " + self.config.get("ftp.username") + " " + \
-            self.config.get("ftp.password") + "\n")
+        (os.write(tf, "user " + self.config.get("ftp.username") + " " +
+            self.config.get("ftp.password") + "\n"))
         os.write(tf, "cd " + self.config.get("outgoing.target_dir") + "\n")
         os.write(tf, "lcd " + self.config.get("data_stream.directory") + "\n")
         os.write(tf, "get " + self.config.get("outgoing.stop_file") + "\n")
         os.write(tf, "exit\n")
         os.fsync(tf)
         os.close(tf)
-        pullstop = "/usr/bin/ftp -n " + self.config.get("outgoing.target_host") \
-             + " < " + name
+        pullstop = ("/usr/bin/ftp -n " + self.config.get("outgoing.target_host")
+             + " < " + name)
         self.info("setupStopFileCmd %s" % pullstop)
         self.stoptf = tf
         self.stopname = name
@@ -78,27 +78,27 @@ class FtpTransfer(TransferBase):
                 pass
         # set up a control file
         item_name = self.getFile()
-        item_path = os.path.join(self.config.get("data_stream.directory"), \
-            os.path.basename(item_name))
-        ctl_file_name = ".%s.%s" % (item_name, self.config.get( \
-            "outgoing.control_file_extension"))
-        ctl_file_path = os.path.join(self.config.get("data_stream.directory"), \
-            os.path.basename(ctl_file_name))
+        item_path = (os.path.join(self.config.get("data_stream.directory"),
+            os.path.basename(item_name)))
+        ctl_file_name = (".%s.%s" % (item_name, self.config.get(
+            "outgoing.control_file_extension")))
+        ctl_file_path = (os.path.join(self.config.get("data_stream.directory"),
+            os.path.basename(ctl_file_name)))
         self.ctl_file_path = ctl_file_path
         item_size = os.path.getsize(item_path)
         item_cksum = TransferUtils.calcChecksum(item_path)                                               
         ts = "%.2f" % time.time()
-        rcpt_file_name = ".%s.%s.%s" % (item_name, ts, self.config.get( \
-            "outgoing.receipt_file_extension"))
+        rcpt_file_name = (".%s.%s.%s" % (item_name, ts, self.config.get(
+            "outgoing.receipt_file_extension")))
         ctl_file = ControlFile(ctl_file_path, can_overwrite=True)
         ctl_file.create(item_name, item_size, item_cksum, rcpt_file_name)
         self.rcpt_file_name = rcpt_file_name
-        self.rcpt_file_path = TransferUtils.getPathInDir(rcpt_file_name, \
-            self.config.get("data_stream.directory"))
+        self.rcpt_file_path = (TransferUtils.getPathInDir(rcpt_file_name,
+            self.config.get("data_stream.directory")))
         # set up ftp transfer + control file
         tf, name = tempfile.mkstemp()
-        os.write(tf, "user " + self.config.get("ftp.username") + " " + \
-            self.config.get("ftp.password") + "\n")
+        (os.write(tf, "user " + self.config.get("ftp.username") + " " +
+            self.config.get("ftp.password") + "\n"))
         os.write(tf, "cd " + self.config.get("outgoing.target_dir") + "\n")
         os.write(tf, "lcd " + self.config.get("data_stream.directory") + "\n")
         os.write(tf, "put " + self.getFile() + "\n")
@@ -108,8 +108,8 @@ class FtpTransfer(TransferBase):
         os.fsync(tf)
         os.close(tf)
         #print self.getTargetHost(), self.getTarget(), self.getDatasetName(), self.config.get("dataset.directory"), self.getFile(), ctl_file_name
-        pushcmd = "/usr/bin/ftp -n " + self.config.get("outgoing.target_host") \
-            + " < " + name
+        pushcmd = ("/usr/bin/ftp -n " + self.config.get("outgoing.target_host")
+            + " < " + name)
         self.info("setupPushCmd %s" % pushcmd)
         self.pushtf = tf
         self.pushname = name
@@ -122,16 +122,16 @@ class FtpTransfer(TransferBase):
         from the target
         '''
         tf, name = tempfile.mkstemp()
-        os.write(tf, "user " + self.config.get("ftp.username") + " " + \
-            self.config.get("ftp.password") + "\n")
+        (os.write(tf, "user " + self.config.get("ftp.username") + " " +
+            self.config.get("ftp.password") + "\n"))
         os.write(tf, "cd " + self.config.get("outgoing.target_dir") + "\n")
         os.write(tf, "lcd " + self.config.get("data_stream.directory") + "\n")
         os.write(tf, "get " + self.rcpt_file_name + "\n")
         os.write(tf, "exit\n")
         os.fsync(tf)
         os.close(tf)
-        pullrcpt = "/usr/bin/ftp -n " + self.config.get("outgoing.target_host") \
-            + " < " + name
+        pullrcpt = ("/usr/bin/ftp -n " + self.config.get("outgoing.target_host")
+            + " < " + name)
         self.info("setupPullRcptCmd %s" % pullrcpt)
         self.pulltf = tf
         self.pullname = name
@@ -159,24 +159,24 @@ class FtpTransfer(TransferBase):
             self.info("push thanks setup fail %s" % err)
             return ""
         thankyou_file_name = rcpt_data[4]
-        thankyou_file_path = TransferUtils.getPathInDir(thankyou_file_name, \
-            self.config.get("data_stream.directory"))
+        thankyou_file_path = (TransferUtils.getPathInDir(thankyou_file_name,
+            self.config.get("data_stream.directory")))
         self.thankyou_file_path = thankyou_file_path
         thankyou_file = ThankyouFile(thankyou_file_path)
         thankyou_file.create(self.rcpt_file_name)
         self.thankyou_file_path = thankyou_file_path
         # set up ftp transfer + thankyou file
         tf, name = tempfile.mkstemp()
-        os.write(tf, "user " + self.config.get("ftp.username") + " " + \
-            self.config.get("ftp.password") + "\n")
+        (os.write(tf, "user " + self.config.get("ftp.username") + " " +
+            self.config.get("ftp.password") + "\n"))
         os.write(tf, "cd " + self.config.get("outgoing.target_dir") + "\n")
         os.write(tf, "lcd " + self.config.get("data_stream.directory") + "\n")
         os.write(tf, "put " + thankyou_file_name + "\n")
         os.write(tf, "exit\n")
         os.fsync(tf)
         os.close(tf)
-        thankyoucmd = "/usr/bin/ftp -n " + self.config.get( \
-            "outgoing.target_host") + " < " + name
+        thankyoucmd = ("/usr/bin/ftp -n " + self.config.get(
+            "outgoing.target_host") + " < " + name)
         self.info("setupThanksCmd %s" % thankyoucmd)
         self.thktf = tf
         self.thkname = name
@@ -210,13 +210,13 @@ class FtpTransfer(TransferBase):
     def setupTransfer(self, f):
         self.setFile(f)
         #print "current file name = ", f
-        file_name = TransferUtils.getPlainFileName(self.config.get( \
-            "data_stream.directory"), f, self.config.get( \
-            "outgoing.dir_size_limit"))
+        file_name = (TransferUtils.getPlainFileName(self.config.get(
+            "data_stream.directory"), f, self.config.get(
+            "outgoing.dir_size_limit")))
         #print "file_name from getplain filename = ", file_name
         if not file_name:
-            TransferUtils.quarantine(f, self.config.get("data_stream.directory"), \
-                 self.config.get("outgoing.quarantine_dir"))
+            (TransferUtils.quarantine(f, self.config.get("data_stream.directory"),
+                 self.config.get("outgoing.quarantine_dir")))
             grv = Response.failure("Did not attempt transfer of %s" % f)
             self.info("Did not attempt transfer of %s" % f)
             return grv
@@ -242,10 +242,10 @@ class FtpTransfer(TransferBase):
         if str(grv.code) == "Success":
             os.remove(self.stopname)
             # get rid of any stop files we may have retrieved
-            if os.path.exists(self.config.get("data_stream.directory") + "/" + \
-                self.config.get("outgoing.stop_file")):
-                os.remove(self.config.get("data_stream.directory") + "/" +  \
-                    self.config.get("outgoing.stop_file"))
+            if (os.path.exists(self.config.get("data_stream.directory") + "/" +
+                self.config.get("outgoing.stop_file"))):
+                (os.remove(self.config.get("data_stream.directory") + "/" + 
+                    self.config.get("outgoing.stop_file")))
 
             grv = self.pushData()
 
@@ -268,7 +268,7 @@ class FtpTransfer(TransferBase):
             self.info(" rv = %s " % str(grv.code))
 
         if str(grv.code) == "Success":
-            self.info("Successfully sent: %s; size: %s bytes" % (self.getFile(), \
-                filesize))
+            (self.info("Successfully sent: %s; size: %s bytes" % (self.getFile(),
+                filesize)))
         return grv
 
