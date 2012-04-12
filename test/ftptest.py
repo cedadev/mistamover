@@ -25,7 +25,7 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         print sys.argv
         if sys.argv[1] == "--checkVars":
-            s = StagerController.StagerController("test/conf/ftp_global.ini")
+            s = MiStaMoverController.MiStaMoverController("test/conf/ftp_global.ini")
             d = s.dconfigs['ftp']
             r = FtpTransfer(d)
             r.checkVars()

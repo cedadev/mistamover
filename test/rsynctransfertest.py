@@ -19,7 +19,7 @@ lib_dir = os.path.join(top_dir, "lib")
 sys.path.append(lib_dir)
 
 from TransferModules.RsyncTransfer import RsyncTransfer
-import StagerController
+import MiStaMoverController
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
@@ -35,7 +35,7 @@ if __name__ == '__main__':
             except Exception, e1:
                 print str(e1)
             hd1 = h1.digest()
-            s = StagerController.StagerController("test/conf/rsync_global2.ini")
+            s = MiStaMoverController.MiStaMoverController("test/conf/rsync_global2.ini")
             d = s.dconfigs['rsync2']
             t = RsyncTransfer(d)
             rv = t.setupTransfer("testfile")

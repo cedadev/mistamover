@@ -18,13 +18,13 @@ lib_dir = os.path.join(top_dir, "lib")
 sys.path.append(lib_dir)
 
 
-import StagerController
+import MiStaMoverController
 import AlertEmailer
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         print sys.argv
         if sys.argv[1] == "--runLog":
-            s = StagerController.StagerController("test/conf/email_global.ini")
+            s = MiStaMoverController.MiStaMoverController("test/conf/email_global.ini")
             s.startLogServer()
             s.checkConfig()
             s.info("info test message")

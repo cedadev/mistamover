@@ -17,11 +17,11 @@ lib_dir = os.path.join(top_dir, "lib")
 sys.path.append(lib_dir)
 
 
-import StagerController
+import MiStaMoverController
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         print sys.argv
         if sys.argv[1] == "--dump":
-            s = StagerController.StagerController("test/conf/rsync_global.ini")
+            s = MiStaMoverController.MiStaMoverController("test/conf/rsync_global.ini")
             s.dumpConfig()
