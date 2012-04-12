@@ -29,7 +29,6 @@ class DatasetConfig(BaseConfig):
         if gconfig["global"].has_key("dataset_config_dir"):
             gconfig["global"]["config_dir"] = gconfig["global"]["dataset_config_dir"]
             print "Re-setting '%s' to use configs in alternative dir: %s" % (dataset_name, gconfig["global"]["config_dir"])
-            #print "PID: %s" % os.getpid()
   
         if global_path == None:
             file_path = os.path.join(gconfig["global"]["config_dir"], "ds_%s.ini" % dataset_name)
@@ -101,12 +100,7 @@ class DatasetConfig(BaseConfig):
                 if k not in sect_dset:
                     sect_dset[k] = sect_global[k]
       
-    # FIXME: add compulsoryVars - see BaseConfig, and see GlobalConfig for example
 
 if __name__ == '__main__':
-    #import time
     from TestConfig import dc_mytest as dc
     dc.dump()
-    #time.sleep(5)
-    #dc.reread()
-    #dc.dump()

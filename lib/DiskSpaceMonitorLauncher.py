@@ -10,8 +10,6 @@ import os
 from FileUtils import futils
 import Daemon
 import DiskSpaceMonitor
-#from Config import GlobalConfig
-#from Config import DatasetConfig
 
 class DiskSpaceMonitorLauncher(object):
 
@@ -142,7 +140,6 @@ class DiskSpaceMonitorLauncher(object):
 
 if __name__ == '__main__':
     import time
-    #import os
     import StagerController
 
     os.environ["CONFIG__global__top"] = ".."

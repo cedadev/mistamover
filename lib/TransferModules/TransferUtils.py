@@ -70,7 +70,7 @@ class TransferUtils:
     def getPaths(srcpath, files):
         fl2 = []
         op = os.getcwd()
-        np = os.chdir(srcpath)
+        os.chdir(srcpath)
         for f in files:
             if os.path.isdir(f) == True:
                 fl2.append(f + "/")

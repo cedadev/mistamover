@@ -248,7 +248,7 @@ class TransferBase:
                     else: grv += rrv
                     if str(rrv.code) == "Success":
                         # do thanksyou
-                        trv = self.pushThankYou()
+                        self.pushThankYou()
                         self.info("pushData thankyou file sent ok")
                         break
                 else:
@@ -298,7 +298,7 @@ class TransferBase:
                 rcpt_err = None
                 try:
                     rcpt = ReceiptFile(self.rcpt_file_path)
-                    rcpt_data = rcpt.read()
+                    rcpt.read()
                     if grv == None: grv = rv
                     else: grv += rv
                     return grv

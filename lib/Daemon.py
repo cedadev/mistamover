@@ -29,7 +29,6 @@ the daemon can test whether signals were received.
 # Standard library imports
 import os
 import signal
-#import types
 import time
 import sys
 

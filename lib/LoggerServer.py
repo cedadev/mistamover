@@ -15,7 +15,7 @@ log these to the relevant files.
 """
 
 import os
-import time
+#import time
 import logging
 
 import LogReceiver
@@ -150,7 +150,6 @@ class LoggerServer(object):
 
 if __name__ == '__main__':
 
-    #import time
     import sys
     from TestConfig import gc
 

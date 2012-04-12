@@ -9,11 +9,6 @@ import os
 import stat
 import time
 import hashlib 
-#import md5 as hashlib
-#import md5wrapped as md5
-# note to Ag - DeprecationWarning on import md5 - 
-# hashlib.md5() is drop-in replacement for md5.md5()
-
 
 import Response
 import MyZipFile
@@ -44,7 +39,8 @@ class FileUtils(object):
         """
         NOTE: THIS MIGHT NOT BE BEST METHOD FOR CALCULATING MD5 checksum!!!!
 
-        comment from Alan - tested it and it agrees with md5sum command - haven't tested performance
+        comment from Alan - tested it and it agrees with md5sum command - 
+        haven't tested performance
         """
         block_size = 0x10000
 

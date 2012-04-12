@@ -6,7 +6,7 @@
 # the full license text.
 
 import os
-import re
+#import re
 import logging, logging.handlers
 import signal
 

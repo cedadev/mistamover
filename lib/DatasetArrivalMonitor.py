@@ -12,7 +12,6 @@ from AbstractDatasetController import AbstractDatasetController
 import ReceiptFile
 import ControlFile
 import ThankyouFile
-#import Daemon
 from StatusFlag import status
 from FileUtils import futils
 

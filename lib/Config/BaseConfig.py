@@ -64,7 +64,6 @@ class ConfigSection(dict):
     This class is unlikely to be instantiated directly by calling code.
     """
 
-    #_varSubsRe = re.compile("\{\{var:\[([a-zA-Z_]+)\](.*?)\}\}")
     _varSubsRe = re.compile("\$\(([a-zA-Z_]+)\:(.*?)\)")
     _evalSubsRe = re.compile("\{\{eval:(.*?)\}\}")
 
@@ -319,7 +318,7 @@ class BaseConfig(dict):
         try:
             sk = key.split(".")
             a = self.d.__getitem__(sk[0])
-            b = a[sk[1]]
+            #b = a[sk[1]]
             a[sk[1]] = value
             self.d.__setitem__(sk[0], a);
         except Exception, ex:
