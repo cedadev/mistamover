@@ -73,7 +73,8 @@ class StagerController(object):
         self.sub_procs = {}
 
         if not os.path.exists(self.gconfig.get("logging.base_log_dir")):
-            print "log path " + self.gconfig.get("logging.base_log_dir") + " does not exist"
+            print ("log path " + self.gconfig.get("logging.base_log_dir") + 
+                " does not exist")
             sys.exit()
 
         self.initLogger()
@@ -122,8 +123,8 @@ class StagerController(object):
         """
         Main loop.
         Start the daemons, then wait until we are told to stop.
-        It checks the data_stream config directory for new data_streams if that method
-        is used.
+        It checks the data_stream config directory for new data_streams if that
+        method is used.
         """
 
         self.startAll()
@@ -182,7 +183,8 @@ class StagerController(object):
         if self.gconfig["global"].has_key("data_stream_config_dir"):
             self.gconfig["global"]["config_dir"] = self.gconfig["global"]["data_stream_config_dir"]
             self._populateDatasetConfigsFromConfigDir()
-            print "Using data_streams in alternative dir: %s" % self.gconfig["global"]["config_dir"]
+            print ("Using data_streams in alternative dir: %s" % 
+                self.gconfig["global"]["config_dir"])
             print "Using data_streams: %s" % self.datasets
         else:
             self.datasets = string.split(self.gconfig["global"]["data_stream_list"])
@@ -205,11 +207,10 @@ class StagerController(object):
         for ds_name in self.datasets:
             if ds_name not in self.dconfigs.keys():
                 if self.oneoff == False:
-                  self.dconfigs[ds_name] = \
-                      DatasetConfig(ds_name, self.gconfig)
+                  self.dconfigs[ds_name] = DatasetConfig(ds_name, self.gconfig)
                 else:
-                  self.dconfigs[ds_name] = \
-                      DatasetConfig(ds_name, self.gconfig, self.global_config_path)
+                  self.dconfigs[ds_name] = (DatasetConfig(ds_name, self.gconfig,
+                       self.global_config_path))
                 ds_added.append(ds_name)
 
             # Now they should all have been loaded. When re-trying, try all those
@@ -231,37 +232,42 @@ class StagerController(object):
 
     def _removeDeletedDatasets(self):
         """
-        Remove any (and try stopping the sub-process) data_streams that have disappeared
-        from the configuration.
+        Remove any (and try stopping the sub-process) data_streams that have 
+        disappeared from the configuration.
         """
         for ds_name in self.dconfigs.keys():
 
             if ds_name not in self.datasets:
-                self.info("STOPPING data_stream because removed from data_stream list: %s" % ds_name)
+                (self.info("STOPPING data_stream because removed from data_stream list: %s" %
+                    ds_name))
                 self.stopDatasetProcs(ds_name) 
                 del self.dconfigs[ds_name]
 
 
     def _populateDatasetConfigsFromConfigDir(self):
         """
-        Lists all files in ``data_stream_config_dir`` to generate a list of data_streams
-        to use. Stores them in ``self.data_streams``.
+        Lists all files in ``data_stream_config_dir`` to generate a list of 
+        data_streams to use. Stores them in ``self.data_streams``.
         """
 
         if self.gconfig["global"].has_key("data_stream_config_dir"):
             self.gconfig["global"]["config_dir"] = self.gconfig["global"]["data_stream_config_dir"]
             dataset_config_dir = self.gconfig.get("global.config_dir")
 
-            print "Scanning data_stream configs dir for new data streams: %s" % dataset_config_dir
-            dataset_config_files = [conf_file for conf_file in os.listdir(dataset_config_dir) if conf_file[0] != "."]
-            self.datasets = [i.replace("dataset_", "").replace(".ini", "") for i in dataset_config_files]
+            print ("Scanning data_stream configs dir for new data streams: %s" % 
+                dataset_config_dir)
+            dataset_config_files = ([conf_file for conf_file in 
+                os.listdir(dataset_config_dir) if conf_file[0] != "."])
+            self.datasets = ([i.replace("dataset_", "").replace(".ini", "") 
+                for i in dataset_config_files])
         else:
             pass
 
 
     def scanDatasetConfigsForChange(self):
         """
-        Reads ``data_stream_config`` dir and reacts to any new config files or any deletions.
+        Reads ``data_stream_config`` dir and reacts to any new config files or 
+        any deletions.
         """
         self.gconfig = GlobalConfig(self.global_config_path)
         self.datasets = string.split(self.gconfig.get("global.data_stream_list"))
@@ -432,7 +438,8 @@ class StagerController(object):
         dconfig = args[0]
         # set up a config item so that we can do oneoff etc
         dconfig.set("global.oneoff", self.oneoff)
-        dtc = DatasetTransferController.DatasetTransferController(dconfig, debug_on=self.debug_on)
+        dtc = (DatasetTransferController.DatasetTransferController(dconfig, 
+            debug_on=self.debug_on))
         return dtc.processTransfers()
 
     
