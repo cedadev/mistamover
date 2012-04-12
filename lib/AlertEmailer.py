@@ -72,27 +72,16 @@ class AlertEmailer(object):
 
         smtpServer = self.email_smarthost
 
-#        msg = MIMEText("Stager running on %s (sub-system '%s')\n reported the following:\n\n%s" %
-#                       (self.hostname, self.name, message))
-#        msg["From"] = self.email_from
-#        msg["Subject"] = ("%s (%s)" %  (self.email_subject, self.name))
-#        msg["To"] = self.email_recipients
-
         msg = "MiStaMover running on %s (sub-system '%s')\n reported the following:\n\n%s" % (self.hostname, self.name, message)
-
-#        s.sendmail(self.email_from, self.email_recipients, msg.as_string())
 
         # mail to each separately
         for recipient in self.email_recipients:
-            #print recipient
             s = smtplib.SMTP()
             s.connect(smtpServer)            
-#print "\nMailing: %s\n\n" % recipient
             content = """To: %s
 From: %s
 Subject: %s
 %s""" % (recipient, self.email_from, self.email_subject, msg)
-#            print content
             s.sendmail(self.email_from, [recipient], content)
             s.close()
 
