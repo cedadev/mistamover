@@ -19,9 +19,9 @@ rsynctransfertest.py
 	uses rsync_global2.ini dataset_rsync2.ini
 	sets up RsyncTransfer instance, transfers a file to another directory
 
-stagercontrollertest.py
+mistamovercntrollertest.py
 	uses rsync_global_ini dataset_rsync.ini
-	sets up a stagercontroller instance and dumps the config
+	sets up a mistamovercontroller instance and dumps the config
 
 transferbasetest.py
 	uses rsync_global.ini dataset_rsync.ini
