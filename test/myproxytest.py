@@ -25,7 +25,7 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         print sys.argv
         if sys.argv[1] == "--runPipe":
-            s = StagerController.StagerController("test/gridftp_global.ini")
+            s = StagerController.StagerController("test/conf/gridftp_global.ini")
             t = TransferBase()
             t.setConfig(s.gconfig)
             t.initLogger("transferbase")

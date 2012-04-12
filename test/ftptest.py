@@ -25,7 +25,7 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         print sys.argv
         if sys.argv[1] == "--checkVars":
-            s = StagerController.StagerController("test/ftp_global.ini")
+            s = StagerController.StagerController("test/conf/ftp_global.ini")
             d = s.dconfigs['ftp']
             r = FtpTransfer(d)
             r.checkVars()
@@ -48,8 +48,7 @@ if __name__ == '__main__':
             r.rcpt_file_path = "test/." + r.getFile() + "." + r.config.get("outgoing.receipt_file_extension") 
             print r.setupPushThanksCmd()
             try:
-                os.remove("test/." + r.getFile() + "." + r.config.get("outgoing.control_file_extension"))
-                os.remove("test/." + r.getFile() + "." + r.config.get("outgoing.receipt_file_extension"))
-                os.remove("test/." + r.getFile() + "." + r.config.get("outgoing.thankyou_file_extension"))
-            except:
+                os.remove("test/testfiles/." + r.getFile() + "." + r.config.get("outgoing.control_file_extension"))
+                os.remove("test/testfiles/." + r.getFile() + "." + r.config.get("outgoing.receipt_file_extension"))
+            except Exception, ex:
                 pass

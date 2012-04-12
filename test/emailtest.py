@@ -24,7 +24,7 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         print sys.argv
         if sys.argv[1] == "--runLog":
-            s = StagerController.StagerController("test/email_global.ini")
+            s = StagerController.StagerController("test/conf/email_global.ini")
             s.startLogServer()
             s.checkConfig()
             s.info("info test message")

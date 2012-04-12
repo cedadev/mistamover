@@ -23,7 +23,7 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         print sys.argv
         if sys.argv[1] == "--checkVars":
-            s = StagerController.StagerController("test/rsync_global.ini")
+            s = StagerController.StagerController("test/conf/rsync_global.ini")
             d = s.dconfigs['rsync']
             r = RsyncTransfer(d)
             r.checkVars()

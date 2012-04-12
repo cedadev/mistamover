@@ -26,16 +26,16 @@ if __name__ == '__main__':
         print sys.argv
         if sys.argv[1] == "--runPipe":
             h1 = hashlib.md5()
-            shutil.copy("test/rsync2/testfile.bak", "test/rsync2/testfile")
+            shutil.copy("test/testfiles/testfile.bak", "test/testfiles/testfile")
             try:
-                f1 = open("test/rsync2/testfile", "r")
+                f1 = open("test/testfiles/testfile", "r")
                 fs1 = f1.read()
                 f1.close()
                 h1.update(fs1)
             except Exception, e1:
                 print str(e1)
             hd1 = h1.digest()
-            s = StagerController.StagerController("test/rsync_global2.ini")
+            s = StagerController.StagerController("test/conf/rsync_global2.ini")
             d = s.dconfigs['rsync2']
             t = RsyncTransfer(d)
             rv = t.setupTransfer("testfile")
@@ -54,9 +54,9 @@ if __name__ == '__main__':
 
                 assert hd1 == hd2, "file hashes not equal"
 
-                shutil.copy("test/rsync2/testfile.bak", "test/rsync2/testfile")
+                shutil.copy("test/testfiles/testfile.bak", "test/testfiles/testfile")
                 try:
-                    os.remove("test2/rsync2/testfile")
+                    os.remove("test2/testfiles/testfile")
                 except:
                     pass  
    
