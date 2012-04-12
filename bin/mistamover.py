@@ -38,7 +38,7 @@ daemon_mode = False
 sys.path.append(lib_dir)
 
 # Local imports
-import StagerController
+import MiStaMoverController
 import Daemon
 
 def parseOptions(args):
@@ -80,7 +80,7 @@ else:
     os.environ["CONFIG__global__top"] = top_dir
 
 # Set up stager instance an start
-sc = StagerController.StagerController(global_config, debug_on, oneoff)
+sc = MiStaMoverController.MiStaMoverController(global_config, debug_on, oneoff)
 
 # Run as daemon if requested...
 if daemon_mode == True:
