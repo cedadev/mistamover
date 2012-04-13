@@ -43,3 +43,23 @@ if __name__ == '__main__':
                 pass
             print rv
             assert str(rv.code) == "Success"
+        if sys.argv[1] == "--runPipeFail":
+            s = MiStaMoverController.MiStaMoverController("test/conf/gridftp_global.ini")
+            t = TransferBase()
+            t.setConfig(s.gconfig)
+            t.initLogger("transferbase")
+            tf, name = tempfile.mkstemp()
+            os.write(tf, t.config.get("gridftp.password"))
+            os.fsync(tf)
+            cmd = "1myproxy-logon -S -s " + t.config.get("gridftp.proxy") + " -l " + t.config.get("gridftp.username") + \
+                " < " + name
+            print cmd, name
+            rv = t.transferData(cmd)
+            try:
+                os.close(tf)
+                os.remove(name)
+            except:
+                pass
+            print rv
+            assert str(rv.code) == "Failure"
+            print "Success - a command that is not present causes an error to be raised"
