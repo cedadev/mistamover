@@ -30,3 +30,13 @@ if __name__ == '__main__':
             r.setFile("testfile")
             print r.setupStopFileCmd()
             print r.setupPushCmd()
+        if sys.argv[1] == "--checkVarsFail":
+            s = MiStaMoverController.MiStaMoverController("test/conf/rsync_global_fail.ini")
+            d = s.dconfigs['rsync']
+            r = RsyncTransfer(d)
+            try:
+                r.checkVars()
+                r.setFile("testfile")
+                print r.setupStopFileCmd()
+            except Exception, ex:
+                print "Success - an exception was thrown!\n", str(ex)
