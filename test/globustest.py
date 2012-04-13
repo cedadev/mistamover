@@ -17,14 +17,12 @@ lib_dir = os.path.join(top_dir, "lib")
 sys.path.append(lib_dir)
 
 from TransferModules.TransferBase import TransferBase
-#from LoggerClient import LoggerClient
 import MiStaMoverController
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         print sys.argv
         if sys.argv[1] == "--runPipe":
             s = MiStaMoverController.MiStaMoverController("test/conf/rsync_global.ini")
-            #s.gconfig.dump()
             t = TransferBase()
             t.setConfig(s.gconfig)
             t.initLogger("transferbase")
