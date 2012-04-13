@@ -18,15 +18,12 @@ lib
    LogReceiver
    LoggerClient
    LoggerServer
+   MiStaMoverController
    MyZipFile
    ProcName
    ReceiptFile
    Response
-   StagerController
    StatusFlag
    SystemCheck
-   TestConfig
-   TestDataset
    ThankyouFile
    TransferModules
-   md5wrapped

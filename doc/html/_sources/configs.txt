@@ -323,20 +323,217 @@ Here we define the sections that are defined in the configuration files and the 
 
 The sections can be as follows\:
 
-ADDMORE
+**[global]**
+  Intended for options that are unlikely to be overridden
 
-**``[rsync_ssh]``**
+**[incoming]**
+  Options required to define how MiStaMover will operate if it is acting as a server and receiving files (and using an Arrivals Monitor)
+
+**[outgoing]**
+  Options required to define how MiStaMover will operate when it pushes data to another computer
+
+**[logging]**
+  Options required to define where log files are kept etc.
+
+**[email]**
+  Options required to define who to send email to and what smarthost to use etc.
+
+**[disk_space_monitor]**
+  Options to define when to remove transfered files if disk space if getting low
+
+**[rsync_ssh]**
+  Options to define how rsync over ssh transfer module operates
+
+**[rsync_native]**
+  Options to define how native rsync transfer module operates
+
+**[ftp]**
+  Options to define how ftp transfer module operates
+
+**[gridftp]**
+  Options to define how gridftp transfer module operates
+
+**[rsync_ssh]**
   Defines settings required for using the rsync-over-SSH transfer protocol.
 
-For each section, the following settings, their meanings and possible values are given below\:
+*  `For each section, the following settings, their meanings and possible values are given below\:`
 
-**``[rsync_ssh]``**
+**[global]**
+  debug_on
+    If True, then debug will be written to the console
+
+  homedir
+    The user homedir
+
+  top
+    The location of MiStaMover
+
+  base_data_dir
+    The location of where data files will be located
+
+  config_dir
+    The location of the global and data_stream config files
+
+  base_incoming_dir
+    Location where incoming files will be stored
+
+  data_stream_list
+    List of datastreams which are being transfered
+
+  general_poll_interval
+    Interval (in seconds) at which MiStaMover polls for state changes
+
+**[incoming]**
+  require_arrival_monitor
+    If True, then MiStaMover will run the Arrivals Monitor protocol for incoming data
+
+  control_file_extension
+    Defines file extensions used by Arrivals Monitor protocol
+
+  receipt_file_extension
+    Defines file extensions used by Arrivals Monitor protocol
+  
+  thankyou_file_extension
+    Defines file extensions used by Arrivals Monitor protocol
+
+  stop_file
+    The name of the file that will stop any remote MiStaMover instances from sending more data to this MiStaMover Instance
+
+**[outgoing]**
+  target_uses_arrival_monitor
+    If True, then MiStaMover will push data and expect the Arrivals Monitor protocol to be running on the target host
+
+  target_host
+    Eefines the host MiStaMover is pushing data to
+
+  transfer_protocol
+    Defines the TransferModule that will be used to push data to the target host
+
+  target_dir
+    Defines where on the target host the data will be pushed to
+
+  control_file_extension
+    Defines file extensions used by Arrivals Monitor protocol
+
+  receipt_file_extension
+    Defines file extensions used by Arrivals Monitor protocol  
+
+  thankyou_file_extension
+    Defines file extensions used by Arrivals Monitor protocol
+
+  retry_count
+    The number of times MiStaMover will retry a data push
+
+  receipt_file_poll_count
+    When usin gArrivals Monitor protocol - defines how many times a receipt for the data push will be requested before failing
+
+  receipt_file_poll_interval
+    When usin gArrivals Monitor protocol - defines how long to wait (in seconds) before requesting a receipt for the data push
+
+  dir_size_limit
+    The directory size limit for files that are being pushed
+
+  stop_file
+    The name of the file that will stop MiStaMover from sending more data to the remote  MiStaMover Instance
+
+  stop_file_poll_interval
+    The interval at which MiStaMover polls the remote host for the presence of a stop file
+
+**[logging]**
+  base_log_dir
+    The location of log files
+
+  log_level
+    The minimum log level (of a message) before it is logged to file
+
+  port
+    The port on which the log server listens
+
+**[email]**
+  from
+    The email address that should be used for any emails sent by MiStaMover
+
+  threshold
+    The minimum level (of a message) before it is sent via email
+
+  recipient
+    The email address to whom the emails should be sent
+
+  subject
+    The subject line of emails sent from MiStaMover
+
+  smarthost
+    The smarthost that should be used in the email transfer
+
+**[disk_space_monitor]**
+  base_priority
+    priority to define a baseline as to whether or not to remove transfered files if disk space is getting low
+
+  level_good
+    An integer value defining (in Mb) how much disk space is considered 'good'
+
+  level_low
+    An integer value defining (in Mb) how much disk space is considered 'low'
+
+  level_vlow
+    An integer value defining (in Mb) how much disk space is considered 'vlow'
+
+  poll_interval
+    The interval at which the disk space monitor will check disk space levels
+
+**[rsync_ssh]**
   cmd
     The full-path to the command that will be run.
     
   transfer_mode
     Set the transfer mode to either ``move`` or ``mirror``.
-  
+
+  checksum
+    If True then rsync will use checksum to determine if file needs to be transfered
+
+  size-only
+    If True then rsync will use size only to determine if file needs to be transfered
+
+**[rsync_native]**
+  cmd
+    The full-path to the command that will be run
+
+  username
+    Username to use in authentication during transfer
+
+  password
+    Password to use in authentication during transfer
+
+  transfer_mode
+    Set the transfer mode to either ``move`` or ``mirror``
+
+**[ftp]**
+  cmd
+    The full-path to the command that will be run
+
+  username
+    Username to use in authentication during transfer
+
+  password
+    Password to use in authentication during transfer
+
+**[gridftp]**
+  cmd
+    The full-path to the command that will be run
+
+  username
+    Username to use in authentication during transfer
+
+  password
+    Password to use in authentication during transfer
+
+  port
+    Port of GridFtp server on remote host
+
+  proxy
+    location of MyProxy proxy server (used to serve credentials)
+
+
 Extensions to the Standard Configuration File Parsing
 -----------------------------------------------------
 

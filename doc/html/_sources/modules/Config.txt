@@ -33,3 +33,11 @@ Config Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`settings` Module
+----------------------
+
+.. automodule:: Config.settings
+    :members:
+    :undoc-members:
+    :show-inheritance:
+

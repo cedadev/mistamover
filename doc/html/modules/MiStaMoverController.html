@@ -1,0 +1,257 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MiStaMoverController Module &mdash; MiStaMover 0.1.0alpha documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MiStaMover 0.1.0alpha documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-MiStaMoverController">
+<span id="mistamovercontroller-module"></span><h1>MiStaMoverController Module<a class="headerlink" href="#module-MiStaMoverController" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="MiStaMoverController.MiStaMoverController">
+<em class="property">class </em><tt class="descclassname">MiStaMoverController.</tt><tt class="descname">MiStaMoverController</tt><big>(</big><em>global_config_path</em>, <em>debug_on=False</em>, <em>oneoff=False</em><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>This is the daemon process that manages a group of other class 
+instances which are run in sub-processes, specifically:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">one LoggerServer</p>
+</li>
+<li><dl class="first docutils">
+<dt>one DiskSpaceMonitor for each filesystem </dt>
+<dd><p class="first last">(via DiskSpaceMonitorLauncher)</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">a DatasetTransferController for each data_stream</p>
+</li>
+<li><p class="first">a DatasetArrivalMonitor for each data_stream which needs it</p>
+</li>
+</ul>
+</div></blockquote>
+<p>It is the top-level in MiStaMover (apart from the main program MiStaMover.py
+which basically just sets a few variables and calls this)</p>
+<dl class="method">
+<dt id="MiStaMoverController.MiStaMoverController.checkConfig">
+<tt class="descname">checkConfig</tt><big>(</big><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController.checkConfig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="MiStaMoverController.MiStaMoverController.dumpConfig">
+<tt class="descname">dumpConfig</tt><big>(</big><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController.dumpConfig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="MiStaMoverController.MiStaMoverController.getDatasetProcs">
+<tt class="descname">getDatasetProcs</tt><big>(</big><em>ds_name</em><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController.getDatasetProcs" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a method that is run in a daemon when startDatasetProcs()
+is called.</p>
+<p>Don&#8217;t call this directly unless you want it running
+in the foreground.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MiStaMoverController.MiStaMoverController.initLogger">
+<tt class="descname">initLogger</tt><big>(</big><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController.initLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>initialise the logger client object for logging from this module.
+NB this is completely separate from the server side, which is also 
+started by MiStaMoverController</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MiStaMoverController.MiStaMoverController.main">
+<tt class="descname">main</tt><big>(</big><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main loop.
+Start the daemons, then wait until we are told to stop.
+It checks the data_stream config directory for new data_streams if that
+method is used.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MiStaMoverController.MiStaMoverController.readConfig">
+<tt class="descname">readConfig</tt><big>(</big><em>global_config_path</em><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController.readConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read global config and dictionary of all the data_stream configs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MiStaMoverController.MiStaMoverController.runDatasetArrivalMonitor">
+<tt class="descname">runDatasetArrivalMonitor</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController.runDatasetArrivalMonitor" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a method that is run in a daemon when startDatasetProcs()
+is called.</p>
+<p>Don&#8217;t call this directly unless you want it running
+in the foreground.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MiStaMoverController.MiStaMoverController.runDatasetTransferController">
+<tt class="descname">runDatasetTransferController</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController.runDatasetTransferController" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is method that is run in the daemon when startLogServer()
+is called.</p>
+<p>Don&#8217;t call this directly unless you want it running
+in the foreground.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MiStaMoverController.MiStaMoverController.runLogger">
+<tt class="descname">runLogger</tt><big>(</big><em>gconfig</em><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController.runLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is method that is run in the daemon when startLogServer()
+is called.</p>
+<p>Don&#8217;t call this directly unless you want it running
+in the foreground.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MiStaMoverController.MiStaMoverController.scanDatasetConfigsForChange">
+<tt class="descname">scanDatasetConfigsForChange</tt><big>(</big><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController.scanDatasetConfigsForChange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads <tt class="docutils literal"><span class="pre">data_stream_config</span></tt> dir and reacts to any new config files or 
+any deletions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MiStaMoverController.MiStaMoverController.startAll">
+<tt class="descname">startAll</tt><big>(</big><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController.startAll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts up sub-processes: log server, disk space monitor, 
+and data_stream specific processes</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MiStaMoverController.MiStaMoverController.startDatasetProcs">
+<tt class="descname">startDatasetProcs</tt><big>(</big><em>ds_name</em><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController.startDatasetProcs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets up the data_stream sub-process.</p>
+<p>Note that if the source_requires_checksum argument is set to True in
+the config file then we need to set up two sub-processes:</p>
+<p>1. to monitor arrivals, run checksums and produce checksum files
+(to confirm receipt).
+2. to send data on.
+In other cases we only set up the second sub-process.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MiStaMoverController.MiStaMoverController.startLogServer">
+<tt class="descname">startLogServer</tt><big>(</big><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController.startLogServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the logger server process</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MiStaMoverController.MiStaMoverController.stopAll">
+<tt class="descname">stopAll</tt><big>(</big><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController.stopAll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the same things that startAll() starts</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MiStaMoverController.MiStaMoverController.stopDatasetProcs">
+<tt class="descname">stopDatasetProcs</tt><big>(</big><em>ds_name</em>, <em>cleanly=True</em><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController.stopDatasetProcs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stops a data_stream sub-process by sending a signal to the sub-process
+requesting it to stop after the current transfer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MiStaMoverController.MiStaMoverController.stopHandler">
+<tt class="descname">stopHandler</tt><big>(</big><em>signo</em>, <em>frame</em><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController.stopHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>A signal handler that just records that we were signalled.
+Doesn&#8217;t bother to see what signal we were called with, as
+should only be installed as a handler for appropriate signals.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MiStaMoverController.MiStaMoverController.stopLogServer">
+<tt class="descname">stopLogServer</tt><big>(</big><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController.stopLogServer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="MiStaMoverController.MiStaMoverController.waitForDatasetProcs">
+<tt class="descname">waitForDatasetProcs</tt><big>(</big><em>ds_name</em><big>)</big><a class="headerlink" href="#MiStaMoverController.MiStaMoverController.waitForDatasetProcs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for processes associated with a named data_stream to stop</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/modules/MiStaMoverController.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MiStaMover 0.1.0alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright See STFC Licence..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

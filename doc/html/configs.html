@@ -363,19 +363,182 @@ password = mistamover</pre>
 <h2>Configuration Options<a class="headerlink" href="#configuration-options" title="Permalink to this headline">¶</a></h2>
 <p>Here we define the sections that are defined in the configuration files and the options that can be set for each.</p>
 <p>The sections can be as follows:</p>
-<p>ADDMORE</p>
 <dl class="docutils">
-<dt><strong>``[rsync_ssh]``</strong></dt>
+<dt><strong>[global]</strong></dt>
+<dd>Intended for options that are unlikely to be overridden</dd>
+<dt><strong>[incoming]</strong></dt>
+<dd>Options required to define how MiStaMover will operate if it is acting as a server and receiving files (and using an Arrivals Monitor)</dd>
+<dt><strong>[outgoing]</strong></dt>
+<dd>Options required to define how MiStaMover will operate when it pushes data to another computer</dd>
+<dt><strong>[logging]</strong></dt>
+<dd>Options required to define where log files are kept etc.</dd>
+<dt><strong>[email]</strong></dt>
+<dd>Options required to define who to send email to and what smarthost to use etc.</dd>
+<dt><strong>[disk_space_monitor]</strong></dt>
+<dd>Options to define when to remove transfered files if disk space if getting low</dd>
+<dt><strong>[rsync_ssh]</strong></dt>
+<dd>Options to define how rsync over ssh transfer module operates</dd>
+<dt><strong>[rsync_native]</strong></dt>
+<dd>Options to define how native rsync transfer module operates</dd>
+<dt><strong>[ftp]</strong></dt>
+<dd>Options to define how ftp transfer module operates</dd>
+<dt><strong>[gridftp]</strong></dt>
+<dd>Options to define how gridftp transfer module operates</dd>
+<dt><strong>[rsync_ssh]</strong></dt>
 <dd>Defines settings required for using the rsync-over-SSH transfer protocol.</dd>
 </dl>
-<p>For each section, the following settings, their meanings and possible values are given below:</p>
+<ul class="simple">
+<li><cite>For each section, the following settings, their meanings and possible values are given below:</cite></li>
+</ul>
 <dl class="docutils">
-<dt><strong>``[rsync_ssh]``</strong></dt>
+<dt><strong>[global]</strong></dt>
+<dd><dl class="first last docutils">
+<dt>debug_on</dt>
+<dd>If True, then debug will be written to the console</dd>
+<dt>homedir</dt>
+<dd>The user homedir</dd>
+<dt>top</dt>
+<dd>The location of MiStaMover</dd>
+<dt>base_data_dir</dt>
+<dd>The location of where data files will be located</dd>
+<dt>config_dir</dt>
+<dd>The location of the global and data_stream config files</dd>
+<dt>base_incoming_dir</dt>
+<dd>Location where incoming files will be stored</dd>
+<dt>data_stream_list</dt>
+<dd>List of datastreams which are being transfered</dd>
+<dt>general_poll_interval</dt>
+<dd>Interval (in seconds) at which MiStaMover polls for state changes</dd>
+</dl>
+</dd>
+<dt><strong>[incoming]</strong></dt>
+<dd><dl class="first last docutils">
+<dt>require_arrival_monitor</dt>
+<dd>If True, then MiStaMover will run the Arrivals Monitor protocol for incoming data</dd>
+<dt>control_file_extension</dt>
+<dd>Defines file extensions used by Arrivals Monitor protocol</dd>
+<dt>receipt_file_extension</dt>
+<dd>Defines file extensions used by Arrivals Monitor protocol</dd>
+<dt>thankyou_file_extension</dt>
+<dd>Defines file extensions used by Arrivals Monitor protocol</dd>
+<dt>stop_file</dt>
+<dd>The name of the file that will stop any remote MiStaMover instances from sending more data to this MiStaMover Instance</dd>
+</dl>
+</dd>
+<dt><strong>[outgoing]</strong></dt>
+<dd><dl class="first last docutils">
+<dt>target_uses_arrival_monitor</dt>
+<dd>If True, then MiStaMover will push data and expect the Arrivals Monitor protocol to be running on the target host</dd>
+<dt>target_host</dt>
+<dd>Eefines the host MiStaMover is pushing data to</dd>
+<dt>transfer_protocol</dt>
+<dd>Defines the TransferModule that will be used to push data to the target host</dd>
+<dt>target_dir</dt>
+<dd>Defines where on the target host the data will be pushed to</dd>
+<dt>control_file_extension</dt>
+<dd>Defines file extensions used by Arrivals Monitor protocol</dd>
+<dt>receipt_file_extension</dt>
+<dd>Defines file extensions used by Arrivals Monitor protocol</dd>
+<dt>thankyou_file_extension</dt>
+<dd>Defines file extensions used by Arrivals Monitor protocol</dd>
+<dt>retry_count</dt>
+<dd>The number of times MiStaMover will retry a data push</dd>
+<dt>receipt_file_poll_count</dt>
+<dd>When usin gArrivals Monitor protocol - defines how many times a receipt for the data push will be requested before failing</dd>
+<dt>receipt_file_poll_interval</dt>
+<dd>When usin gArrivals Monitor protocol - defines how long to wait (in seconds) before requesting a receipt for the data push</dd>
+<dt>dir_size_limit</dt>
+<dd>The directory size limit for files that are being pushed</dd>
+<dt>stop_file</dt>
+<dd>The name of the file that will stop MiStaMover from sending more data to the remote  MiStaMover Instance</dd>
+<dt>stop_file_poll_interval</dt>
+<dd>The interval at which MiStaMover polls the remote host for the presence of a stop file</dd>
+</dl>
+</dd>
+<dt><strong>[logging]</strong></dt>
+<dd><dl class="first last docutils">
+<dt>base_log_dir</dt>
+<dd>The location of log files</dd>
+<dt>log_level</dt>
+<dd>The minimum log level (of a message) before it is logged to file</dd>
+<dt>port</dt>
+<dd>The port on which the log server listens</dd>
+</dl>
+</dd>
+<dt><strong>[email]</strong></dt>
+<dd><dl class="first last docutils">
+<dt>from</dt>
+<dd>The email address that should be used for any emails sent by MiStaMover</dd>
+<dt>threshold</dt>
+<dd>The minimum level (of a message) before it is sent via email</dd>
+<dt>recipient</dt>
+<dd>The email address to whom the emails should be sent</dd>
+<dt>subject</dt>
+<dd>The subject line of emails sent from MiStaMover</dd>
+<dt>smarthost</dt>
+<dd>The smarthost that should be used in the email transfer</dd>
+</dl>
+</dd>
+<dt><strong>[disk_space_monitor]</strong></dt>
+<dd><dl class="first last docutils">
+<dt>base_priority</dt>
+<dd>priority to define a baseline as to whether or not to remove transfered files if disk space is getting low</dd>
+<dt>level_good</dt>
+<dd>An integer value defining (in Mb) how much disk space is considered &#8216;good&#8217;</dd>
+<dt>level_low</dt>
+<dd>An integer value defining (in Mb) how much disk space is considered &#8216;low&#8217;</dd>
+<dt>level_vlow</dt>
+<dd>An integer value defining (in Mb) how much disk space is considered &#8216;vlow&#8217;</dd>
+<dt>poll_interval</dt>
+<dd>The interval at which the disk space monitor will check disk space levels</dd>
+</dl>
+</dd>
+<dt><strong>[rsync_ssh]</strong></dt>
 <dd><dl class="first last docutils">
 <dt>cmd</dt>
 <dd>The full-path to the command that will be run.</dd>
 <dt>transfer_mode</dt>
 <dd>Set the transfer mode to either <tt class="docutils literal"><span class="pre">move</span></tt> or <tt class="docutils literal"><span class="pre">mirror</span></tt>.</dd>
+<dt>checksum</dt>
+<dd>If True then rsync will use checksum to determine if file needs to be transfered</dd>
+<dt>size-only</dt>
+<dd>If True then rsync will use size only to determine if file needs to be transfered</dd>
+</dl>
+</dd>
+<dt><strong>[rsync_native]</strong></dt>
+<dd><dl class="first last docutils">
+<dt>cmd</dt>
+<dd>The full-path to the command that will be run</dd>
+<dt>username</dt>
+<dd>Username to use in authentication during transfer</dd>
+<dt>password</dt>
+<dd>Password to use in authentication during transfer</dd>
+<dt>transfer_mode</dt>
+<dd>Set the transfer mode to either <tt class="docutils literal"><span class="pre">move</span></tt> or <tt class="docutils literal"><span class="pre">mirror</span></tt></dd>
+</dl>
+</dd>
+<dt><strong>[ftp]</strong></dt>
+<dd><dl class="first last docutils">
+<dt>cmd</dt>
+<dd>The full-path to the command that will be run</dd>
+<dt>username</dt>
+<dd>Username to use in authentication during transfer</dd>
+<dt>password</dt>
+<dd>Password to use in authentication during transfer</dd>
+</dl>
+</dd>
+<dt><strong>[gridftp]</strong></dt>
+<dd><dl class="first last docutils">
+<dt>cmd</dt>
+<dd>The full-path to the command that will be run</dd>
+<dt>username</dt>
+<dd>Username to use in authentication during transfer</dd>
+<dt>password</dt>
+<dd>Password to use in authentication during transfer</dd>
+<dt>port</dt>
+<dd>Port of GridFtp server on remote host</dd>
+<dt>proxy</dt>
+<dd>location of MyProxy proxy server (used to serve credentials)</dd>
 </dl>
 </dd>
 </dl>

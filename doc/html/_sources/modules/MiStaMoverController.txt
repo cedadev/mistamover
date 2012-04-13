@@ -1,0 +1,7 @@
+MiStaMoverController Module
+===========================
+
+.. automodule:: MiStaMoverController
+    :members:
+    :undoc-members:
+    :show-inheritance:
