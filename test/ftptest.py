@@ -17,7 +17,7 @@ lib_dir = os.path.join(top_dir, "lib")
 sys.path.append(lib_dir)
 
 
-import StagerController
+import MiStaMoverController
 from TransferModules.FtpTransfer import FtpTransfer
 from TransferModules.TransferUtils import TransferUtils
 from ReceiptFile import ReceiptFile
