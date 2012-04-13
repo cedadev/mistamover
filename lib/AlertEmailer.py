@@ -77,13 +77,16 @@ class AlertEmailer(object):
         # mail to each separately
         for recipient in self.email_recipients:
             s = smtplib.SMTP()
-            s.connect(smtpServer)            
-            content = """To: %s
+            try:
+                s.connect(smtpServer)            
+                content = """To: %s
 From: %s
 Subject: %s
 %s""" % (recipient, self.email_from, self.email_subject, msg)
-            s.sendmail(self.email_from, [recipient], content)
-            s.close()
+                s.sendmail(self.email_from, [recipient], content)
+                s.close()
+            except Exception, ex:
+                print "Alert Emailer", str(ex)
 
         return True
 

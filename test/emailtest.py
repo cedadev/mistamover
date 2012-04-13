@@ -33,3 +33,13 @@ if __name__ == '__main__':
             print "sleeping"
             time.sleep(20)
             s.stopLogServer()
+        if sys.argv[1] == "--runLogFail":
+            s = MiStaMoverController.MiStaMoverController("test/conf/email_global_fail.ini")
+            s.startLogServer()
+            s.checkConfig()
+            s.info("info test message")
+            s.critical("critical test message")
+            s.info("info test message")
+            print "sleeping"
+            time.sleep(20)
+            s.stopLogServer() 
