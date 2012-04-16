@@ -18,7 +18,101 @@ These define such information as what a data stream is called, where its data ca
 Global Configuration Files
 --------------------------
 
-TBC
+The following is an example of aglobal config file::  
+
+  #  
+  # Global config file - can override values per data_stream by giving them the 
+  # same section and key in the data_stream config file                                          
+  #                                                                                                                        
+  [global]  
+  # global section is intended for stuff which is unlikely to be overridden   
+  # per-data_stream (although technically there is nothing to prevent a 'global'  
+  # section in the data_stream config file)  
+                                                                                                  
+  debug_on = True                                                                    
+  homedir = /home/users/mistamover                                                             
+  #                                                                                            
+  # the location of stager                                                              
+  #                                                                                                      
+  top = /home/users/jhorton/Download/SVN/jah/19mar2012  
+  base_data_dir = $(global:top)/data                                                               
+  #                                                                                               
+  # the location of the global and data_stream config files  
+  #                                                                                              
+  config_dir = $(global:top)/conf                                                              
+  # Note that data_stream_config_dir overrides data_stream_list in terms of where to look for config files 
+  base_incoming_dir = /home/users/mistamover/incoming/                   
+  #                                                                                              
+  # a list of data_streams to transfer - each one of these will have a config file                  
+  #                                                                                                
+  data_stream_list = rsync_ssh                                                                     
+  general_poll_interval = 3                                                                      
+
+  [incoming]
+  require_arrival_monitor = False
+  control_file_extension = stager-ctrl-bss
+  thankyou_file_extension = stager-thanks-bss
+  stop_file = .stop                          
+
+  [outgoing]
+  #         
+  # the transfer_protocol defines the underlying protcol used to transfer files
+  # each protocol is wrapped in a class that inherits from TransferModules::TransferBase
+  #                                                                                     
+  transfer_protocol = rsync_ssh                                                         
+  #                                                                                     
+  # The transfer_mode can be either move OR mirror for rsync (all other protocols only support move)
+  #                                                                                                 
+  transfer_mode = move                                                                              
+
+  control_file_extension = stager-ctrl-bss
+  receipt_file_extension = stager-rcpt-bss
+  thankyou_file_extension = stager-thanks-bss
+  #                                          
+  # by setting the arrival monitor to True - we use the overlaying handshake protcol
+  # to ensure that files arrive at their destination  correctly                     
+  #                                                                                 
+  #target_uses_arrival_monitor = True                                               
+  retry_count = 3                                                                   
+  receipt_file_poll_count = 100                                                     
+  receipt_file_poll_interval = 5                                                    
+  dir_size_limit = 1000.                                                            
+  stop_file = .stop                                                                 
+  stop_file_poll_interval = 10                                                      
+
+  [logging]
+  #        
+  # location of log files - this directory must exist
+  #                                                  
+  base_log_dir = /tmp/log                            
+  log_level = INFO                                   
+  #log_level = DEBUG                                 
+  port = 2000                                        
+
+  [email]
+  #      
+  # any log message of type CRITICAL or above will be emailed as well as logged
+  #                                                                            
+  from = badc@rl.ac.uk
+  threshold = CRITICAL
+  recipient = mistamover@stfc.ac.uk
+  subject = Error from Local Stager
+  smarthost = outbox.rl.ac.uk
+
+  [disk_space_monitor]
+  base_priority = 100
+  # thresholds in MB - description in DiskSpaceMonitor.py
+  level_good = 1500
+  level_low = 1000
+  level_vlow = 500
+  # note re poll_interval: 1GBit/s, maxed out, is 7.5GB/minute
+  poll_interval = 60
+
+  ## A default data_stream priority can be set here as the data_stream config will fall
+  ## back to the global config in the ordinary way.  But if not then the base
+  ## priority will also be used as a default.
+  # [data_stream]
+  # priority = 100
 
 Data Stream Configuration Files
 -------------------------------
@@ -76,8 +170,6 @@ The following example configuration files can be copied and modified as you requ
  * FTP data stream "move" example (no arrivals monitor)
  * FTP data stream "move" example (with arrivals monitor)
  
-**TBC - need to cover all the above examples in section below!!!**
-
 Here is an example of a *one-off* config file that uses the ``rsync-over-ssh`` transfer protocol::
 
   #                                                                
@@ -326,6 +418,9 @@ The sections can be as follows\:
 **[global]**
   Intended for options that are unlikely to be overridden
 
+**[data_stream]**
+  Options required to define a data_stream - typically one section per data_stream config file
+
 **[incoming]**
   Options required to define how MiStaMover will operate if it is acting as a server and receiving files (and using an Arrivals Monitor)
 
@@ -382,6 +477,19 @@ The sections can be as follows\:
 
   general_poll_interval
     Interval (in seconds) at which MiStaMover polls for state changes
+
+**[data_stream]**
+  priority
+    priority of data_stream - used if disk space monitor is used and disk space is low. It is used to determine if files from the data_stream should be deleted to make more space
+
+  name
+    name of data_stream
+
+  directory
+    location of files for this data_stream
+
+  status
+    status of data_stream, can be RUNNING or STOPPED
 
 **[incoming]**
   require_arrival_monitor
@@ -541,7 +649,7 @@ In addition to supporting the INI file format understood by the python ``ConfigP
 
   ``$(section:option)``
  
-This allows you to re-use values that are set elsewhere in the configuration file (or the global configuration file???CHECK???TOFIX???TRUE???). For example::
+This allows you to re-use values that are set elsewhere in the configuration file (or the global configuration file). For example::
 
   [global]
   homedir = /home/users/me 

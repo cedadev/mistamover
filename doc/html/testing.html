@@ -116,6 +116,7 @@
 <div class="section" id="configuring-a-test-data-stream">
 <span id="config-test-data"></span><h2>Configuring a test data stream<a class="headerlink" href="#configuring-a-test-data-stream" title="Permalink to this headline">¶</a></h2>
 <p>MiStaMover can manage a number (up to 10 have been tested) of parallel data stream transfers. It requires a configuration file for each data stream and will monitor incoming directories and transfer files to outgoing directories for each stream.</p>
+<p>## AG :: the following is probably no longer relevant</p>
 <p>In order to run a test, we need to create a test data stream. Since we imagine that most users will get started this way, we have provided a test data stream configuration file in the configuration directory called <tt class="docutils literal"><span class="pre">data</span> <span class="pre">stream_test1.ini</span></tt>. In order for MiStaMover to know about this data stream its global configuration file (<tt class="docutils literal"><span class="pre">global.ini</span></tt>) needs to be informed about it. The default <tt class="docutils literal"><span class="pre">global.ini</span></tt> file includes the line:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">data_stream_list</span> <span class="o">=</span> <span class="n">test1</span>
 </pre></div>
@@ -167,6 +168,7 @@ LOG MESSAGE: 20: (pid=17109) Transfer succeeded: test1-0.nc</pre>
 <h2>Trouble-shooting the test data stream configuration<a class="headerlink" href="#trouble-shooting-the-test-data-stream-configuration" title="Permalink to this headline">¶</a></h2>
 <p>If the test data stream did not run you may need to modify your configuration file(s). Please see the <a class="reference internal" href="configs.html#configuration"><em>Configuring MiStaMover</em></a> section for more details.</p>
 <p>Or it may be that you cannot run rsync over SSH. If that is the case you may wish to set the software up to run with FTP by customising the <a class="reference internal" href="configs.html#configuration"><em>configuration files</em></a>.</p>
+<p>#&#8217; Ag :: the above is probably not relevant</p>
 </div>
 <div class="section" id="indices-and-tables">
 <h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>

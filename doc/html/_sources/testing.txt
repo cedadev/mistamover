@@ -55,6 +55,8 @@ Configuring a test data stream
 
 MiStaMover can manage a number (up to 10 have been tested) of parallel data stream transfers. It requires a configuration file for each data stream and will monitor incoming directories and transfer files to outgoing directories for each stream. 
 
+## AG :: the following is probably no longer relevant
+
 In order to run a test, we need to create a test data stream. Since we imagine that most users will get started this way, we have provided a test data stream configuration file in the configuration directory called ``data stream_test1.ini``. In order for MiStaMover to know about this data stream its global configuration file (``global.ini``) needs to be informed about it. The default ``global.ini`` file includes the line::
 
   data_stream_list = test1
@@ -115,6 +117,7 @@ If the test data stream did not run you may need to modify your configuration fi
 
 Or it may be that you cannot run rsync over SSH. If that is the case you may wish to set the software up to run with FTP by customising the :ref:`configuration files <configuration>`.
 
+#' Ag :: the above is probably not relevant
 
 Indices and tables
 ------------------
