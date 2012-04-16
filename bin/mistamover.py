@@ -44,6 +44,21 @@ import Daemon
 def parseOptions(args):
     return 
 
+def minver():
+    print "MiStaMover requires python 2.5 or above"
+    sys.exit()
+
+# check that the python interpreter version is at least 2.5
+vs = sys.version
+vss = vs.split()
+vs = vss[0].split('.')
+mj = int(vs[0])
+mn = int(vs[1])
+if mj < 2:
+    minver()
+if mj == 2 and mn < 5:
+    minver()
+   
     
 # Handle arguments, get configuration
 args = sys.argv[1:]
