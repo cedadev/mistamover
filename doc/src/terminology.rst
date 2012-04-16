@@ -44,3 +44,9 @@ This section explains the meaning of various terms used in relation to MiStaMove
 
 **Transfer Mode**
   The *transfer mode* can be set in the configuration files as either `move`_ or `mirror`_.
+
+**Incoming**
+  The directory where files are received to
+
+**Outgoing**
+  The directory where files are pushed from
