@@ -59,4 +59,23 @@ if __name__ == '__main__':
                     os.remove("test2/testfiles/testfile")
                 except:
                     pass  
-   
+        if sys.argv[1] == "--runPipeFail":
+            h1 = hashlib.md5()
+            shutil.copy("test/testfiles/testfile.bak", "test/testfiles/testfile")
+            try:
+                f1 = open("test/testfiles/testfile", "r")
+                fs1 = f1.read()
+                f1.close()
+                h1.update(fs1)
+            except Exception, e1:
+                print str(e1)
+            hd1 = h1.digest()
+            s = MiStaMoverController.MiStaMoverController("test/conf/rsync_global2.ini")
+            d = s.dconfigs['rsync2']
+            t = RsyncTransfer(d)
+            rv = t.setupTransfer("testfileDoesNotExist")
+            assert str(rv.code) == "Failure"
+            try:
+                os.remove("test2/testfiles/testfile")
+            except:
+                pass   

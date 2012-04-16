@@ -17,7 +17,6 @@ lib_dir = os.path.join(top_dir, "lib")
 sys.path.append(lib_dir)
 
 from Response import Response, ResponseCode
-#from LoggerClient import LoggerClient
 from ControlFile import ControlFile
 from ReceiptFile import ReceiptFile
 from ThankyouFile import ThankyouFile
@@ -54,6 +53,9 @@ class GridFTPTransfer(TransferBase):
                 os.remove(self.rcpt_file_path)
             except:
                 pass
+        f = self.getFile()
+        if not self.checkFileExists(self.config.get("data_stream.directory") + "/" + f):
+            return None
         # set up a control file
         if self.config.get("outgoing.target_uses_arrival_monitor"):
             # set up a control file
@@ -117,13 +119,11 @@ class GridFTPTransfer(TransferBase):
                 pass
         # there should be no issue here as this is only called after
         # a receipt file has been proven to be valid
-        #rcpt_err = None
         gftp = self.cmd
         try:
             rcpt = ReceiptFile(self.rcpt_file_path)
             rcpt_data = rcpt.read()
         except Exception, err:
-            #rcpt_err = "bad receipt file: %s" % err
             self.info("push thanks setup fail %s" % err)
             return ""
         thankyou_file_name = rcpt_data[4]
@@ -189,6 +189,10 @@ class GridFTPTransfer(TransferBase):
     # this is the entry point for the module
     def setupTransfer(self, f):
         self.setFile(f)
+        if not self.checkFileExists(self.config.get("data_stream.directory") + "/" + f):
+            rc = ResponseCode(False)
+            grv = Response(rc, "Not attempting file transfer")
+            return grv
         file_name = (TransferUtils.getPlainFileName(self.config.get(
             "data_stream.directory"), f, self.config.get("outgoing.dir_size_limit")))
         if not file_name:

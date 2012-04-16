@@ -16,7 +16,6 @@ lib_dir = os.path.join(top_dir, "lib")
 sys.path.append(lib_dir)
 
 from .Response import Response, ResponseCode
-#from .LoggerClient import LoggerClient
 from .ControlFile import ControlFile
 from .ReceiptFile import ReceiptFile
 from .ThankyouFile import ThankyouFile
@@ -60,6 +59,8 @@ class RsyncNativeTransfer(TransferBase):
             except:
                 pass
         f = self.getFile()
+        if not self.checkFileExists(self.config.get("data_stream.directory") + "/" + f):
+            return None
         if self.config.get("outgoing.target_uses_arrival_monitor"):
             item_name = f
             item_path = (os.path.join(self.config.get("data_stream.directory"),
@@ -182,6 +183,10 @@ class RsyncNativeTransfer(TransferBase):
     # this is the entry point for the module
     def setupTransfer(self, f):
         self.setFile(f)
+        if not self.checkFileExists(self.config.get("data_stream.directory") + "/" + f):
+            rc = ResponseCode(False)
+            grv = Response(rc, "Not attempting file transfer")
+            return grv
         # if we are mirroring - then do not zip directories - (we pass False
         # to getPlainFileName)
         if self.config.get("rsync_native.transfer_mode") == "mirror":

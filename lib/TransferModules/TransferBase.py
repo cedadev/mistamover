@@ -8,7 +8,6 @@
 import os
 from subprocess import Popen, PIPE
 import time
-#import hashlib
 import shutil
 
 import sys
@@ -18,7 +17,6 @@ lib_dir = os.path.join(top_dir, "lib")
 sys.path.append(lib_dir)
 
 from Response import Response, ResponseCode
-#from FileUtils import futils
 from LoggerClient import LoggerClient
 from StatusFlag import status
 from Daemon import weWereSignalled
@@ -96,6 +94,16 @@ class TransferBase:
     def __del__(self):
         self.info("transferbase exit")
 
+    def checkFileExists(self, f):
+        try:
+            if not os.path.exists(f):
+                self.warn("Trying to transfer a file (" + f + ") that does not exist")
+                return False 
+        except Exception, ex:
+            self.warn("Trying to transfer a file (" + f + ") that does not exist")
+            return False
+        return True
+
     def transferData(self, cmd):
         """
         transferData via subprocess.popen
@@ -106,6 +114,10 @@ class TransferBase:
         grc = None
         grv = None 
         self.info("transferData")
+        if cmd == None:
+            grc = ResponseCode(False)
+            grv = Response(grc, "cmd was None")
+            return grv
         try:
             p = Popen(cmd, shell=True, bufsize=1024, stdout=PIPE, stderr=PIPE)
             stdout, stderr = p.communicate()

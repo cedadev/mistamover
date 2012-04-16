@@ -78,6 +78,8 @@ class FtpTransfer(TransferBase):
                 pass
         # set up a control file
         item_name = self.getFile()
+        if not self.checkFileExists(self.config.get("data_stream.directory") + "/" + item_name):
+            return None
         item_path = (os.path.join(self.config.get("data_stream.directory"),
             os.path.basename(item_name)))
         ctl_file_name = (".%s.%s" % (item_name, self.config.get(
@@ -107,7 +109,6 @@ class FtpTransfer(TransferBase):
         os.write(tf, "exit\n")
         os.fsync(tf)
         os.close(tf)
-        #print self.getTargetHost(), self.getTarget(), self.getDatasetName(), self.config.get("dataset.directory"), self.getFile(), ctl_file_name
         pushcmd = ("/usr/bin/ftp -n " + self.config.get("outgoing.target_host")
             + " < " + name)
         self.info("setupPushCmd %s" % pushcmd)
@@ -150,12 +151,10 @@ class FtpTransfer(TransferBase):
                 pass
         # there should be no issue here as this is only called after
         # a receipt file has been proven to be valid
-        #rcpt_err = None
         try:
             rcpt = ReceiptFile(self.rcpt_file_path)
             rcpt_data = rcpt.read()
         except Exception, err:
-            #rcpt_err = "bad receipt file: %s" % err
             self.info("push thanks setup fail %s" % err)
             return ""
         thankyou_file_name = rcpt_data[4]
@@ -209,11 +208,13 @@ class FtpTransfer(TransferBase):
     # entry point for module  
     def setupTransfer(self, f):
         self.setFile(f)
-        #print "current file name = ", f
+        if not self.checkFileExists(self.config.get("data_stream.directory") + "/" + f):
+            rc = ResponseCode(False)
+            grv = Response(rc, "Not attempting file transfer")
+            return grv
         file_name = (TransferUtils.getPlainFileName(self.config.get(
             "data_stream.directory"), f, self.config.get(
             "outgoing.dir_size_limit")))
-        #print "file_name from getplain filename = ", file_name
         if not file_name:
             (TransferUtils.quarantine(f, self.config.get("data_stream.directory"),
                  self.config.get("outgoing.quarantine_dir")))

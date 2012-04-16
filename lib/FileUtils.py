@@ -35,6 +35,17 @@ class FileUtils(object):
     """
     Class acting as a container for a selection of useful file utilities.
     """
+    def checkFileExists(self, f):
+        """
+        check a file exists and return True if it does and False if not
+        """
+        try:
+            if not os.path.exists(f):
+                return False
+        except Exception, ex:
+            return False
+        return True
+
     def calcChecksum(self, file_path):
         """
         NOTE: THIS MIGHT NOT BE BEST METHOD FOR CALCULATING MD5 checksum!!!!
@@ -92,7 +103,9 @@ class FileUtils(object):
         """
         get file size in bytes
         """
-        return os.path.getsize(file_path)
+        if self.checkFileExists(file_path): 
+          return os.path.getsize(file_path)
+        return 0
 
    
     def getDirSize(self, dir_path):
@@ -115,7 +128,9 @@ class FileUtils(object):
         """
         get file mtime
         """
-        return os.path.getmtime(file_path)
+        if self.checkFileExists(file_path):
+          return os.path.getmtime(file_path)
+        return 0
 
     
     def getCtimeOrNone(self, file_path):
