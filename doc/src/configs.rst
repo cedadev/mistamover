@@ -146,15 +146,6 @@ The following is an example of a data stream-specific configuration file. It con
   [email]
   recipient = simon.diming@diming-froim.com
 
-The various sections and options in the configuration file are explained in detail below:
-
-data_stream
------------
-
-name
-
-  The name of the data_stream
-
 .. _example_configs:
 
 Example Configuration Files
@@ -193,7 +184,6 @@ Here is an example of a *one-off* config file that uses the ``rsync-over-ssh`` t
   [data_stream]
   priority = 200
   name = jah3      
-  transfer_unit = file
   status = RUNNING    
   directory = /home/users/jhorton/Download/SVN/jah/outgoing/jah3
 
@@ -250,7 +240,6 @@ Here is an example of a Data Stream config file the uses FTP and an Arrivals Mon
   [data_stream]
   priority = 200
   name = ftp
-  transfer_unit = file
   status = RUNNING
   deletion_enabled = False
   #
@@ -286,7 +275,6 @@ Here is an example of the Data Stream config file that will run on the other ser
   [data_stream]
   priority = 200
   name = arrival_monitor
-  transfer_unit = file
   status = RUNNING
   deletion_enabled = False
   #
@@ -313,7 +301,6 @@ Here is an example of a Data Stream config file that uses rsync ssh to mirror::
   [data_stream]
   priority = 200
   name = rsync_ssh
-  transfer_unit = file
   status = RUNNING
   directory = /home/users/mistamover/outgoing/rsync_ssh
   
@@ -335,7 +322,6 @@ Here is an example of a Data Stream config file that uses rsync native to move::
   [data_stream]
   priority = 200
   name = rsync_native
-  transfer_unit = file
   status = RUNNING
   #
   # location of files to transfer for this data_stream
@@ -373,7 +359,6 @@ Here is an example of Data Stream config file that uses gridftp to move::
   [data_stream]
   priority = 200
   name = gridftp
-  transfer_unit = file
   status = RUNNING
   deletion_enabled = False
   #
