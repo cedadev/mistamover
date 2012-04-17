@@ -25,3 +25,11 @@ if __name__ == '__main__':
         if sys.argv[1] == "--dump":
             s = MiStaMoverController.MiStaMoverController("test/conf/rsync_global.ini")
             s.dumpConfig()
+        if sys.argv[1] == "--read":
+            s = MiStaMoverController.MiStaMoverController("test/conf/rsync_global.ini")
+            s.readConfig("test/conf/rsync_global.ini")
+        if sys.argv[1] == "--readFail":
+            print "should output :-"
+            print "unable to access global.config_dir /home/users/jhorton/Download/SVN/jah/mistamover/test/conf2"
+            s = MiStaMoverController.MiStaMoverController("test/conf/rsync_global_fail2.ini")
+            s.readConfig("test/conf/rsync_global_fail2.ini")
