@@ -176,6 +176,25 @@ class MiStaMoverController(object):
         self.gconfig = GlobalConfig(global_config_path)
         self.global_config_path = global_config_path
 
+        # check that we can access various directories
+        if not os.access(self.gconfig.get("global.config_dir"), os.R_OK):
+            print "unable to access global.config_dir " + \
+                str(self.gconfig.get("global.config_dir"))
+            sys.exit()
+        if not os.access(self.gconfig.get("global.base_incoming_dir"), os.R_OK):
+            print "unable to access global.base_incoming_dir " + \
+                str(self.gconfig.get("global.base_incoming_dir"))
+            sys.exit()
+        if not os.access(self.gconfig.get("global.top"), os.R_OK):
+            print "unable to access global.top " + \
+                str(self.gconfig.get("global.top"))
+            sys.exit()
+        if not os.access(self.gconfig.get("global.base_data_dir"), os.R_OK):
+            print "unable to access global.base_data_dir " + \
+                str(self.gconfig.get("global.base_data_dir"))
+            sys.exit()        
+
+
         # Decide which dataset listing method to use:
         #  1. ``data_stream_config_dir`` implies get all found in that directory
         #  2. ``data_stream_list`` implies picking up only those in the directory listed
@@ -272,7 +291,6 @@ class MiStaMoverController(object):
         self.gconfig = GlobalConfig(self.global_config_path)
         self.datasets = string.split(self.gconfig.get("global.data_stream_list"))
 
-        #self._populateDatasetConfigsFromConfigDir()
         ds_added = self._loadDatasetConfigs()        
 
         print "Scanning for new data_stream configs or updated status in existing configs..."
