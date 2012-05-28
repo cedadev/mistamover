@@ -8,7 +8,8 @@
 from RsyncTransfer import RsyncTransfer
 from RsyncNativeTransfer import RsyncNativeTransfer
 from FtpTransfer import FtpTransfer
-from GridFTPTransfer import GridFTPTransfer
+from GridFTPTransferMyProxy import GridFTPTransferMyProxy
+from GridFTPTransferCertificate import GridFTPTransferCertificate
 class TransferBaseController:
     '''
     The main controller for transfermodules - this module discovers which transfer

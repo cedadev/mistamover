@@ -7,4 +7,5 @@
 
 from TransferBase import TransferBase
 from RsyncTransfer import RsyncTransfer
-from GridFTPTransfer import GridFTPTransfer
+from GridFTPTransferMyProxy import GridFTPTransferMyProxy
+from GridFTPTransferCertificate import GridFTPTransferCertificate
