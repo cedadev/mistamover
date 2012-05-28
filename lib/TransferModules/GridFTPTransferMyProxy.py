@@ -21,7 +21,7 @@ from ControlFile import ControlFile
 from ReceiptFile import ReceiptFile
 from ThankyouFile import ThankyouFile
 
-class GridFTPTransfer(TransferBase):
+class GridFTPTransferMyProxy(TransferBase):
     """
     GridFTP transfer type
     """

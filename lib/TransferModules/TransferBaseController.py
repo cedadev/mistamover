@@ -28,7 +28,9 @@ class TransferBaseController:
         if self.tp == "ftp":
             r = FtpTransfer(self.config)
             r.setupTransfer(f)
-        if self.tp == "gridftp":
-            r = GridFTPTransfer(self.config)
+        if self.tp == "gridftp_myproxy":
+            r = GridFTPTransferMyProxy(self.config)
             r.setupTransfer(f)
-    
+        if self.tp == "gridftp_certificate":
+            r = GridFTPTransferCertificate(self.config)
+            r.setupTransfer(f) 
