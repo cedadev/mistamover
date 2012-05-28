@@ -84,13 +84,13 @@ class GridFTPTransferCertificate(TransferBase):
             gftp += " -sync -sync-level 3"
         pushcmd = (gftp + " " + self.config.get("data_stream.directory") + "/"
             + f + " gsiftp://" + self.config.get("outgoing.target_host") + ":" 
-            + str(self.config.get("gridftp.port")) + "//" +  
+            + str(self.config.get("gridftp_certificate.port")) + "//" +  
             self.config.get("outgoing.target_dir") + "/" + f)
         if self.config.get("outgoing.target_uses_arrival_monitor"):
             pushcmd += ("; " + gftp + " " + self.config.get(
                 "data_stream.directory") + "/" + ctl_file_name + " gsiftp://"
                 + self.config.get("outgoing.target_host") + ":" +
-                str(self.config.get("gridftp.port")) +
+                str(self.config.get("gridftp_certificate.port")) +
                 self.config.get("outgoing.target_dir") + "/" + ctl_file_name)
         self.info("setupPushCmd %s " % pushcmd)
         return pushcmd
@@ -102,7 +102,7 @@ class GridFTPTransferCertificate(TransferBase):
         '''
         gftp = self.cmd
         pullrcpt = (gftp + " gsiftp://" + self.config.get("outgoing.target_host")
-            + ":" + str(self.config.get("gridftp.port")) + "//" + self.config.get(
+            + ":" + str(self.config.get("gridftp_certificate.port")) + "//" + self.config.get(
             "outgoing.target_dir") + "/" + self.rcpt_file_name + " " +
             self.config.get("data_stream.directory") + "/" + self.rcpt_file_name)
         return pullrcpt
@@ -136,7 +136,7 @@ class GridFTPTransferCertificate(TransferBase):
         thankyoucmd = (gftp + " " + self.config.get("data_stream.directory") +
             "/" + thankyou_file_name + " gsiftp://" + self.config.get(
             "outgoing.target_host") + ":" + str(self.config.get(
-            "gridftp.port")) + "//" +  self.config.get("outgoing.target_dir")
+            "gridftp_certificate.port")) + "//" +  self.config.get("outgoing.target_dir")
             + "/" + thankyou_file_name)
         return thankyoucmd
 
@@ -150,7 +150,7 @@ class GridFTPTransferCertificate(TransferBase):
         self.stopname = name
         self.stoptf = tf
         pullstop = (self.cmd + " gsiftp://" + self.config.get(
-            "outgoing.target_host") + ":" + str(self.config.get("gridftp.port"))
+            "outgoing.target_host") + ":" + str(self.config.get("gridftp_certificate.port"))
             + "//" + self.config.get("outgoing.target_dir") + "/" +
             self.config.get("outgoing.stop_file") + " " + name)
         self.info("setupStopFileCmd %s " % pullstop)
@@ -161,23 +161,23 @@ class GridFTPTransferCertificate(TransferBase):
             os.environ['GLOBUS_LOCATION']
         except:
             raise Exception("GLOBUS_LOCATION environment variable is not set")
-        try:
-            os.environ['X509_USER_PROXY']
-        except:
-            raise Exception("X509_USER_PROXY environment variable is not set")
-        if not self.config.checkSet("gridftp.port"):
-            raise Exception("gridftp.port is not set")
-        if not self.config.checkSet("gridftp.cmd"):
+        #try:
+        #    os.environ['X509_USER_PROXY']
+        #except:
+        #    raise Exception("X509_USER_PROXY environment variable is not set")
+        if not self.config.checkSet("gridftp_certificate.port"):
+            raise Exception("gridftp_certificate.port is not set")
+        if not self.config.checkSet("gridftp_certificate.cmd"):
             raise Exception("gridftp.cmd is not set")
         # the following 3 are needed for setting up a proxy credential
-        if not self.config.checkSet("gridftp.username"):
-            raise Exception("gridftp.username is not set")
-        if not self.config.checkSet("gridftp.password"):
-            raise Exception("gridftp.password is not set")
-        if not self.config.checkSet("gridftp.proxy"):
-            raise Exception("gridftp.proxy is not set")
-        if not self.config.checkSet("gridftp.port"):
-            raise Exception("gridftp.port is not set")
+        if not self.config.checkSet("gridftp_certificate.username"):
+            raise Exception("gridftp_certificate.username is not set")
+        if not self.config.checkSet("gridftp_certificate.password"):
+            raise Exception("gridftp_certificate.password is not set")
+        #if not self.config.checkSet("gridftp.proxy"):
+        #    raise Exception("gridftp.proxy is not set")
+        #if not self.config.checkSet("gridftp_certificate.port"):
+        #    raise Exception("gridftp_certificate.port is not set")
         # these are required for transfer
         if not self.config.checkSet("outgoing.target_dir"):
             raise Exception("outgoing.target_dir is not set")
@@ -225,7 +225,7 @@ class GridFTPTransferCertificate(TransferBase):
             # try and set a new credential
             self.info("GridFTPTransfer checking credentials failed %s" % grv.data)
             tf, name = tempfile.mkstemp()
-            os.write(tf, self.config.get("gridftp.password"))
+            os.write(tf, self.config.get("gridftp_certificate.password"))
             os.fsync(tf)
             setupCredential = ("myproxy-logon -S -s " + self.config.get(
                 "gridftp.proxy") + " -l " + self.config.get("gridftp.username")
@@ -243,7 +243,7 @@ class GridFTPTransferCertificate(TransferBase):
         if str(grv.code) == "Success":
             grv = self.pushData()
             self.info(" rv = %s " % str(grv.code))
-            self.info("GridFTPTransfer exiting %s" % str(grv.code))
+            self.info("GridFTPTransferCertificate exiting %s" % str(grv.code))
             self.info("Successfully sent: %s; size: %s" % (self.getFile(), filesize))
         return grv
 
