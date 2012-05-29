@@ -161,23 +161,12 @@ class GridFTPTransferCertificate(TransferBase):
             os.environ['GLOBUS_LOCATION']
         except:
             raise Exception("GLOBUS_LOCATION environment variable is not set")
-        #try:
-        #    os.environ['X509_USER_PROXY']
-        #except:
-        #    raise Exception("X509_USER_PROXY environment variable is not set")
         if not self.config.checkSet("gridftp_certificate.port"):
             raise Exception("gridftp_certificate.port is not set")
         if not self.config.checkSet("gridftp_certificate.cmd"):
             raise Exception("gridftp.cmd is not set")
-        # the following 3 are needed for setting up a proxy credential
-        if not self.config.checkSet("gridftp_certificate.username"):
-            raise Exception("gridftp_certificate.username is not set")
         if not self.config.checkSet("gridftp_certificate.password"):
             raise Exception("gridftp_certificate.password is not set")
-        #if not self.config.checkSet("gridftp.proxy"):
-        #    raise Exception("gridftp.proxy is not set")
-        #if not self.config.checkSet("gridftp_certificate.port"):
-        #    raise Exception("gridftp_certificate.port is not set")
         # these are required for transfer
         if not self.config.checkSet("outgoing.target_dir"):
             raise Exception("outgoing.target_dir is not set")
@@ -227,9 +216,7 @@ class GridFTPTransferCertificate(TransferBase):
             tf, name = tempfile.mkstemp()
             os.write(tf, self.config.get("gridftp_certificate.password"))
             os.fsync(tf)
-            setupCredential = ("myproxy-logon -S -s " + self.config.get(
-                "gridftp.proxy") + " -l " + self.config.get("gridftp.username")
-                + " < " + name)
+            setupCredential = ("grid-proxy-init -pwstdin " + " < " + name)
             grv = self.transferData(setupCredential)
             try:
                 os.close(tf)
