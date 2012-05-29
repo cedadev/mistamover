@@ -37,7 +37,7 @@ MiStaMover is not creating a new protocol or method of moving data around the ne
 
 By building in Python the tool is easy to install, configure and extend. The functionality provided should allow users to set the transfer running and to walk away without having to continually monitor that the process is running correctly.
 
-Who should use stager?
+Who should use **MiStaMover**?
 ----------------------
 
 MiStaMover is most likely to be used by:
