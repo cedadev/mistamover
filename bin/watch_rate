@@ -1,0 +1,148 @@
+#!/usr/bin/env python
+
+"""
+Utility to interactively watch rate of disk usage change at a 
+particular path (e.g. useful while copying data).
+
+Reports rate of disk usage over most recent poll interval and
+also average rate since start of running the program.
+
+Usage:
+
+  watch_rate [-f] [-i poll_interval] <path>
+
+   options: 
+     -f   do a 'df' of the containing filesystem (defaults to du)
+     -i poll_interval   - time in seconds between measurements (defaults to 5)
+
+(hint: do not set poll interval too short when using du)
+"""
+
+import sys
+import time
+import os
+import string
+import commands
+import getopt
+import math
+
+
+class DiskUsageMeasurer:
+        """
+        A measurer of disk usage, in Mbyte, at specified path.
+        
+        If keyword argument "fs" is set to True, 
+        measure the containing filesystem (as 'df')
+
+        otherwise defaults a 'du' of the specified file or directory
+        """
+        def __init__(self, path, fs=False):
+            self.path = path
+            self.fs = fs
+
+        def getMeasurement(self):
+            start_time = time.time()
+            mbytes = self.measure()
+            end_time = time.time()
+            return DiskUsageMeasurement(mbytes, start_time, end_time)
+
+        def measure(self):
+            if self.fs:
+                fsstat = os.statvfs(self.path)
+                return \
+                    (fsstat.f_blocks - fsstat.f_bfree) \
+                    * fsstat.f_bsize / 1024. / 1024
+            else:
+                return int(commands.getoutput(
+                        "du -skx %s" % self.path).split("\t")[0]) / 1024.
+        
+
+class DiskUsageMeasurement:
+    
+    def __init__(self, mbytes, start_time, end_time):
+        """
+        A time-stamped measurement of disk usage.
+        """
+        self.mbytes = mbytes
+        self.start_time = start_time
+        self.end_time = end_time
+
+
+    def __str__(self):
+        return "%s MBytes (%s, +/- %ds)" % \
+            (self.mbytes, self.asc_time_val(), int(self.time_err()))
+
+
+    def time_val(self):
+        return (self.start_time + self.end_time) / 2
+
+
+    def time_err(self):
+        return  (self.end_time - self.start_time) / 2
+
+
+    def rate_since(self, other):
+        """
+        Compare with another time-stamped measurement, returning 
+        (mean, error) of value in MByte/s       
+        """
+        diff_mbytes = self.mbytes - other.mbytes
+        diff_time = self.time_val() - other.time_val()
+        err_time = math.sqrt(self.time_err() ** 2 + other.time_err() ** 2)
+
+        rate = diff_mbytes / diff_time
+        err_frac = err_time / diff_time
+        return (rate, abs(rate * err_frac))
+
+
+    def asc_time_val(self):
+        return time.asctime(time.localtime(self.time_val()))
+    
+
+def show_rate(path, fs=False, poll_interval=5):
+    """
+    loop indefinitely, showing rate
+    """
+    measurer = DiskUsageMeasurer(path, fs=True)
+    initial = measurer.getMeasurement()
+    previous = initial
+    format = "%.1f +/- %.1f MByte/s" 
+
+
+    while True:
+        time.sleep(poll_interval)
+        latest = measurer.getMeasurement()
+        if fs:
+            print "Filesystem containing:", path
+        else:
+            print "Path:", path
+        print latest.asc_time_val()
+        print ("Current rate: " + format) % latest.rate_since(previous)
+        print ("Average rate: " + format) % latest.rate_since(initial)
+        print
+        previous = latest
+
+
+def parse_args(argv):
+    opts = {}    
+
+    cmd_opts, cmd_args = getopt.getopt(argv, "i:f")
+
+    (path,) = cmd_args
+
+    for opt, arg in cmd_opts:
+        if opt == '-f':
+            opts['fs'] = True
+        elif opt == '-i':
+            opts['poll_interval'] = string.atof(arg)
+
+    return path, opts
+    
+
+if __name__ == '__main__':
+    try:
+        path, opts = parse_args(sys.argv[1:])
+    except:
+        print __doc__
+	sys.exit(1)
+    show_rate(path, **opts)
