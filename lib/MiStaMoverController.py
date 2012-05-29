@@ -6,6 +6,7 @@
 # the full license text.
 
 import os
+import stat
 import string
 import sys
 import time
@@ -224,28 +225,39 @@ class MiStaMoverController(object):
         ds_added = []  
 
         for ds_name in self.datasets:
-            if ds_name not in self.dconfigs.keys():
-                if self.oneoff == False:
-                  self.dconfigs[ds_name] = DatasetConfig(ds_name, self.gconfig)
-                else:
-                  self.dconfigs[ds_name] = (DatasetConfig(ds_name, self.gconfig,
-                       self.global_config_path))
-                ds_added.append(ds_name)
-
-            # Now they should all have been loaded. When re-trying, try all those
-            # that are STOPPED as they might have been re-started
-            ds_status = self.dconfigs[ds_name].get("data_stream.status")
-
-            if ds_status == "<stopped>":
-                print "Re-scanning previously stopped data_stream just in case re-started: %s" % ds_name
-
-                self.dconfigs[ds_name] = \
-                    DatasetConfig(ds_name, self.gconfig)
-
-                new_ds_status = self.dconfigs[ds_name].get("data_stream.status")
-                if new_ds_status == "<running>":
+            data_stream_path = self.gconfig.get("global.config_dir")
+            # check that the config files have 400 permissions
+            ds_filepath = data_stream_path + "/ds_" + ds_name + ".ini"
+            st = os.stat(ds_filepath).st_mode
+            rv = stat.S_IMODE(st)
+            if rv == stat.S_IRUSR:
+                if ds_name not in self.dconfigs.keys():
+                    if self.oneoff == False:
+                        self.dconfigs[ds_name] = DatasetConfig(ds_name, self.gconfig)
+                    else:
+                        self.dconfigs[ds_name] = (DatasetConfig(ds_name, self.gconfig,
+                            self.global_config_path))
                     ds_added.append(ds_name)
 
+                # Now they should all have been loaded. When re-trying, try all those
+                # that are STOPPED as they might have been re-started
+                ds_status = self.dconfigs[ds_name].get("data_stream.status")
+
+                if ds_status == "<stopped>":
+                    print "Re-scanning previously stopped data_stream just in case re-started: %s" % ds_name
+
+                    self.dconfigs[ds_name] = \
+                        DatasetConfig(ds_name, self.gconfig)
+
+                    new_ds_status = self.dconfigs[ds_name].get("data_stream.status")
+                    if new_ds_status == "<running>":
+                        ds_added.append(ds_name)
+            else:
+                print ds_filepath + " must have permissions of 400"
+                if hasattr(self, 'info'):
+                    self.info("%s must have permissions of 400" % ds_filepath)
+                # remove the offending item
+                self.datasets.remove(ds_name)
         return ds_added
 
 
