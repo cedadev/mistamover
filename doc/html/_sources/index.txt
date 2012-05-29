@@ -25,6 +25,8 @@ Welcome to MiStaMover's documentation!
    terminology
    
    testing
+
+   utilities
    
    download
 
