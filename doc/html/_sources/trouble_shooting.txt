@@ -19,7 +19,11 @@ Why does MiStaMover not unzip directories once delivered to the target host?
   
   However, for other protocols there is no direct support for remotely copying whole directories. We therefore took the decision to zip the directory on the source host so that we could verify the send process robustly. Unzipping on the target host would require a signficant amount of extra engineering which was considered out of scope for the development of this tool.
   
+How can I specify a different key for use with rsync_ssh?
+  The rsync over ssh transfer module requires the private and public key pair to be in the users home directory in the .ssh directory. The default id_rsa and id_rsa.pub are used. In order to specify a different key for use with rsync_ssh, you must update the rsync_ssh `cmd` variable in the config file.
+  i.e. modify the `cmd` paramter from /usr/bin/rsync to /usr/bin/rsync -e 'ssh -i /home/users/jhorton/.ssh/id_rsa.bak' (for example)
 
 
   
-  
+ 
+ 

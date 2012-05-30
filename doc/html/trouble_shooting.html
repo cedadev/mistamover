@@ -65,6 +65,9 @@
 <dd><p class="first">A number of transfer protocols are available to push data to a remote host. Since each protocol has its own limitations we could not implement a generic solution for pushing a directory structure that would work for all. As a result if the <em class="xref std std-ref">rsync_ssh</em> or <em class="xref std std-ref">rsync_native</em> protocols are used then an entire directory will be copied to the target host as is.</p>
 <p class="last">However, for other protocols there is no direct support for remotely copying whole directories. We therefore took the decision to zip the directory on the source host so that we could verify the send process robustly. Unzipping on the target host would require a signficant amount of extra engineering which was considered out of scope for the development of this tool.</p>
 </dd>
+<dt>How can I specify a different key for use with rsync_ssh?</dt>
+<dd>The rsync over ssh transfer module requires the private and public key pair to be in the users home directory in the .ssh directory. The default id_rsa and id_rsa.pub are used. In order to specify a different key for use with rsync_ssh, you must update the rsync_ssh <cite>cmd</cite> variable in the config file.
+i.e. modify the <cite>cmd</cite> paramter from /usr/bin/rsync to /usr/bin/rsync -e &#8216;ssh -i /home/users/jhorton/.ssh/id_rsa.bak&#8217; (for example)</dd>
 </dl>
 </div>
 </div>
