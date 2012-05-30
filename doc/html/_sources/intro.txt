@@ -21,7 +21,7 @@ The following features and functionality are included:
 
  #. Able to run as a daemon or a one-off process
  #. Each Data Stream is managed by single configuration file
- #. Files and/or directories can be recieved and sent by various transfer protocols (such as :ref:`rsync`` and :ref:``ftp``)
+ #. Files and/or directories can be recieved and sent by various transfer protocols (such as :ref:``rsync`` and :ref:``ftp``)
  #. Transfer failures will be re-tried based on a configuration setting
  #. Full logging of all transfers
  #. An alert feature that will highlight any failures or issues via e-mail

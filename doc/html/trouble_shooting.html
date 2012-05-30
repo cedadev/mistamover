@@ -57,17 +57,17 @@
 <div class="section" id="frequently-asked-questions">
 <h2>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
-<dt>Why does MiStaMover not run on Python 2.4 or older versions?</dt>
+<dt><strong>Why does MiStaMover not run on Python 2.4 or older versions?</strong></dt>
 <dd>We had to make a cut-off point and we decided that Python 2.5 and above was reasonable. MiStaMover may not run on older versions of Python.</dd>
-<dt>Why is the &#8220;mirror&#8221; transfer mode only available for rsync transfer protocols?</dt>
+<dt><strong>Why is the &#8220;mirror&#8221; transfer mode only available for rsync transfer protocols?</strong></dt>
 <dd>The <cite>rsync</cite> tool has been built to be able to exactly duplicate the contents of a directory to a remote host. This is a relatively complex function that would require significant coding to achieve with all transfer protocols. Within MiStaMover it has only therefore been possible to implement the &#8220;mirror&#8221; transfer mode as a thin wrapper around the existing functionality of rsync.</dd>
-<dt>Why does MiStaMover not unzip directories once delivered to the target host?</dt>
+<dt><strong>Why does MiStaMover not unzip directories once delivered to the target host?</strong></dt>
 <dd><p class="first">A number of transfer protocols are available to push data to a remote host. Since each protocol has its own limitations we could not implement a generic solution for pushing a directory structure that would work for all. As a result if the <em class="xref std std-ref">rsync_ssh</em> or <em class="xref std std-ref">rsync_native</em> protocols are used then an entire directory will be copied to the target host as is.</p>
 <p class="last">However, for other protocols there is no direct support for remotely copying whole directories. We therefore took the decision to zip the directory on the source host so that we could verify the send process robustly. Unzipping on the target host would require a signficant amount of extra engineering which was considered out of scope for the development of this tool.</p>
 </dd>
-<dt>How can I specify a different key for use with rsync_ssh?</dt>
-<dd>The rsync over ssh transfer module requires the private and public key pair to be in the users home directory in the .ssh directory. The default id_rsa and id_rsa.pub are used. In order to specify a different key for use with rsync_ssh, you must update the rsync_ssh <cite>cmd</cite> variable in the config file.
-i.e. modify the <cite>cmd</cite> paramter from /usr/bin/rsync to /usr/bin/rsync -e &#8216;ssh -i /home/users/jhorton/.ssh/id_rsa.bak&#8217; (for example)</dd>
+<dt><strong>How can I specify a different SSH key for use with the &#8220;rsync_ssh&#8221; transfer method?</strong></dt>
+<dd>The &#8220;rsync_ssh&#8221; (rsync over SSH) transfer module expects the private and public key pair to be in the users home directory in the <tt class="docutils literal"><span class="pre">$HOME/.ssh/</span></tt> directory. The default <tt class="docutils literal"><span class="pre">id_rsa</span></tt> and <tt class="docutils literal"><span class="pre">id_rsa.pub</span></tt> files are used. In order to specify a different key for use with the &#8220;rsync_ssh&#8221; transfer method you must update the rsync_ssh <strong>cmd</strong> variable in the config file.
+For example, modify the <cite>cmd</cite> parameter from <tt class="docutils literal"><span class="pre">/usr/bin/rsync</span></tt> to <tt class="docutils literal"><span class="pre">/usr/bin/rsync</span> <span class="pre">-e</span> <span class="pre">'ssh</span> <span class="pre">-i</span> <span class="pre">/home/users/me/.ssh/id_rsa.bak'</span></tt>.</dd>
 </dl>
 </div>
 </div>

@@ -24,13 +24,18 @@ This section explains the meaning of various terms used in relation to MiStaMove
   
 **Mirror**
   The *mirroring* of a file/directory on the local host involves duplicating it exactly on the *target host*.
-  
-.. _source_host:
+
+.. _mistamover_service:
+
+**MiStaMover Service**
+  The MiStaMover tool running as a service managed by an administrator to support scientific users.
   
 .. _one_off:
 
 **One-off**
   Running MiStaMover as a *one-off* process will scan each data stream incoming directory only once, transfer the files/directories found, and then exit.
+
+.. _source_host:
   
 **Source Host**
   The *source host* is the local server on which the MiStaMover process is running: monitoring incoming directories and *moving* or *mirroring* the contents to a *target host*.

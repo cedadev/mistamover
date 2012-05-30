@@ -26,7 +26,7 @@ If sub-directories exist within the incoming directory then MiStaMover will eith
 One-off move mode
 -----------------
 
-The *one-off* process can also be run in *move* transfer mode. In this case it acts the same as the one-off *mirror* mode but after each file is successfully trasnferred to the target host **the copy on the local host will be deleted.**
+The *one-off* process can also be run in *move* transfer mode. In this case it acts the same as the one-off *mirror* mode but after each file is successfully transferred to the target host **the copy on the local host will be deleted.**
 
 **WARNING: The default transfer mode is "move". Do not set your incoming directory to a location in which you intend to keep data without setting the transfer mode to "mirror"!** 
 
