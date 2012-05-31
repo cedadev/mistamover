@@ -1,0 +1,139 @@
+#
+# Global config file - can override values per data_stream by giving them the 
+# same section and key in the data_stream config file
+#
+
+[global]
+# global section is intended for stuff which is unlikely to be overridden
+# per-data_stream (although technically there is nothing to prevent a 'global'
+# section in the data_stream config file)
+
+# Setting debug_on to True provides more information in log files
+debug_on = True
+
+# Optionally set the home directory 'homedir' to be referenced in other sections of the config file(s)
+homedir = 
+# Optionally set the 'top' directory to be referenced in other sections of the config file(s).
+# If not set, 'top' is set to the current working directory where the mistamover script is invoked from.
+top = 
+# Optionally set the 'base_data_dir' directory to be referencd in other sections of the config file(s)
+base_data_dir = 
+
+#
+# The location of the global and data_stream config files
+#
+config_dir = __MUST_DEFINE__
+# Note that data_stream_config_dir overrides data_stream_list in terms of where to look for config files
+
+# Optionally set the base directory for incoming data
+base_incoming_dir = 
+#/data/local/bwriter/RUBBISH
+
+#
+# The list of data_stream names to transfer - each one of these will have its own config file
+#
+data_stream_list = __MUST_DEFINE__ 
+
+# The interval in seconds between polling to see if new data has arrived
+general_poll_interval = 3
+
+[incoming]
+#
+# Information about detecting incoming data arriving
+#
+require_arrival_monitor = False
+control_file_extension = stager-ctrl-bss
+thankyou_file_extension = stager-thanks-bss
+stop_file = .stop
+
+[outgoing]
+#
+# The transfer_protocol defines the underlying protcol used to transfer files
+# each protocol is wrapped in a class that inherits from TransferModules::TransferBase
+#
+transfer_protocol = rsync_ssh
+#
+# The transfer_mode can be either move OR mirror for rsync (all other protocols only support move)
+#
+transfer_mode = move
+
+# Control, receipt and thank you files are used to check files have arrived (not relevant to rsync transfers)
+control_file_extension = stager-ctrl-bss
+receipt_file_extension = stager-rcpt-bss
+thankyou_file_extension = stager-thanks-bss
+
+#
+# By setting the arrival monitor to True - we use the overlaying handshake protocol
+# to ensure that files arrive at their destination correctly
+#
+target_uses_arrival_monitor = False
+retry_count = 3
+receipt_file_poll_count = 100
+receipt_file_poll_interval = 5
+dir_size_limit = 1000.
+stop_file = .stop
+stop_file_poll_interval = 10
+
+[logging]
+#
+# Location of log files - this directory must exist
+#
+base_log_dir = __MUST_DEFINE__ 
+log_level = WARN
+#log_level = DEBUG
+port = 2001
+
+[email]
+#
+# The 'threshold' option below defines the level at which log messages will be sent out
+# as e-mail reports as well as being logged.
+#
+from = __MUST_DEFINE__
+threshold = CRITICAL
+recipient = __MUST_DEFINE__
+subject = MiStaMover Error Report
+smarthost = localhost 
+
+[rsync_ssh]
+username = 
+transfer_mode = move
+# Path to rsync command
+cmd = /usr/bin/rsync
+
+[rsync_native]
+username = 
+password = 
+transfer_mode = move
+# Path to rsync command
+cmd = /usr/bin/rsync
+
+[ftp]
+# Path to FTP command
+cmd = /usr/bin/ftp
+username = 
+password = 
+
+[gridftp_myproxy]
+username =
+# Path to globus-url-copy command
+cmd = /home/users/mistamover/globus/bin/globus-url-copy
+port = 2811
+# Address of proxy to be used with GridFTP (e.g.: myproxy.ceda.ac.uk)
+proxy = 
+username = 
+password = 
+
+[disk_space_monitor]
+base_priority = 100
+# Thresholds are in MB - see more information in `lib/DiskSpaceMonitor.py` module
+level_good = 1500
+level_low = 1000
+level_vlow = 500
+# Note regarding poll_interval for disk space monitor: 1GBit/s, maxed out, is 7.5GB/minute
+poll_interval = 60
+
+## A default data_stream priority can be set here as the data_stream config will fall
+## back to the global config in the ordinary way.  But if not then the base priority 
+## will also be used as a default.
+# [data_stream]
+# priority = 100
