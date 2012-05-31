@@ -28,7 +28,7 @@ class LoggerClient(object):
     def __init__(self, config,
                  host = 'localhost', 
                  port = None,
-                 tag = "MiStaMover", name = None,
+                 tag = "mistamover", name = None,
                  debug_on = False):
         """
         Arg config is the DatasetConfig or GlobalConfig object

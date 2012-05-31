@@ -61,7 +61,7 @@ class DiskSpaceMonitorLauncher(object):
         daemon = Daemon.DaemonCtl(DiskSpaceMonitor.DiskSpaceMonitor,
                                   args = [ds_filesys, self.gconfig, ds_group,
                                           desc_short, desc_long],
-                                  description = "MiStaMover_" + desc_short)
+                                  description = "mistamover_" + desc_short)
         daemon.desc_long = desc_long
         return daemon
 
@@ -149,6 +149,6 @@ if __name__ == '__main__':
 
     dsml.launch()
     time.sleep(1)
-    os.system("ps uxw | egrep 'MiStaMover|dsm'")
+    os.system("ps uxw | egrep 'mistamover|dsm'")
     time.sleep(600)
     dsml.kill()

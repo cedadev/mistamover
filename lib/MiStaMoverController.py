@@ -176,24 +176,21 @@ class MiStaMoverController(object):
         """
         self.gconfig = GlobalConfig(global_config_path)
         self.global_config_path = global_config_path
-
-        # check that we can access various directories
-        if not os.access(self.gconfig.get("global.config_dir"), os.R_OK):
-            print "unable to access global.config_dir " + \
-                str(self.gconfig.get("global.config_dir"))
+        # Check configs dir is accessible
+        configs_dir = self.gconfig.get("global.config_dir")
+        if not os.access(configs_dir, os.R_OK):
+            print "Unable to access directory defined in config file:\n\t%s = '%s'.\n\nPlease fix and re-start ." % ("global.config_dir", configs_dir)
             sys.exit()
-        if not os.access(self.gconfig.get("global.base_incoming_dir"), os.R_OK):
-            print "unable to access global.base_incoming_dir " + \
-                str(self.gconfig.get("global.base_incoming_dir"))
-            sys.exit()
-        if not os.access(self.gconfig.get("global.top"), os.R_OK):
-            print "unable to access global.top " + \
-                str(self.gconfig.get("global.top"))
-            sys.exit()
-        if not os.access(self.gconfig.get("global.base_data_dir"), os.R_OK):
-            print "unable to access global.base_data_dir " + \
-                str(self.gconfig.get("global.base_data_dir"))
-            sys.exit()        
+        # Check that we can access various directories and warn users of consequences
+        for check_dir in ("global.base_incoming_dir",
+                          "global.top",
+                          "global.base_data_dir"):
+            # Check dir and exit if we cannot access it
+            if self.gconfig.get(check_dir).strip() == "":
+                print "WARNING: You have not set the '%s' configuration option in the global configuration. Ensure that the data stream specific configuration files define the full directory paths and do not rely on this global setting." % check_dir
+            elif not os.access(self.gconfig.get(check_dir), os.R_OK):
+                print "WARNING: Unable to access directory defined in config file:\n\t%s = '%s'.\n\nPlease fix and re-start." % (check_dir, self.gconfig.get(check_dir))
+                sys.exit()
 
 
         # Decide which dataset listing method to use:
@@ -383,8 +380,8 @@ class MiStaMoverController(object):
         """
         self.logger = LoggerClient.LoggerClient(
             self.gconfig,
-            tag = "MiStaMover_ctl",
-            name = "top-level MiStaMover controller",
+            tag = "mistamover_ctl",
+            name = "top-level mistamover controller",
             debug_on = self.debug_on)
         self.logger.exportMethods(self)
 
@@ -395,7 +392,7 @@ class MiStaMoverController(object):
         """
         self.log_server_proc = Daemon.DaemonCtl(self.runLogger,
                                                 args = [self.gconfig],
-                                                description = "MiStaMover_log_server")
+                                                description = "mistamover_log_server")
         
     def stopLogServer(self):
         try:
@@ -452,7 +449,7 @@ class MiStaMoverController(object):
             self.info("starting %s" % full_descrip)           
             daemon = Daemon.DaemonCtl(method,
                                       args = [dconfig],
-                                      description = "MiStaMover_" + short_desc + ds_name)
+                                      description = "mistamover_" + short_desc + ds_name)
             sub_procs[key] = daemon
         self.sub_procs[ds_name] = sub_procs
 

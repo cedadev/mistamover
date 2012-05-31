@@ -71,13 +71,16 @@ class DatasetTransferController(AbstractDatasetController):
  
             self.updateStatusAndConfig()
             tp = self.dconfig.get("outgoing.transfer_protocol")
-            if tp != "none":
-                if (self.dconfig.checkSet("outgoing.target_dir") == False or
-                    self.dconfig.checkSet("outgoing.target_host") == False):
-                    self.status = status.STOPPED
-                    print "exiting"
-                    return self.status
-
+            # If transfer protocol not set then exit
+            if tp.strip().lower() in ("", "none"):
+                self.status = status.STOPPED
+                print "Exiting transfer controller for '%s' because 'outgoing.transfer_protocol' is set to '%s' which is invalid." % (self.dconfig.get("data_stream.name"), tp)
+            else:
+                # If transfer protocol is set then check valid target information is set for host and directory
+                for check_item in ("outgoing.target_dir", "outgoing.target_host"):
+                    if (self.dconfig.checkSet(check_item) == False):
+                        self.status = status.STOPPED
+                        print "Exiting transfer controller for '%s' because '%s' not set in config file." % (self.dconfig.get("data_stream.name"), check_item)
             if self.status == status.STOPPED:
                 return self.status
       

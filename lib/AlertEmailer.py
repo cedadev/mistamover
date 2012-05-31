@@ -22,7 +22,7 @@ class AlertEmailer(object):
     taken from the config file
     """
 
-    def __init__(self, config, name =" MiStaMover"):
+    def __init__(self, config, name ="mistamover"):
         """
         "config" is the config object (global or dataset)
 

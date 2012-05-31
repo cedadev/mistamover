@@ -15,7 +15,7 @@ top_dir = os.path.abspath(os.path.dirname(this_dir + "../"))
 lib_dir = os.path.join(top_dir, "lib")
 sys.path.append(lib_dir)
 
-from .FileUtils import futils
+from FileUtils import futils
 
 class TransferUtils:
     """
