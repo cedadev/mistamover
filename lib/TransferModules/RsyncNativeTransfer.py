@@ -15,10 +15,10 @@ top_dir = os.path.abspath(os.path.dirname(this_dir + "../"))
 lib_dir = os.path.join(top_dir, "lib")
 sys.path.append(lib_dir)
 
-from .Response import Response, ResponseCode
-from .ControlFile import ControlFile
-from .ReceiptFile import ReceiptFile
-from .ThankyouFile import ThankyouFile
+from Response import Response, ResponseCode
+from ControlFile import ControlFile
+from ReceiptFile import ReceiptFile
+from ThankyouFile import ThankyouFile
 
 
 class RsyncNativeTransfer(TransferBase):

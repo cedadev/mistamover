@@ -168,7 +168,7 @@ class TransferBase:
             self.getConfig(),
             tag = "%s_%s" % (short_name, dset_name),
             name = "%s for data_stream %s" % (short_name, dset_name),
-            debug_on=debug_on)
+            debug_on = debug_on)
         # import some methods from the logger
         self.logger.exportMethods(self)
         self.info("startup")
@@ -178,18 +178,17 @@ class TransferBase:
         remove files after they have been transfered or warn
         if for any reason they cannot be deleted
         '''
-        self.info("deleteOrWarn")
+        self.debug("Running: 'deleteOrWarn' method")
         try:
-            self.info("removing %s " % filename)
+            self.info("Removing local path: %s " % filename)
             if os.path.isdir(filename):
                 shutil.rmtree(filename)    
             else:
                 os.remove(filename)
-            self.info("deleteOrWarn removed %s" % filename)
+            self.info("Removed: %s" % filename)
         except Exception, ex:
             self.warn("Could not delete %s" % filename)
-            (self.info("deleteOrWarn raised exception %s for %s" % (str(ex),
-                filename)))
+            (self.info("'deleteOrWarn' method raised exception %s for %s" % (str(ex), filename)))
 
     def waitForStopFile(self):
         """

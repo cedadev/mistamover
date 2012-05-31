@@ -10,11 +10,11 @@
 MiStaMover.py - Script to run MiStaMover Application
 ===================================================
 
-The ``MiStaMover.py`` script is run to start the MiStaMover Application. It is typically installed to initialise when the server starts and is run in daemon mode by the ``lib/daemon.py`` script. However, it can also be run at the command-line.
+The ``mistamover.py`` script is run to start the mistamover Application. It is typically installed to initialise when the server starts and is run in daemon mode by the ``lib/daemon.py`` script. However, it can also be run at the command-line.
 
 Usage::
 
-  MiStaMover.py [<global_config_file>] [oneoff]
+  mistamover.py [<global_config_file>] [oneoff]
 
 If no global config file given, then use ``global.ini`` in ``conf/`` directory, also overriding the variable "top" in section "``[global]``" with the parent directory path.
 
@@ -99,8 +99,8 @@ sc = MiStaMoverController.MiStaMoverController(global_config, debug_on, oneoff)
 
 # Run as daemon if requested...
 if daemon_mode == True:
-    dmn = Daemon.DaemonCtl(sc.main, args=[], description="MiStaMover_controller")
-    print "Deamon process 'MiStaMover' now forked. This process ends."
+    dmn = Daemon.DaemonCtl(sc.main, args=[], description="mistamover_controller")
+    print "Deamon process 'mistamover' now forked. This process ends."
 else:
     sc.main()
 

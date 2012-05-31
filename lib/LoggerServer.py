@@ -141,7 +141,7 @@ class LoggerServer(object):
         if self.multi:
             logger = MultiFileLogger(self.config)
         else:
-            logger = SingleFileLogger(self.config, "MiStaMover")
+            logger = SingleFileLogger(self.config, "mistamover")
             
         tcpserver = LogReceiver.LogRecordSocketReceiver(
                         logger, self.host, self.port)
@@ -155,10 +155,10 @@ if __name__ == '__main__':
 
     server = LoggerServer(gc, multi=False)
 
-    os.system("touch ../log/MiStaMover.log")
+    os.system("touch ../log/mistamover.log")
     pid = os.fork()
     if pid == 0:
-        os.execvp("tail", ["tail", "-f", "../log/stager.log"])
+        os.execvp("tail", ["tail", "-f", "../log/mistamover.log"])
         sys.exit()
 
     try:

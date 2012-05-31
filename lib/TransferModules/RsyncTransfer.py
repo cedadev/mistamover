@@ -166,12 +166,13 @@ class RsyncTransfer(TransferBase):
     # this is the entry point for the module
     def setupTransfer(self, f):
         self.setFile(f)
+
         if not self.checkFileExists(self.config.get("data_stream.directory") + "/" + f):
             rc = ResponseCode(False)
             grv = Response(rc, "Not attempting file transfer")
             return grv
+
         # if we are mirroring - then do not zip directories - (we pass False to getPlainFileName)
-        #if self.config.get("rsync.mirror") == True:
         if self.config.get("rsync_ssh.transfer_mode") == "mirror":
             self.mirror = True
             file_name = (TransferUtils.getPlainFileName(self.config.get(
@@ -202,6 +203,7 @@ class RsyncTransfer(TransferBase):
             r = Response(rc, "not all variables in RsyncTransfer ", str(ex))
             self.info("not all variables in RsyncTransfer %s " % str(ex))
             return r
+
         self.setStopReturnCode(23)
         self.setStopError("failed: No such file or directory")
 

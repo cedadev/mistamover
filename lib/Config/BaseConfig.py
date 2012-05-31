@@ -340,7 +340,7 @@ class BaseConfig(dict):
     def checkSet(self, key):
         try:
             a = self.get(key)
-            if a != None:
+            if a:
                 return True
             return False
         except:

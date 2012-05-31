@@ -30,7 +30,7 @@ class AbstractDatasetController(object):
 
 
     def __del__(self):
-        self.info("exit abstract datasetcontroller")
+        self.info("Exiting AbstractDatasetController")
 
 
     def setVarsFromConfig(self):
