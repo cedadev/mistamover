@@ -200,26 +200,26 @@ def createConfig(conf_type, name):
                 if fls2 == "__MUST_DEFINE__":
                     s = ""
                     while len(s) == 0:
-                        print "required :", section + "." + fls[0].strip()
+                        print "required :", section + ":" + fls[0].strip()
                         s = raw_input('--> ')
-                    print "setting", section + "." + currvar, s
+                    print "setting", section + ":" + currvar, "=", s, "\n"
                     line = currvar + " = " + s
                     output.append(line)
                 else:
-                    print "optional :", section + "." + fls[0].strip(), "(press enter to accept default) :", fls[2].strip()  
+                    print "optional :", section + ":" + fls[0].strip(), "(press enter to accept default) :", fls[2].strip()  
                     s = raw_input('--> ')
                     if len(s) == 0:
-                        print "setting", section + "." + currvar, fls2
+                        print "setting", section + ":" + currvar, "=", fls2, "\n"
                         line = currvar + " = " + fls2
                         output.append(line)
                     else:
-                        print "setting", section + "." + currvar, s
+                        print "setting", section + ":" + currvar, "=", s, "\n"
                         line = currvar + " = " + s
                         output.append(line)
             if len(fls) == 2:
                 print currvar, " : (optional : no default value currently set)"
                 s = raw_input('--> ')
-                print "setting", section + "." + currvar, s
+                print "setting", section + ":" + currvar, "=", s, "\n"
                 line = currvar + " = " + s
                 output.append(line)
             #print "fls = ", fls
