@@ -32,7 +32,7 @@ The following is an example of aglobal config file::
   debug_on = True                                                                    
   homedir = /home/users/mistamover                                                             
   #                                                                                            
-  # the location of stager                                                              
+  # the location of MiStaMover                                                          
   #                                                                                                      
   top = /home/users/jhorton/Download/SVN/jah/19mar2012  
   base_data_dir = $(global:top)/data                                                               
@@ -157,7 +157,7 @@ The following example configuration files can be copied and modified as you requ
  * Rsync-over-SSH data stream "move" example
  * Rsync-over-SSH data stream "mirror" example
  * Rsync-native data stream "move" example
- * GridFTP data stream "move" example
+ * GridFTP (using myproxy) data stream "move" example
  * FTP data stream "move" example (no arrivals monitor)
  * FTP data stream "move" example (with arrivals monitor)
  
@@ -196,7 +196,7 @@ Here is an example of a *one-off* config file that uses the ``rsync-over-ssh`` t
   [outgoing]
   target_host = cmip-dev2
   target_dir = /home/users/jhorton/incoming/jah
-  transfer_protocol = rsync                    
+  transfer_protocol = rsync_ssh                    
   control_file_extension = mistamover-ctrl-bss     
   receipt_file_extension = mistamover-rcpt-bss     
   thankyou_file_extension = mistamover-thanks-bss  
@@ -377,7 +377,7 @@ Here is an example of Data Stream config file that uses gridftp to move::
   #
   # the underlying protocol we are using to transfer files
   #
-  transfer_protocol = gridftp
+  transfer_protocol = gridftp_myproxy
   target_uses_arrival_monitor = False
   #
   # the location on the target_host where we are placing the files
@@ -430,8 +430,11 @@ The sections can be as follows\:
 **[ftp]**
   Options to define how ftp transfer module operates
 
-**[gridftp]**
-  Options to define how gridftp transfer module operates
+**[gridftp_myproxy]**
+  Options to define how gridftp (using myproxy) transfer module operates
+
+**[gridftp_certificate]**
+  Options to define how gridftp (using certificates) transfer module operates
 
 **[rsync_ssh]**
   Defines settings required for using the rsync-over-SSH transfer protocol.
@@ -610,7 +613,7 @@ The sections can be as follows\:
   password
     Password to use in authentication during transfer
 
-**[gridftp]**
+**[gridftp_myproxy]**
   cmd
     The full-path to the command that will be run
 
@@ -625,6 +628,16 @@ The sections can be as follows\:
 
   proxy
     location of MyProxy proxy server (used to serve credentials)
+
+**[gridftp_certificate]**
+  cmd
+    The full-path to the command that will be run
+
+  username
+    Username to use in authentication during transfer
+
+  password
+    Password to use in authentication during transfer
 
 
 Extensions to the Standard Configuration File Parsing

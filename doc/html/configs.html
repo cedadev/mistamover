@@ -82,7 +82,7 @@
 debug_on = True
 homedir = /home/users/mistamover
 #
-# the location of stager
+# the location of MiStaMover
 #
 top = /home/users/jhorton/Download/SVN/jah/19mar2012
 base_data_dir = $(global:top)/data
@@ -205,7 +205,7 @@ recipient = simon.diming@diming-froim.com</pre>
 <li>Rsync-over-SSH data stream &#8220;move&#8221; example</li>
 <li>Rsync-over-SSH data stream &#8220;mirror&#8221; example</li>
 <li>Rsync-native data stream &#8220;move&#8221; example</li>
-<li>GridFTP data stream &#8220;move&#8221; example</li>
+<li>GridFTP (using myproxy) data stream &#8220;move&#8221; example</li>
 <li>FTP data stream &#8220;move&#8221; example (no arrivals monitor)</li>
 <li>FTP data stream &#8220;move&#8221; example (with arrivals monitor)</li>
 </ul>
@@ -244,7 +244,7 @@ stop_file = .stop
 [outgoing]
 target_host = cmip-dev2
 target_dir = /home/users/jhorton/incoming/jah
-transfer_protocol = rsync
+transfer_protocol = rsync_ssh
 control_file_extension = mistamover-ctrl-bss
 receipt_file_extension = mistamover-rcpt-bss
 thankyou_file_extension = mistamover-thanks-bss
@@ -420,7 +420,7 @@ target_host = mercury
 #
 # the underlying protocol we are using to transfer files
 #
-transfer_protocol = gridftp
+transfer_protocol = gridftp_myproxy
 target_uses_arrival_monitor = False
 #
 # the location on the target_host where we are placing the files
@@ -461,8 +461,10 @@ password = mistamover</pre>
 <dd>Options to define how native rsync transfer module operates</dd>
 <dt><strong>[ftp]</strong></dt>
 <dd>Options to define how ftp transfer module operates</dd>
-<dt><strong>[gridftp]</strong></dt>
-<dd>Options to define how gridftp transfer module operates</dd>
+<dt><strong>[gridftp_myproxy]</strong></dt>
+<dd>Options to define how gridftp (using myproxy) transfer module operates</dd>
+<dt><strong>[gridftp_certificate]</strong></dt>
+<dd>Options to define how gridftp (using certificates) transfer module operates</dd>
 <dt><strong>[rsync_ssh]</strong></dt>
 <dd>Defines settings required for using the rsync-over-SSH transfer protocol.</dd>
 </dl>
@@ -618,7 +620,7 @@ password = mistamover</pre>
 <dd>Password to use in authentication during transfer</dd>
 </dl>
 </dd>
-<dt><strong>[gridftp]</strong></dt>
+<dt><strong>[gridftp_myproxy]</strong></dt>
 <dd><dl class="first last docutils">
 <dt>cmd</dt>
 <dd>The full-path to the command that will be run</dd>
@@ -630,6 +632,16 @@ password = mistamover</pre>
 <dd>Port of GridFtp server on remote host</dd>
 <dt>proxy</dt>
 <dd>location of MyProxy proxy server (used to serve credentials)</dd>
+</dl>
+</dd>
+<dt><strong>[gridftp_certificate]</strong></dt>
+<dd><dl class="first last docutils">
+<dt>cmd</dt>
+<dd>The full-path to the command that will be run</dd>
+<dt>username</dt>
+<dd>Username to use in authentication during transfer</dd>
+<dt>password</dt>
+<dd>Password to use in authentication during transfer</dd>
 </dl>
 </dd>
 </dl>
