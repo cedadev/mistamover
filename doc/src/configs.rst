@@ -221,7 +221,7 @@ Here is an example of a *one-off* config file that uses the ``rsync-over-ssh`` t
   subject = Error from Local MiStaMover 
   smarthost = outbox.rl.ac.uk       
 
-  [rsync]
+  [rsync_ssh]
   username = jhorton
   transfer_mode = move
   cmd = /usr/bin/rsync     
@@ -384,7 +384,7 @@ Here is an example of Data Stream config file that uses gridftp to move::
   #
   target_dir = /disks/almond1/mistamover/incoming/gridftp
   
-  [gridftp]
+  [gridftp_myproxy]
   username = mistamover
   cmd = /home/users/mistamover/globus/bin/globus-url-copy
   port = 2811

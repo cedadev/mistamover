@@ -15,7 +15,7 @@ MiStaMover is typically used in the following ways:
  
 See the :ref:`modes` for a full list of running modes.
 
-MiStaMover is able to manage multiple transfer processes in a manner than ensures what is sent from the :ref:`Source Host <source_host>` actually arrives in-tact on the :ref:`Target Host <target_host>`.  
+MiStaMover is able to manage multiple transfer processes in a manner that ensures what is sent from the :ref:`Source Host <source_host>` actually arrives in-tact on the :ref:`Target Host <target_host>`.  
 
 The following features and functionality are included:
 

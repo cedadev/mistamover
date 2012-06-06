@@ -269,7 +269,7 @@ recipient = john.horton@stfc.ac.uk
 subject = Error from Local MiStaMover
 smarthost = outbox.rl.ac.uk
 
-[rsync]
+[rsync_ssh]
 username = jhorton
 transfer_mode = move
 cmd = /usr/bin/rsync
@@ -427,7 +427,7 @@ target_uses_arrival_monitor = False
 #
 target_dir = /disks/almond1/mistamover/incoming/gridftp
 
-[gridftp]
+[gridftp_myproxy]
 username = mistamover
 cmd = /home/users/mistamover/globus/bin/globus-url-copy
 port = 2811
