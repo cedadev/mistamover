@@ -23,7 +23,7 @@ o create a data stream configuration file use
     ftp
     gridftp_myproxy
     gridftp_certificate
-
+    arrival_monitor
 
 o view the list of settings that must be defined for a specific configuration use:
 
