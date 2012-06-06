@@ -94,6 +94,10 @@ tar -C $HOME/mstmvr -xvzf mistamover-${VERSION}.tar.gz</pre>
 <p>Since the code is written in python there is nothing to build!</p>
 <p>Note that it is possible to split the various directories across your linux distribution, for example moving the <tt class="docutils literal"><span class="pre">log/</span></tt> directory to a common logging location and the <tt class="docutils literal"><span class="pre">lib/</span></tt> directory into your python source. Be sure to make the appropriate changes to your configuration information and PYTHONPATH environment variable if you decide to move the directories.</p>
 </div>
+<div class="section" id="creating-configs">
+<h2>Creating configs<a class="headerlink" href="#creating-configs" title="Permalink to this headline">¶</a></h2>
+<p>The simplest way to create a config file for MiStaMover is to use the create_config.py program which is documented in <a class="reference internal" href="create_config.html#create-config"><em>create_config</em></a></p>
+</div>
 <div class="section" id="running-mistamover">
 <h2>Running MiStaMover<a class="headerlink" href="#running-mistamover" title="Permalink to this headline">¶</a></h2>
 <p>The best way to get started is to run MiStaMover as a <em class="xref std std-ref">one-off process</em>. This will work as follows:</p>
@@ -262,6 +266,7 @@ check_size = True</pre>
 <li><a class="reference internal" href="#">Getting Started</a><ul>
 <li><a class="reference internal" href="#downloading-and-installing-mistamover">Downloading and Installing MiStaMover</a></li>
 <li><a class="reference internal" href="#the-directory-structure">The Directory Structure</a></li>
+<li><a class="reference internal" href="#creating-configs">Creating configs</a></li>
 <li><a class="reference internal" href="#running-mistamover">Running MiStaMover</a></li>
 <li><a class="reference internal" href="#the-global-configuration-file">The Global Configuration File</a></li>
 <li><a class="reference internal" href="#the-data-stream-configuration-file">The Data Stream Configuration File</a></li>

@@ -54,6 +54,12 @@ Since the code is written in python there is nothing to build!
 
 Note that it is possible to split the various directories across your linux distribution, for example moving the ``log/`` directory to a common logging location and the ``lib/`` directory into your python source. Be sure to make the appropriate changes to your configuration information and PYTHONPATH environment variable if you decide to move the directories.
 
+
+Creating configs
+----------------
+
+The simplest way to create a config file for MiStaMover is to use the create_config.py program which is documented in :ref:`create_config`
+
 Running MiStaMover
 ------------------
 
