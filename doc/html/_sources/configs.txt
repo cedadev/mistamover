@@ -15,6 +15,12 @@ This defines the global information MiStaMover needs and also sets up defaults f
 
 These define such information as what a data stream is called, where its data can be found on arrival, which protocol should be used to transfer the data and the address of the remote host that data should be forwarded to.
 
+Create_Config
+-------------
+
+A config creation utility is available. It is documented in :ref:`create_config`
+
+
 Global Configuration Files
 --------------------------
 
