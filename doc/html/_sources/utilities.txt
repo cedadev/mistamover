@@ -29,3 +29,6 @@ gridftp.py
 
 runCommand.py
   A module that allows commands to be run from python
+
+create_config.py
+  A script that is used to create config files for MiStaMover. Documentation can be found in the :ref:`create_config` page
