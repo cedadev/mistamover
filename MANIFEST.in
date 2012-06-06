@@ -1,6 +1,7 @@
 include *.*
 recursive-include bin *.py
-recursive-include conf *.* 
+recursive-include conf *.*
+recursive-include templates/*.*
 recursive-include data *.* 
 recursive-include doc *.*
 recursive-include lib *.py
