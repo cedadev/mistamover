@@ -1,0 +1,33 @@
+[data_stream]
+priority = 200
+name = __MUST_DEFINE__ 
+transfer_unit = file
+status = RUNNING
+directory =  
+
+[incoming]
+#
+# there is no arrivals monitor being used for incoming
+# data_streams on this machine
+#
+require_arrival_monitor = False
+
+[outgoing]
+#
+# the host we are transfering files to
+#
+target_host = __MUST_DEFINE__ 
+#
+# the underlying protocol we are using to transfer files
+#
+transfer_protocol = gridftp_certificate
+target_dir = __MUST_DEFINE__ 
+
+[gridftp_certificate]
+username = __MUST_DEFINE__ 
+password = __MUST_DEFINE__
+#
+# the location of globus-url-copy may be in a different location
+# than from that specified below
+#
+cmd = /usr/bin/globus-url-copy
