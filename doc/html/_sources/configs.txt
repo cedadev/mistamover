@@ -34,7 +34,7 @@ The following is an example of aglobal config file::
   #                                                                                            
   # the location of MiStaMover                                                          
   #                                                                                                      
-  top = /home/users/jhorton/Download/SVN/jah/19mar2012  
+  top = /home/users/mistamover 
   base_data_dir = $(global:top)/data                                                               
   #                                                                                               
   # the location of the global and data_stream config files  
@@ -173,19 +173,19 @@ Here is an example of a *one-off* config file that uses the ``rsync-over-ssh`` t
   # per-data stream (although technically there is nothing to prevent a 'global'
   # section in the data stream config file)                                     
 
-  homedir = /home/users/jhorton
-  top = /home/users/jhorton/Download/SVN/jah/jah
+  homedir = /home/users/mistamover
+  top = /home/users/mistamover
   base_data_dir = $(global:top)/data               
   config_dir = $(global:top)/conf                     
-  base_incoming_dir = /home/users/jhorton/Download/SVN/jah/incoming                               
-  data_stream_list = jah3                                                                             
+  base_incoming_dir = /home/users/mistamover/incoming                               
+  data_stream_list = data3                                                                             
   general_poll_interval = 1                                                                       
 
   [data_stream]
   priority = 200
-  name = jah3      
+  name = data3     
   status = RUNNING    
-  directory = /home/users/jhorton/Download/SVN/jah/outgoing/jah3
+  directory = /home/users/mistamover/data3
 
   [incoming]
   require_arrival_monitor = False
@@ -195,7 +195,7 @@ Here is an example of a *one-off* config file that uses the ``rsync-over-ssh`` t
 
   [outgoing]
   target_host = cmip-dev2
-  target_dir = /home/users/jhorton/incoming/jah
+  target_dir = /home/users/mistamover/incoming/indata
   transfer_protocol = rsync_ssh                    
   control_file_extension = mistamover-ctrl-bss     
   receipt_file_extension = mistamover-rcpt-bss     
@@ -222,7 +222,7 @@ Here is an example of a *one-off* config file that uses the ``rsync-over-ssh`` t
   smarthost = outbox.rl.ac.uk       
 
   [rsync_ssh]
-  username = jhorton
+  username = mistamover
   transfer_mode = move
   cmd = /usr/bin/rsync     
 
