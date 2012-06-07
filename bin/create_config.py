@@ -140,7 +140,7 @@ def getFilePaths(conf_type, name, tmpl_only = False):
 
     if conf_type == "global":
         tmpl = os.path.join(template_dir, "global.tmpl")
-        if tmpl_only == False: conf = os.path.join(config_dir, "NEWglobal.ini")
+        if tmpl_only == False: conf = os.path.join(config_dir, "global.ini")
     else:                                                                      
         if not name:                                                           
             raise Exception("Must define 'data_stream:name=<value>' in data stream config arguments.")
