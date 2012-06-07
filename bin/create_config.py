@@ -175,6 +175,14 @@ def createConfig(conf_type, name):
             print "Exiting"
             sys.exit(0)
 
+    # check if user wishes to accept all defaults
+    acc_def = False
+    print "Do you wish to accept all default values ?"
+    s = raw_input('y/n ')
+    s = s.lower()
+    if s == 'y':
+        acc_def = True
+
     input = open(tmpl)
     output = []
 
@@ -206,7 +214,7 @@ def createConfig(conf_type, name):
         elif not fl.startswith('#') and len(fl) != 0 and not fl.startswith('['):
             fls = fl.split("=")
             currvar = fls[0].strip()
-            if len(fls) == 2:
+            if len(fls) == 2 and len(fls[1]) != 0:
                 fls2 = fls[1].strip()
                 if fls2 == "__MUST_DEFINE__":
                     s = ""
@@ -217,17 +225,22 @@ def createConfig(conf_type, name):
                     line = currvar + " = " + s
                     output.append(line)
                 else:
-                    print "optional :", section + ":" + fls[0].strip(), "(press enter to accept default) :", fls[1].strip()  
-                    s = raw_input('--> ')
-                    if len(s) == 0:
+                    if acc_def == False:
+                        print "optional :", section + ":" + fls[0].strip(), "(press enter to accept default) :", fls[1].strip()  
+                        s = raw_input('--> ')
+                        if len(s) == 0:
+                            print "setting", section + ":" + currvar, "=", fls2, "\n"
+                            line = currvar + " = " + fls2
+                            output.append(line)
+                        else:
+                            print "setting", section + ":" + currvar, "=", s, "\n"
+                            line = currvar + " = " + s
+                            output.append(line)
+                    else:
                         print "setting", section + ":" + currvar, "=", fls2, "\n"
                         line = currvar + " = " + fls2
                         output.append(line)
-                    else:
-                        print "setting", section + ":" + currvar, "=", s, "\n"
-                        line = currvar + " = " + s
-                        output.append(line)
-            if len(fls) == 1:
+            else:
                 print currvar, " : (optional : no default value currently set)"
                 s = raw_input('--> ')
                 print "setting", section + ":" + currvar, "=", s, "\n"
