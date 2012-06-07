@@ -105,7 +105,10 @@ stop_file_poll_interval = 10
 #
 # Location of log files - this directory must exist
 #
-base_log_dir = __MUST_DEFINE__ 
+base_log_dir = __MUST_DEFINE__
+#
+# Only log items that are WARN or above. Can also be DEBUG, INFO, ERROR, CRITICAL
+#
 log_level = WARN
 #log_level = DEBUG
 port = 2001
@@ -116,6 +119,9 @@ port = 2001
 # as e-mail reports as well as being logged.
 #
 from = __MUST_DEFINE__
+#
+# Specify the log level at which email messages are sent
+#
 threshold = CRITICAL
 #
 # Email recipient
