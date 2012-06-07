@@ -219,8 +219,17 @@ def createConfig(conf_type, name):
                 if fls2 == "__MUST_DEFINE__":
                     s = ""
                     while len(s) == 0:
-                        print "required :", section + ":" + fls[0].strip()
-                        s = raw_input('--> ')
+                        if section == 'data_stream' and fls[0].strip() == 'name':
+                            print "required :", section + ":" + fls[0].strip(), "(accept default?)", name
+                            s = raw_input('y/n ')
+                            s = s.lower()
+                            if s == 'y':
+                                s = name
+                            else:
+                                s = raw_input('--> ')
+                        else:
+                            print "required :", section + ":" + fls[0].strip()
+                            s = raw_input('--> ')
                     print "setting", section + ":" + currvar, "=", s, "\n"
                     line = currvar + " = " + s
                     output.append(line)
