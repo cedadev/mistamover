@@ -42,8 +42,17 @@ general_poll_interval = 3
 # Information about detecting incoming data arriving
 #
 require_arrival_monitor = False
+#
+# Arrival monitor control file extension
+#
 control_file_extension = stager-ctrl-bss
+#
+# Arrival monitor thankyou file extension
+#
 thankyou_file_extension = stager-thanks-bss
+#
+# Stop file used to halt transfers to target machines
+#
 stop_file = .stop
 
 [outgoing]
@@ -59,7 +68,13 @@ transfer_mode = move
 
 # Control, receipt and thank you files are used to check files have arrived (not relevant to rsync transfers)
 control_file_extension = stager-ctrl-bss
+#
+# Arrival monitor receipt file extension
+#
 receipt_file_extension = stager-rcpt-bss
+#
+# Arrival monitor thankyou file extension
+#
 thankyou_file_extension = stager-thanks-bss
 
 #
@@ -67,11 +82,23 @@ thankyou_file_extension = stager-thanks-bss
 # to ensure that files arrive at their destination correctly
 #
 target_uses_arrival_monitor = False
+#
+# Specify the number of times to retry and transfer
+#
 retry_count = 3
+#
+# Specify the number of times to try and get a receipt file (if using arrival monitor)
+#
 receipt_file_poll_count = 100
+#
+# Specify the interval in seconds between tries to get a receipt file
+#
 receipt_file_poll_interval = 5
-dir_size_limit = 1000.
+dir_size_limit = 1000
 stop_file = .stop
+#
+# Specify the interval in seconds between trying to get a .stop file
+#
 stop_file_poll_interval = 10
 
 [logging]
@@ -90,12 +117,17 @@ port = 2001
 #
 from = __MUST_DEFINE__
 threshold = CRITICAL
+#
+# Email recipient
+#
 recipient = __MUST_DEFINE__
 subject = MiStaMover Error Report
 smarthost = localhost 
 
 [rsync_ssh]
-username = 
+username =
+#
+# For rsync transfer modules, transfer_mode can be either move or mirror 
 transfer_mode = move
 # Path to rsync command
 cmd = /usr/bin/rsync

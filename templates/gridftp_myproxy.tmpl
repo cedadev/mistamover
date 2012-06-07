@@ -1,8 +1,23 @@
 [data_stream]
+#
+# Data_streams with priorities lower than the base_priority will be stopped
+# and potentially removed) before data_streams with higher priorities.
+# Data_streams will only be removed if the option in the data_stream section
+# of the data_stream config file called deletion_enabled is set to True
+#
 priority = 200
-name = __MUST_DEFINE__ 
+#
+# the name of the data stream
+#
+name = __MUST_DEFINE__
+#
+# currently only file is supported
+#
 transfer_unit = file
 status = RUNNING
+#
+# location of files to transfer for this data_stream
+#
 directory =  
 
 [incoming]
@@ -21,6 +36,9 @@ target_host = __MUST_DEFINE__
 # the underlying protocol we are using to transfer files
 #
 transfer_protocol = gridftp_myproxy
+#
+# The location on the target machine where the transfered files should be placed
+#
 target_dir = __MUST_DEFINE__ 
 
 [gridftp_myproxy]

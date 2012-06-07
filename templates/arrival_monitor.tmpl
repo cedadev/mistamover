@@ -1,6 +1,18 @@
-[data_stream]
+data_stream]
+#
+# Data_streams with priorities lower than the base_priority will be stopped 
+# and potentially removed) before data_streams with higher priorities.
+# Data_streams will only be removed if the option in the data_stream section 
+# of the data_stream config file called deletion_enabled is set to True
+#
 priority = 200
+#
+# the name of the data stream
+#
 name = arrival_monitor
+#
+# currently only file is supported
+#
 transfer_unit = file
 status = RUNNING
 deletion_enabled = False
