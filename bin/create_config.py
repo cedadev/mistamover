@@ -193,10 +193,10 @@ def createConfig(conf_type, name):
             output.append(fl)
             i = i + 1
         elif not fl.startswith('#') and len(fl) != 0 and not fl.startswith('['):
-            fls = fl.split()
+            fls = fl.split("=")
             currvar = fls[0].strip()
-            if len(fls) == 3:
-                fls2 = fls[2].strip()
+            if len(fls) == 2:
+                fls2 = fls[1].strip()
                 if fls2 == "__MUST_DEFINE__":
                     s = ""
                     while len(s) == 0:
@@ -206,7 +206,7 @@ def createConfig(conf_type, name):
                     line = currvar + " = " + s
                     output.append(line)
                 else:
-                    print "optional :", section + ":" + fls[0].strip(), "(press enter to accept default) :", fls[2].strip()  
+                    print "optional :", section + ":" + fls[0].strip(), "(press enter to accept default) :", fls[1].strip()  
                     s = raw_input('--> ')
                     if len(s) == 0:
                         print "setting", section + ":" + currvar, "=", fls2, "\n"
@@ -216,7 +216,7 @@ def createConfig(conf_type, name):
                         print "setting", section + ":" + currvar, "=", s, "\n"
                         line = currvar + " = " + s
                         output.append(line)
-            if len(fls) == 2:
+            if len(fls) == 1:
                 print currvar, " : (optional : no default value currently set)"
                 s = raw_input('--> ')
                 print "setting", section + ":" + currvar, "=", s, "\n"
