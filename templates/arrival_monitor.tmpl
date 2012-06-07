@@ -1,4 +1,4 @@
-data_stream]
+[data_stream]
 #
 # Data_streams with priorities lower than the base_priority will be stopped 
 # and potentially removed) before data_streams with higher priorities.
@@ -21,8 +21,10 @@ status = RUNNING
 deletion_enabled = False
 #
 # location of files to transfer for this data_stream
+#   - if not provided the directory path is assumed to be:
+#      <global:base_data_dir>/<data_stream:name>
 #
-directory = /home/users/mistamover/incoming/my_data_stream
+directory =
 
 [incoming]
 #
