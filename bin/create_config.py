@@ -164,6 +164,17 @@ def createConfig(conf_type, name):
 
     (tmpl, conf) = getFilePaths(conf_type, name)
 
+    # check if conf exists already
+    if os.path.exists(conf):
+        print "Do you want to overwrite", conf, "?"
+        s = raw_input('y/n ')
+        s = s.lower()
+        if s == 'y':
+            os.chmod(conf, stat.S_IWUSR)
+        else:
+            print "Exiting"
+            sys.exit(0)
+
     input = open(tmpl)
     output = []
 
