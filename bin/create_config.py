@@ -212,7 +212,7 @@ def createConfig(conf_type, name):
             output.append(fl)
             i = i + 1
         elif not fl.startswith('#') and len(fl) != 0 and not fl.startswith('['):
-            fls = fl.split("=")
+            fls = fl.split("=", 1)
             currvar = fls[0].strip()
             if len(fls) == 2 and len(fls[1]) != 0:
                 fls2 = fls[1].strip()
