@@ -205,6 +205,9 @@ def createConfig(conf_type, name):
             s1 = fl.replace('[', '')
             s2 = s1.replace(']', '')
             section = s2
+            print "-----------------------------------------------------------------------"
+            print "Section: [", section, "] -- configuration settings"
+            print "-----------------------------------------------------------------------"
             output.append(fl)
             #print "section = ", section
             i = i + 1
