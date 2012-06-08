@@ -225,7 +225,13 @@ class MiStaMoverController(object):
             data_stream_path = self.gconfig.get("global.config_dir")
             # check that the config files have 400 permissions
             ds_filepath = data_stream_path + "/ds_" + ds_name + ".ini"
-            st = os.stat(ds_filepath).st_mode
+            try:
+                st = os.stat(ds_filepath).st_mode
+            except:
+                print ""
+                wrn = "The global configuration 'data_stream_list' setting expects to find a configuration for the '" + ds_name + "' data stream called: '" + ds_filepath + "'. This file does not exist. Please create it manually or use the 'bin/create_config.py' wizard."
+                print "WARNING", wrn
+                continue
             rv = stat.S_IMODE(st)
             if rv == stat.S_IRUSR:
                 if ds_name not in self.dconfigs.keys():
@@ -428,30 +434,32 @@ class MiStaMoverController(object):
         self.info("starting Transfer Controller for data_stream %s"
                          % ds_name)
 
-        dconfig = self.dconfigs[ds_name]
+        try:
+            dconfig = self.dconfigs[ds_name]
 
-        proc_misc = []
+            proc_misc = []
 
-        if dconfig.get("outgoing.transfer_protocol") != "none":
-            proc_misc.append((self.runDatasetTransferController,
+            if dconfig.get("outgoing.transfer_protocol") != "none":
+                proc_misc.append((self.runDatasetTransferController,
                               "transfer controller", "dtc_", "sender"))
         
-        if dconfig['incoming']['require_arrival_monitor']:
-        #if dconfig.get("incoming.require_arrival_monitor") == "True":
-            proc_misc.append((self.runDatasetArrivalMonitor,
+            if dconfig['incoming']['require_arrival_monitor']:
+                proc_misc.append((self.runDatasetArrivalMonitor,
                               "arrival monitor", "dam_", 
                               "arrival_monitor"))
 
-        sub_procs = {}
+            sub_procs = {}
         
-        for method, descrip, short_desc, key in proc_misc:
-            full_descrip = "%s for data_stream %s" % (descrip, ds_name)
-            self.info("starting %s" % full_descrip)           
-            daemon = Daemon.DaemonCtl(method,
+            for method, descrip, short_desc, key in proc_misc:
+                full_descrip = "%s for data_stream %s" % (descrip, ds_name)
+                self.info("starting %s" % full_descrip)           
+                daemon = Daemon.DaemonCtl(method,
                                       args = [dconfig],
                                       description = "mistamover_" + short_desc + ds_name)
-            sub_procs[key] = daemon
-        self.sub_procs[ds_name] = sub_procs
+                sub_procs[key] = daemon
+            self.sub_procs[ds_name] = sub_procs
+        except:
+            pass 
 
 
     def runDatasetTransferController(self, *args):

@@ -228,7 +228,11 @@ class DaemonCtl(DaemonBase):
             opts = 0
         else:
             opts = os.WNOHANG
-        pid, status = os.waitpid(self.pid, opts)
+        try:
+            pid, status = os.waitpid(self.pid, opts)
+        except:
+            return None
+
         if pid == 0:
             # still running
             return None
