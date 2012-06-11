@@ -84,12 +84,14 @@ class RsyncTransfer(TransferBase):
             rsc += " --size-only "
         if not self.config.get("outgoing.target_uses_arrival_monitor"):
             pushcmd = (rsc + self.config.get("data_stream.directory") + "/" +
-            f + " " + self.config.get("outgoing.target_host") + "://" +
+            f + " " + self.config.get("rsync_ssh.username") + "@" +
+            self.config.get("outgoing.target_host") + "://" +
             self.config.get("outgoing.target_dir") + "/" + f)
         else:
             pushcmd = (rsc + self.config.get("data_stream.directory") + "/"
-            +f + " " + self.config.get("data_stream.directory") + "/" +
-            ctl_file_name + " " + self.config.get("outgoing.target_host") +
+            + f + " " + self.config.get("data_stream.directory") + "/" +
+            ctl_file_name + " " + self.config.get("rsync_ssh.username") + "@" +
+            self.config.get("outgoing.target_host") +
             "://" + self.config.get("outgoing.target_dir") + "/")
         self.info("setupPushCmd %s " % pushcmd)
         return pushcmd
@@ -101,7 +103,8 @@ class RsyncTransfer(TransferBase):
         stop files
         '''
         listonly = self.cmd + " --list-only "
-        pullstop = (listonly + self.config.get("outgoing.target_host") + "://" 
+        pullstop = (listonly + self.config.get("rsync_ssh.username") + "@" +
+            self.config.get("outgoing.target_host") + "://" 
             + self.config.get("outgoing.target_dir") + "/" + "/" + 
             self.config.get("outgoing.stop_file"))
         self.info("setupStopFileCmd %s " % pullstop)
@@ -112,7 +115,8 @@ class RsyncTransfer(TransferBase):
         called by TransferBase to setup the command that pulls receipt files 
         from the target
         '''
-        pullrcpt = (self.cmd + " " + self.config.get("outgoing.target_host")
+        pullrcpt = (self.cmd + " " + self.config.get("rsync_ssh.username") + "@" +
+            self.config.get("outgoing.target_host")
             + "://" + self.config.get("outgoing.target_dir") + "/" +
             self.rcpt_file_name + " " + self.config.get(
             "data_stream.directory") + "/")
@@ -147,6 +151,7 @@ class RsyncTransfer(TransferBase):
         thankyou_file.create(self.rcpt_file_name)
         self.thankyou_file_path = thankyou_file_path
         thankyoucmd = (self.cmd + " " + self.thankyou_file_path +
+            self.config.get("rsync_ssh.username") + "@" +
             self.config.get("outgoing.target_host") + "://" +
             self.config.get("outgoing.target_dir") + "/")
         return thankyoucmd
@@ -154,6 +159,8 @@ class RsyncTransfer(TransferBase):
     def checkVars(self):
         if not self.config.checkSet("rsync_ssh.cmd"):
             raise Exception("rsync_ssh.cmd is not set")
+        if not self.config.checkSet("rsync_ssh.username"):
+            raise Exception("rsync_ssh.username is not set")
         if not self.config.checkSet("outgoing.target_dir"):
             raise Exception("outgoing.target_dir is not set")
         if not self.config.checkSet("outgoing.target_host"):
