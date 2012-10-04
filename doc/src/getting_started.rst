@@ -76,9 +76,13 @@ The best way to get started is to run MiStaMover as a :ref:`one-off process <One
 
 The following options are available when running MiStaMover at the command line::
 
-  bin/mistamover.py [ --one-off | --daemon | ] [<GLOBAL_CONFIG_FILE>]
-  
-Where only one of the first four arguments must be specified. The ``<GLOBAL_CONFIG_FILE>`` is the location of the global configuration file you wish to use. This is an optional argument for which the default location is ``conf/global.ini``.
+  bin/mistamover.py [ --one-off | --daemon ] [--debug] [<GLOBAL_CONFIG_FILE>]
+ 
+All the arguments are optional. The ``<GLOBAL_CONFIG_FILE>`` is the location of the global configuration file you wish to use. If this argument is not provided then the default location ``conf/global.ini`` will be used.
+
+MiStaMover can be run as either a daemon process (which will continue to run in the background) or as a one-off process (which will transfer files for a single data stream and then exit). If neither the ``--one-off`` nor the ``--daemon`` argument is provided then MiStaMover will run in the default mode as a one-off process.
+
+if the ``--debug`` argument is provided will tell MiStaMover to be verbose with its reporting/logging.
 
 **WARNING: The default transfer mode is "move". Do not set your incoming directory to a location in which you intend to keep data without setting the transfer mode to "mirror"!** 
 
