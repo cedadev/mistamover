@@ -136,8 +136,6 @@ class TransferBase:
                 grv = Response(grc, rv, err)
                 self.info("transferData for %s Failed " % cmd)
         except Exception, ex:
-            ex = str(ex)
-            rv = str(p.returncode)
             grc = ResponseCode(False)
             grv = (Response(grc, "An exception occurred during  transferData ",
                 str(ex)))
