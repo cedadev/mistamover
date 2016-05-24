@@ -139,7 +139,7 @@ class TransferBase:
             grc = ResponseCode(False)
             grv = (Response(grc, "An exception occurred during  transferData ",
                 str(ex)))
-            self.info("transferData for %s raised exception %s " % cmd, str(ex))
+            self.info("transferData for %s raised exception %s " % (cmd, str(ex)))
         return grv
 
     def checkUSR1(self):
